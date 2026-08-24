@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Songs For You</title>
+  <title>Para mi male</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- Audios -->
-  <!-- Nota: Se llama a Always.mp3 con 'A' mayúscula, tal como está en tu GitHub -->
   <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
   <audio id="mixtape-audio"></audio>
 
-  <!-- PANTALLA 1: Sobre cerrado -->
+  <!-- Pantalla 1: Apertura (Se mantiene igual) -->
   <section id="envelope-screen" class="screen">
     <div class="envelope" id="envelope-btn">
       <div class="envelope-stamp">🌸</div>
@@ -22,152 +21,111 @@
     </div>
   </section>
 
-  <!-- Capa de animación floral -->
-  <div id="flower-overlay" class="flower-overlay hidden"></div>
-
-  <!-- PANTALLA 2: Contenedor Principal -->
+  <!-- Pantalla 2: Dashboard Principal -->
   <section id="main-screen" class="screen hidden">
-    <div class="app-layout">
+    <div class="dashboard-layout">
       
-      <!-- LATERAL IZQUIERDO: Widgets (Carta, YouTube, Letras) -->
-      <aside class="sidebar">
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="left-col">
         
-        <!-- Botón para abrir la carta especial -->
-        <div class="widget-card letter-trigger" id="open-letter-btn">
-          <div class="widget-header">
-            <span class="tag">LETTER</span>
-            <h3>A letter for you</h3>
-            <p>A small soundtrack for a moment worth keeping.</p>
+        <!-- 1. Reproductor ALWAYS con controles y letras -->
+        <div class="organic-box player-box">
+          <h3 class="box-title">Now Playing: Always</h3>
+          
+          <!-- Controles de Audio -->
+          <div class="audio-controls">
+            <div class="progress-container">
+              <span id="current-time">0:00</span>
+              <input type="range" id="seek-bar" value="0" min="0" max="100">
+              <span id="duration">0:00</span>
+            </div>
+            <div class="volume-container">
+              <span>🔊</span>
+              <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="0.5">
+            </div>
           </div>
-          <span class="open-badge">Tap to read ✉️</span>
-        </div>
 
-        <!-- Reproductor de YouTube embebido (Playlist) -->
-        <div class="widget-card yt-widget">
-          <span class="tag">YOUTUBE PLAYLIST</span>
-          <div class="iframe-container">
-            <iframe 
-              id="yt-player"
-              src="https://www.youtube-nocookie.com/embed/videoseries?list=PL4o29bINVT4EG_y-k5jGoOu3-Am8Nvi10" 
-              title="YouTube playlist player" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-
-        <!-- Panel de Letras sincronizadas -->
-        <div class="widget-card lyrics-widget">
-          <span class="tag">NOW PLAYING: ALWAYS</span>
+          <!-- Letras -->
           <div class="lyrics-scroll" id="lyrics-container"></div>
         </div>
 
-      </aside>
+        <!-- 2. Playlist YouTube -->
+        <div class="organic-box yt-box">
+          <h3 class="box-title">YouTube Playlist</h3>
+          <div class="iframe-container">
+            <iframe id="yt-player" src="https://www.youtube-nocookie.com/embed/videoseries?list=PL4o29bINVT4EG_y-k5jGoOu3-Am8Nvi10" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
 
-      <!-- CENTRO: Reproductor Vintage Mixtape -->
-      <main class="mixtape-card">
-        <header class="card-header">
-          <span class="to-from">FOR YOU · SPECIAL MIX</span>
-          <h1>Songs for you</h1>
-        </header>
+      </div>
 
-        <!-- Casete -->
-        <div class="cassette-body">
-          <div class="cassette-label">
-            <span class="label-title">Mixtape Vol. 1</span>
-            <div class="cassette-holes">
-              <div class="gear" id="gear-1"></div>
-              <div class="gear" id="gear-2"></div>
+      <!-- COLUMNA DERECHA -->
+      <div class="right-col">
+        
+        <!-- 3. Playlist MP3 -->
+        <div class="organic-box mp3-box">
+          <h3 class="box-title">Nuestra Playlist</h3>
+          <div class="tracklist">
+            <!-- NOTA: Si cambiaste los nombres sin tildes, actualiza el data-src aquí -->
+            <div class="track-row" data-src="assets/Aqui-Donde-Te-Extrano.mp3">
+              <span class="track-index">01</span>
+              <div class="track-meta"><strong>Aquí Donde Te Extraño</strong></div>
+              <button class="track-btn">▶</button>
             </div>
+            <div class="track-row" data-src="assets/Como-me-duele-perderte.mp3">
+              <span class="track-index">02</span>
+              <div class="track-meta"><strong>Como me duele perderte</strong></div>
+              <button class="track-btn">▶</button>
+            </div>
+            <div class="track-row" data-src="assets/Extranos.mp3">
+              <span class="track-index">03</span>
+              <div class="track-meta"><strong>Extraños</strong></div>
+              <button class="track-btn">▶</button>
+            </div>
+            <div class="track-row" data-src="assets/Glimpse-of-Us.mp3">
+              <span class="track-index">04</span>
+              <div class="track-meta"><strong>Glimpse of Us</strong></div>
+              <button class="track-btn">▶</button>
+            </div>
+            <div class="track-row" data-src="assets/Love-Me-Not.mp3">
+              <span class="track-index">05</span>
+              <div class="track-meta"><strong>Love Me Not</strong></div>
+              <button class="track-btn">▶</button>
+            </div>
+            <!-- Agrega el resto de tus canciones siguiendo este formato... -->
           </div>
         </div>
 
-        <!-- Lista de canciones MP3 actualizada con tus archivos exactos -->
-        <div class="tracklist">
-          <div class="track-row" data-src="assets/Aquí-Donde-Te-Extraño.mp3">
-            <span class="track-index">01</span>
-            <div class="track-meta"><strong>Aquí Donde Te Extraño</strong><span>Track 01</span></div>
-            <button class="track-btn">▶</button>
-          </div>
+      </div>
 
-          <div class="track-row" data-src="assets/Como-me-duele-perderte.mp3">
-            <span class="track-index">02</span>
-            <div class="track-meta"><strong>Como me duele perderte</strong><span>Track 02</span></div>
-            <button class="track-btn">▶</button>
-          </div>
+      <!-- FILA INFERIOR -->
+      <div class="bottom-row">
+        <!-- Botón de la carta -->
+        <button class="organic-btn letter-trigger" id="open-letter-btn">
+          Carta para mi male 💌
+        </button>
 
-          <div class="track-row" data-src="assets/Extraños.mp3">
-            <span class="track-index">03</span>
-            <div class="track-meta"><strong>Extraños</strong><span>Track 03</span></div>
-            <button class="track-btn">▶</button>
+        <!-- Minijuego de Memoria -->
+        <div class="organic-box minigame-box">
+          <h3 class="box-title">Minijuego: Encuentra los pares 🌸</h3>
+          <div class="memory-board" id="memory-board">
+            <!-- Las cartas se generan por JS -->
           </div>
-
-          <div class="track-row" data-src="assets/Glimpse-of-Us.mp3">
-            <span class="track-index">04</span>
-            <div class="track-meta"><strong>Glimpse of Us</strong><span>Joji</span></div>
-            <button class="track-btn">▶</button>
-          </div>
-
-          <div class="track-row" data-src="assets/Love-Me-Not.mp3">
-            <span class="track-index">05</span>
-            <div class="track-meta"><strong>Love Me Not</strong><span>Track 05</span></div>
-            <button class="track-btn">▶</button>
-          </div>
-
-          <div class="track-row" data-src="assets/On-Melancholy-Hill.mp3">
-            <span class="track-index">06</span>
-            <div class="track-meta"><strong>On Melancholy Hill</strong><span>Gorillaz</span></div>
-            <button class="track-btn">▶</button>
-          </div>
-
-          <div class="track-row" data-src="assets/Punto-y-Aparte.mp3">
-            <span class="track-index">07</span>
-            <div class="track-meta"><strong>Punto y Aparte</strong><span>Track 07</span></div>
-            <button class="track-btn">▶</button>
-          </div>
-
-          <div class="track-row" data-src="assets/Solo-Faltas-Tú.mp3">
-            <span class="track-index">08</span>
-            <div class="track-meta"><strong>Solo Faltas Tú</strong><span>Track 08</span></div>
-            <button class="track-btn">▶</button>
-          </div>
-
-          <div class="track-row" data-src="assets/Y-solo-se-me-ocurre-amarte.mp3">
-            <span class="track-index">09</span>
-            <div class="track-meta"><strong>Y solo se me ocurre amarte</strong><span>Alejandro Sanz</span></div>
-            <button class="track-btn">▶</button>
-          </div>
-
-          <div class="track-row" data-src="assets/esperando-que-vuelvas.mp3">
-            <span class="track-index">10</span>
-            <div class="track-meta"><strong>Esperando que vuelvas</strong><span>Track 10</span></div>
-            <button class="track-btn">▶</button>
-          </div>
+          <p id="game-message" class="game-msg hidden">¡Ganaste! Eres increíble 💖</p>
         </div>
-
-        <!-- Liner note -->
-        <div class="liner-note">
-          <p class="liner-title">Liner note</p>
-          <p class="handwritten">
-            Hey you, I made you a mixtape — Side A is us laughing. Side B is me missing you already. Press play.
-          </p>
-        </div>
-      </main>
+      </div>
 
     </div>
   </section>
 
   <!-- MODAL: La Carta Secreta -->
   <div id="letter-modal" class="modal-backdrop hidden">
-    <div class="letter-paper">
+    <div class="organic-box letter-paper">
       <button class="close-btn" id="close-letter-btn">&times;</button>
-      <div class="letter-content">
-        <h2>Para ti,</h2>
-        <p class="handwritten letter-text" id="custom-letter-text">
-          Escribe aquí todo lo que quieras decirle... Cada palabra, recuerdo o dedicatoria que tengas en mente.
-        </p>
-      </div>
+      <h2>Para ti,</h2>
+      <p class="handwritten">
+        Aquí irá todo lo que quieras decirle...
+      </p>
     </div>
   </div>
 
