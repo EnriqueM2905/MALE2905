@@ -4,8 +4,127 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para mi male</title>
-  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #f3ece4;
+      font-family: 'Playfair Display', serif;
+      color: #4a3b38;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+    .hidden { display: none !important; }
+
+    /* SOBRE */
+    .envelope {
+      width: 240px; height: 160px; background: #ecdccb;
+      border-radius: 8px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; cursor: pointer;
+      transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(78,52,46,0.12);
+    }
+    .envelope:hover { transform: scale(1.05); }
+    .envelope-stamp { font-size: 2.5rem; margin-bottom: 6px; }
+    .tap-text { font-style: italic; color: #7a5e56; font-size: 0.95rem; }
+
+    /* DISEÑO ORGÁNICO Y LAYOUT */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 25px;
+      max-width: 1000px;
+      padding: 30px;
+      width: 100%;
+    }
+
+    .organic-box {
+      background: rgba(255, 253, 249, 0.9);
+      backdrop-filter: blur(5px);
+      padding: 25px;
+      border-radius: 40px 15px 50px 20px / 20px 40px 15px 30px;
+      border: 2px solid #e0cabd;
+      box-shadow: 5px 8px 20px rgba(0,0,0,0.04);
+    }
+
+    .box-title { font-size: 1.2rem; color: #8e6c64; margin-bottom: 15px; text-align: center; }
+
+    /* Columna Izquierda */
+    .left-col { display: flex; flex-direction: column; gap: 25px; }
+
+    /* Controles de Audio Always */
+    .audio-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+    .progress-container { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+    .volume-container { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      background: #e0cabd;
+      height: 6px;
+      border-radius: 10px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px; height: 14px;
+      background: #a34851;
+      border-radius: 50%; cursor: pointer;
+    }
+
+    /* Letras de Always */
+    .lyrics-scroll { height: 120px; overflow-y: auto; text-align: center; padding-right: 5px; }
+    .lyric-item { font-size: 0.9rem; opacity: 0.4; transition: 0.3s; margin-bottom: 8px; }
+    .lyric-item.active { opacity: 1; font-weight: bold; color: #a34851; transform: scale(1.05); }
+
+    /* YouTube */
+    .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 15px; overflow: hidden; }
+    .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    /* Playlist MP3 */
+    .tracklist { max-height: 400px; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 10px;}
+    .track-row { display: flex; align-items: center; padding: 12px; background: #fffcf8; border-radius: 20px 10px 20px 10px; border: 1px solid #ebdccb; }
+    .track-index { margin-right: 15px; color: #a88a82; font-weight: bold; }
+    .track-meta { flex: 1; font-size: 0.95rem; }
+    .track-btn { background: #a34851; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+
+    /* Fila Inferior */
+    .bottom-row { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+
+    .organic-btn {
+      background: #a34851; color: white; font-family: inherit; font-size: 1.2rem;
+      padding: 15px 40px; cursor: pointer; border: none;
+      border-radius: 30px 10px 30px 10px / 10px 30px 10px 30px;
+      box-shadow: 0 4px 15px rgba(163, 72, 81, 0.3);
+      transition: all 0.3s ease;
+    }
+    .organic-btn:hover { background: #8e3e46; transform: translateY(-3px); }
+
+    /* Minijuego Memoria */
+    .minigame-box { width: 100%; max-width: 500px; text-align: center; }
+    .memory-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+    .memory-card {
+      background: #e0cabd; height: 60px; border-radius: 15px 8px 15px 8px;
+      display: flex; justify-content: center; align-items: center;
+      font-size: 1.8rem; cursor: pointer; transition: transform 0.3s;
+    }
+    .memory-card.flipped { background: #fff; transform: rotateY(180deg); border: 2px solid #a34851; }
+    .game-msg { margin-top: 15px; color: #a34851; font-weight: bold; font-size: 1.1rem; }
+
+    /* Modal Carta */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; }
+    .letter-paper { width: 90%; max-width: 500px; position: relative; }
+    .handwritten { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #5c453e; margin-top: 20px; line-height: 1.4; }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -32,7 +151,6 @@
         <div class="organic-box player-box">
           <h3 class="box-title">Now Playing: Always</h3>
           
-          <!-- Controles de Audio -->
           <div class="audio-controls">
             <div class="progress-container">
               <span id="current-time">0:00</span>
@@ -45,7 +163,6 @@
             </div>
           </div>
 
-          <!-- Letras -->
           <div class="lyrics-scroll" id="lyrics-container"></div>
         </div>
 
@@ -98,12 +215,10 @@
 
       <!-- FILA INFERIOR -->
       <div class="bottom-row">
-        <!-- Botón de la carta -->
         <button class="organic-btn letter-trigger" id="open-letter-btn">
           Carta para mi male 💌
         </button>
 
-        <!-- Minijuego de Memoria -->
         <div class="organic-box minigame-box">
           <h3 class="box-title">Minijuego: Encuentra los pares 🌸</h3>
           <div class="memory-board" id="memory-board"></div>
@@ -125,6 +240,170 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- CÓDIGO JAVASCRIPT INTEGRADO -->
+  <script>
+    const lyrics = [
+      { t: 0, text: "And I'll be here" },
+      { t: 3, text: "'Cause we both know how it goes" },
+      { t: 6, text: "I don't want things to change" },
+      { t: 10, text: "I pray they stay the same, always" },
+      { t: 15, text: "And I don't care if you're with somebody else" },
+      { t: 20, text: "I'll give you time and space" },
+      { t: 23, text: "Just know I'm not afraid, always" }
+    ];
+
+    const bgAudio = document.getElementById("bg-audio");
+    const mixtapeAudio = document.getElementById("mixtape-audio");
+    const lyricsContainer = document.getElementById("lyrics-container");
+    const seekBar = document.getElementById("seek-bar");
+    const volumeBar = document.getElementById("volume-bar");
+    const currentTimeEl = document.getElementById("current-time");
+    const durationEl = document.getElementById("duration");
+
+    if (lyricsContainer) {
+      lyrics.forEach((line, i) => {
+        const div = document.createElement("div");
+        div.className = "lyric-item";
+        div.id = `lyric-${i}`;
+        div.innerText = line.text;
+        lyricsContainer.appendChild(div);
+      });
+    }
+
+    const envelopeBtn = document.getElementById("envelope-btn");
+    if (envelopeBtn) {
+      envelopeBtn.addEventListener("click", () => {
+        document.getElementById("envelope-screen").classList.add("hidden");
+        document.getElementById("main-screen").classList.remove("hidden");
+        
+        if (bgAudio) {
+          if (volumeBar) bgAudio.volume = volumeBar.value;
+          bgAudio.play().catch(e => console.log("Autoplay bloqueado:", e));
+        }
+      });
+    }
+
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return "0:00";
+      const min = Math.floor(seconds / 60);
+      const sec = Math.floor(seconds % 60);
+      return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+    if (bgAudio) {
+      bgAudio.addEventListener("loadedmetadata", () => {
+        if (seekBar) seekBar.max = bgAudio.duration;
+        if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
+      });
+
+      bgAudio.addEventListener("timeupdate", () => {
+        if (seekBar) seekBar.value = bgAudio.currentTime;
+        if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
+
+        const current = bgAudio.currentTime;
+        lyrics.forEach((item, i) => {
+          const next = lyrics[i + 1];
+          const el = document.getElementById(`lyric-${i}`);
+          if (el) {
+            if (current >= item.t && (!next || current < next.t)) {
+              el.classList.add("active");
+              el.scrollIntoView({ behavior: "smooth", block: "center" });
+            } else {
+              el.classList.remove("active");
+            }
+          }
+        });
+      });
+
+      if (seekBar) {
+        seekBar.addEventListener("input", () => { bgAudio.currentTime = seekBar.value; });
+      }
+    }
+
+    if (volumeBar && bgAudio && mixtapeAudio) {
+      volumeBar.addEventListener("input", () => { 
+        bgAudio.volume = volumeBar.value; 
+        mixtapeAudio.volume = volumeBar.value; 
+      });
+    }
+
+    const trackRows = document.querySelectorAll(".track-row");
+    trackRows.forEach(row => {
+      const btn = row.querySelector(".track-btn");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const src = row.getAttribute("data-src");
+          if (mixtapeAudio && mixtapeAudio.src.includes(src) && !mixtapeAudio.paused) {
+            mixtapeAudio.pause();
+            btn.textContent = "▶";
+            if (bgAudio) bgAudio.play();
+          } else {
+            if (bgAudio) bgAudio.pause();
+            document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+            if (mixtapeAudio) {
+              mixtapeAudio.src = src;
+              mixtapeAudio.play().catch(e => alert("No se pudo reproducir. Verifica que el archivo MP3 exista en assets."));
+            }
+            btn.textContent = "❚❚";
+          }
+        });
+      }
+    });
+
+    if (mixtapeAudio) {
+      mixtapeAudio.addEventListener("ended", () => {
+        document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+        if (bgAudio) bgAudio.play();
+      });
+    }
+
+    const modal = document.getElementById("letter-modal");
+    const openBtn = document.getElementById("open-letter-btn");
+    const closeBtn = document.getElementById("close-letter-btn");
+
+    if (modal && openBtn && closeBtn) {
+      openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+      closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    }
+
+    const board = document.getElementById("memory-board");
+    const msg = document.getElementById("game-message");
+    if (board && msg) {
+      const emojis = ["🌸", "💌", "💖", "🎶", "🌸", "💌", "💖", "🎶"];
+      let flippedCards = [];
+      let matchedCount = 0;
+
+      emojis.sort(() => 0.5 - Math.random());
+
+      emojis.forEach((emoji, i) => {
+        const card = document.createElement("div");
+        card.className = "memory-card";
+        card.dataset.val = emoji;
+        card.dataset.index = i;
+        
+        card.addEventListener("click", () => {
+          if (card.classList.contains("flipped") || flippedCards.length === 2) return;
+          card.classList.add("flipped");
+          card.innerText = emoji;
+          flippedCards.push(card);
+
+          if (flippedCards.length === 2) {
+            setTimeout(() => {
+              const [c1, c2] = flippedCards;
+              if (c1.dataset.val === c2.dataset.val) {
+                matchedCount += 2;
+                if (matchedCount === emojis.length) msg.classList.remove("hidden");
+              } else {
+                c1.classList.remove("flipped"); c1.innerText = "";
+                c2.classList.remove("flipped"); c2.innerText = "";
+              }
+              flippedCards = [];
+            }, 800);
+          }
+        });
+        board.appendChild(card);
+      });
+    }
+  </script>
 </body>
 </html>
