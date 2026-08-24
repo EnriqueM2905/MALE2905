@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Songs for You</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Audio de fondo (Daniel Caesar - Always) -->
+  <audio id="bg-audio" loop src="assets/always.mp3"></audio>
+  <!-- Audio para la mixtape -->
+  <audio id="mixtape-audio"></audio>
+
+  <!-- PANTALLA 1: Sobre cerrado -->
+  <section id="envelope-screen" class="screen active">
+    <div class="envelope" id="envelope-btn">
+      <div class="envelope-stamp">🌸</div>
+      <p class="tap-text">Tap to open</p>
+    </div>
+  </section>
+
+  <!-- PANTALLA 2: Contenido interactivo -->
+  <section id="main-screen" class="screen hidden">
+    <div class="app-container">
+      
+      <!-- Panel Izquierdo: Letra sincronizada -->
+      <aside class="lyrics-panel">
+        <div class="lyrics-header">
+          <span class="music-note">♪</span>
+          <p class="track-playing">Daniel Caesar — Always</p>
+        </div>
+        <div class="lyrics-container" id="lyrics-container">
+          <!-- Las líneas se sincronizan mediante JS -->
+        </div>
+      </aside>
+
+      <!-- Panel Central: Mixtape / Casete -->
+      <main class="mixtape-card">
+        <header class="card-header">
+          <p class="to-from">FOR YOU · WITH LOVE</p>
+          <h1>Songs for you</h1>
+        </header>
+
+        <!-- Ilustración Casete -->
+        <div class="cassette">
+          <div class="cassette-label">
+            <span>Mixtape Vol. 1</span>
+            <div class="cassette-wheels">
+              <div class="wheel" id="wheel-1"></div>
+              <div class="wheel" id="wheel-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de Canciones -->
+        <div class="tracklist">
+          <div class="track-item" data-src="assets/perfect.mp3" data-name="Ed Sheeran - Perfect">
+            <span class="track-number">01</span>
+            <div class="track-info">
+              <strong>Perfect</strong>
+              <span>Ed Sheeran</span>
+            </div>
+            <button class="play-track-btn">▶</button>
+          </div>
+
+          <div class="track-item" data-src="assets/all-of-me.mp3" data-name="John Legend - All of Me">
+            <span class="track-number">02</span>
+            <div class="track-info">
+              <strong>All of Me</strong>
+              <span>John Legend</span>
+            </div>
+            <button class="play-track-btn">▶</button>
+          </div>
+        </div>
+
+        <!-- Nota manuscrita -->
+        <div class="liner-note">
+          <p><strong>Liner note:</strong></p>
+          <p class="handwriting">
+            Te hice este mixtape para que lo escuches cuando me extrañes. Dale play a cualquier canción cuando quieras.
+          </p>
+        </div>
+      </main>
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

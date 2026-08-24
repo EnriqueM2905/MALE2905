@@ -1,0 +1,240 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f7f3eb;
+  font-family: 'Playfair Display', serif;
+  color: #4a3e3d;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease;
+}
+
+.hidden {
+  display: none !important;
+  opacity: 0;
+}
+
+/* Sobre interactivo */
+.envelope {
+  width: 220px;
+  height: 150px;
+  background: #ecd9c6;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #dfc7b0;
+  transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+  transform: scale(1.05);
+}
+
+.envelope-stamp {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+}
+
+.tap-text {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #7d635c;
+}
+
+/* Layout Principal */
+.app-container {
+  display: grid;
+  grid-template-columns: 320px 420px;
+  gap: 30px;
+  padding: 20px;
+  max-width: 850px;
+}
+
+/* Panel de Letras */
+.lyrics-panel {
+  background: #fffdfa;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+}
+
+.lyrics-header {
+  border-bottom: 1px solid #eee1d5;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.track-playing {
+  font-size: 0.85rem;
+  color: #8c736c;
+  font-style: italic;
+}
+
+.lyrics-container {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 5px;
+}
+
+.lyric-line {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.35;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lyric-line.active {
+  opacity: 1;
+  font-weight: 700;
+  color: #9c4146;
+  transform: scale(1.02);
+}
+
+.lyric-line .translation {
+  display: block;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #6e615e;
+  margin-top: 3px;
+}
+
+/* Tarjeta Mixtape */
+.mixtape-card {
+  background: #fffdfa;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.to-from {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: #9c7b74;
+}
+
+.card-header h1 {
+  font-size: 1.8rem;
+  color: #3b2d2b;
+}
+
+/* Casete */
+.cassette {
+  background: #d8c3b5;
+  border-radius: 10px;
+  padding: 15px;
+  border: 2px solid #bda393;
+}
+
+.cassette-label {
+  background: #fcf9f2;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.cassette-wheels {
+  display: flex;
+  gap: 15px;
+}
+
+.wheel {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px dashed #7a665b;
+}
+
+.spinning {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Lista de pistas */
+.tracklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fbf7f0;
+  border: 1px solid #ece0d5;
+}
+
+.track-number {
+  font-size: 0.8rem;
+  color: #8c736c;
+  margin-right: 10px;
+}
+
+.track-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.play-track-btn {
+  background: #9c4146;
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.handwriting {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  color: #634b46;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
