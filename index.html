@@ -10,7 +10,8 @@
 <body>
 
   <!-- Audios -->
-  <audio id="bg-audio" loop src="assets/always.mp3"></audio>
+  <!-- Nota: Se llama a Always.mp3 con 'A' mayúscula, tal como está en tu GitHub -->
+  <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
   <audio id="mixtape-audio"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
@@ -45,7 +46,6 @@
         <div class="widget-card yt-widget">
           <span class="tag">YOUTUBE PLAYLIST</span>
           <div class="iframe-container">
-            <!-- Para actualizar tu playlist, cambia el ID en 'list=TU_ID_AQUI' -->
             <iframe 
               id="yt-player"
               src="https://www.youtube-nocookie.com/embed/videoseries?list=PL4o29bINVT4EG_y-k5jGoOu3-Am8Nvi10" 
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <!-- Panel de Letras sincronizadas con Always -->
+        <!-- Panel de Letras sincronizadas -->
         <div class="widget-card lyrics-widget">
           <span class="tag">NOW PLAYING: ALWAYS</span>
           <div class="lyrics-scroll" id="lyrics-container"></div>
@@ -75,7 +75,7 @@
         <!-- Casete -->
         <div class="cassette-body">
           <div class="cassette-label">
-            <span class="label-title">Songs for you</span>
+            <span class="label-title">Mixtape Vol. 1</span>
             <div class="cassette-holes">
               <div class="gear" id="gear-1"></div>
               <div class="gear" id="gear-2"></div>
@@ -83,23 +83,65 @@
           </div>
         </div>
 
-        <!-- Lista de canciones MP3 -->
+        <!-- Lista de canciones MP3 actualizada con tus archivos exactos -->
         <div class="tracklist">
-          <div class="track-row" data-src="assets/perfect.mp3">
+          <div class="track-row" data-src="assets/Aquí-Donde-Te-Extraño.mp3">
             <span class="track-index">01</span>
-            <div class="track-meta">
-              <strong>Perfect</strong>
-              <span>Ed Sheeran</span>
-            </div>
+            <div class="track-meta"><strong>Aquí Donde Te Extraño</strong><span>Track 01</span></div>
             <button class="track-btn">▶</button>
           </div>
 
-          <div class="track-row" data-src="assets/all-of-me.mp3">
+          <div class="track-row" data-src="assets/Como-me-duele-perderte.mp3">
             <span class="track-index">02</span>
-            <div class="track-meta">
-              <strong>All of Me</strong>
-              <span>John Legend</span>
-            </div>
+            <div class="track-meta"><strong>Como me duele perderte</strong><span>Track 02</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/Extraños.mp3">
+            <span class="track-index">03</span>
+            <div class="track-meta"><strong>Extraños</strong><span>Track 03</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/Glimpse-of-Us.mp3">
+            <span class="track-index">04</span>
+            <div class="track-meta"><strong>Glimpse of Us</strong><span>Joji</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/Love-Me-Not.mp3">
+            <span class="track-index">05</span>
+            <div class="track-meta"><strong>Love Me Not</strong><span>Track 05</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/On-Melancholy-Hill.mp3">
+            <span class="track-index">06</span>
+            <div class="track-meta"><strong>On Melancholy Hill</strong><span>Gorillaz</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/Punto-y-Aparte.mp3">
+            <span class="track-index">07</span>
+            <div class="track-meta"><strong>Punto y Aparte</strong><span>Track 07</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/Solo-Faltas-Tú.mp3">
+            <span class="track-index">08</span>
+            <div class="track-meta"><strong>Solo Faltas Tú</strong><span>Track 08</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/Y-solo-se-me-ocurre-amarte.mp3">
+            <span class="track-index">09</span>
+            <div class="track-meta"><strong>Y solo se me ocurre amarte</strong><span>Alejandro Sanz</span></div>
+            <button class="track-btn">▶</button>
+          </div>
+
+          <div class="track-row" data-src="assets/esperando-que-vuelvas.mp3">
+            <span class="track-index">10</span>
+            <div class="track-meta"><strong>Esperando que vuelvas</strong><span>Track 10</span></div>
             <button class="track-btn">▶</button>
           </div>
         </div>
@@ -123,7 +165,6 @@
       <div class="letter-content">
         <h2>Para ti,</h2>
         <p class="handwritten letter-text" id="custom-letter-text">
-          <!-- Aquí irá el mensaje que tú decidas -->
           Escribe aquí todo lo que quieras decirle... Cada palabra, recuerdo o dedicatoria que tengas en mente.
         </p>
       </div>
