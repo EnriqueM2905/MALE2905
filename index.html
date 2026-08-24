@@ -74,7 +74,7 @@
     .local-video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 60%; /* Cuadro más grande y amplio */
+      padding-bottom: 60%;
       border-radius: 20px;
       overflow: hidden;
       border: 2px solid #ebd2d7;
@@ -215,7 +215,7 @@
 </head>
 <body>
 
-  <!-- Audio por si se usa de respaldo -->
+  <!-- Audio de respaldo local -->
   <audio id="mixtape-audio"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
@@ -237,7 +237,10 @@
         <div class="organic-box player-box">
           <h3 class="box-title">♪ Always (Daniel Caesar)</h3>
           <div class="local-video-container">
-            <video id="always-video" src="assets/Always-Lyrics.mp4" controls autoplay loop playsinline></video>
+            <video id="always-video" controls autoplay muted loop playsinline>
+              <source src="assets/Always-Lyrics.mp4" type="video/mp4">
+              Tu navegador no soporta videos HTML5.
+            </video>
           </div>
         </div>
 
@@ -394,7 +397,6 @@
       const src = row.getAttribute("data-src");
       const name = row.getAttribute("data-name");
 
-      // Si suena una canción del casete, pausar el video de Always
       if (alwaysVideo) alwaysVideo.pause();
 
       mixtapeAudio.src = src;
