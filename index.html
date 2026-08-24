@@ -3,272 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para mi male 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <title>Para mi Male 💜💚</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&family=Quicksand:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --purple-main: #673AB7;
+      --purple-dark: #311B92;
+      --purple-light: #D1C4E9;
+      --turquoise-main: #00BCD4;
+      --turquoise-dark: #006064;
+      --turquoise-light: #B2EBF2;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: linear-gradient(135deg, #fce4ec 0%, #f3ece4 50%, #e8d7f1 100%);
+      /* Fondo fusionando Morado y Turquesa pastel */
+      background: linear-gradient(135deg, #e1bee7 0%, #e0f7fa 50%, #d1c4e9 100%);
       font-family: 'Quicksand', sans-serif;
-      color: #4a3b38;
+      color: #333;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
-      overflow-y: auto !important; /* Desbloqueo definitivo de scroll */
+      overflow-y: auto !important;
     }
 
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; }
     .hidden { display: none !important; }
 
-    /* SOBRE ROMÁNTICO */
+    /* SOBRE */
     .envelope {
-      width: 260px; height: 180px; background: #fff8f3;
+      width: 280px; height: 190px; background: #fff;
       border-radius: 20px 30px 25px 35px; display: flex; flex-direction: column;
       justify-content: center; align-items: center; cursor: pointer;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
-      box-shadow: 0 15px 35px rgba(197, 133, 142, 0.25);
-      border: 2px solid #e8c5cb;
+      box-shadow: 0 15px 35px rgba(103, 58, 183, 0.3);
+      border: 3px solid var(--purple-light);
       animation: pulseEnvelope 2s infinite ease-in-out;
     }
-    .envelope:hover { transform: scale(1.08) rotate(1deg); box-shadow: 0 20px 40px rgba(197, 133, 142, 0.4); }
+    .envelope:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 20px 40px rgba(0, 188, 212, 0.4); border-color: var(--turquoise-light); }
     @keyframes pulseEnvelope { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-    .envelope-stamp { font-size: 2.8rem; margin-bottom: 8px; }
-    .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: #a36b74; font-size: 1rem; font-weight: 600; }
+    .envelope-stamp { font-size: 3.5rem; margin-bottom: 8px; }
+    .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: var(--purple-main); font-size: 1.1rem; font-weight: 600; }
 
-    /* DISEÑO PRINCIPAL CÁLIDO Y VIVO */
+    /* DISEÑO PRINCIPAL */
     .dashboard-layout {
       display: grid;
-      grid-template-columns: 1.1fr 1fr; /* Columna de la letra un poco más ancha */
+      grid-template-columns: 1.2fr 1fr;
       gap: 30px;
-      max-width: 1100px;
+      max-width: 1150px;
       width: 100%;
       padding: 20px;
     }
 
     .organic-box {
-      background: rgba(255, 250, 247, 0.94);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
       padding: 30px;
-      border-radius: 45px 20px 55px 25px / 25px 45px 20px 40px;
-      border: 2px solid #e6ccd2;
-      box-shadow: 8px 12px 30px rgba(163, 107, 116, 0.12);
+      border-radius: 35px;
+      border: 2px solid rgba(255,255,255,0.6);
+      box-shadow: 0 10px 30px rgba(103, 58, 183, 0.1);
       transition: all 0.4s ease;
     }
-    .organic-box:hover {
-      border-radius: 25px 45px 20px 40px / 45px 20px 55px 25px;
-    }
+    .organic-box:hover { box-shadow: 0 12px 35px rgba(0, 188, 212, 0.2); transform: translateY(-3px); }
 
     .box-title { 
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; color: #8e4a55; margin-bottom: 20px; text-align: center; font-weight: 600;
+      font-size: 1.4rem; color: var(--purple-dark); margin-bottom: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px;
     }
 
     .left-col { display: flex; flex-direction: column; gap: 25px; }
 
-    /* REPRODUCTOR ALWAYS CON LETRA Y CONTROLES */
-    .player-box { background: linear-gradient(145deg, rgba(255,250,247,0.95), rgba(252, 235, 238, 0.95)); }
+    /* REPRODUCTOR ALWAYS (Caja principal) */
+    .player-box { background: linear-gradient(145deg, #ffffff, #f0f4ff); padding: 25px; }
     
-    .always-header-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
+    .always-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .always-play-btn {
-      background: #9e2a3b; color: white; border: none;
-      width: 44px; height: 44px; border-radius: 50%;
-      font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 4px 10px rgba(158, 42, 59, 0.3);
-      transition: transform 0.2s, background 0.2s;
+      background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none;
+      width: 48px; height: 48px; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 5px 15px rgba(103, 58, 183, 0.4); transition: transform 0.2s;
     }
-    .always-play-btn:hover { background: #822230; transform: scale(1.1); }
+    .always-play-btn:hover { transform: scale(1.1) rotate(5deg); }
 
     .audio-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-    .progress-container { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: #8e4a55; font-weight: 600; }
-    .volume-container { display: flex; align-items: center; gap: 12px; justify-content: center; }
+    .progress-container { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--purple-dark); font-weight: 700; }
+    .volume-container { display: flex; align-items: center; gap: 12px; justify-content: center; color: var(--purple-main); }
 
-    input[type=range] {
-      flex: 1;
-      -webkit-appearance: none;
-      background: #ebd2d7;
-      height: 8px;
-      border-radius: 10px;
-      outline: none;
-    }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px; height: 18px;
-      background: #9e2a3b;
-      border-radius: 50%; cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    }
+    input[type=range] { flex: 1; -webkit-appearance: none; background: var(--purple-light); height: 6px; border-radius: 10px; outline: none; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--turquoise-main); border-radius: 50%; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
 
-    /* LETRAS MÁS GRANDES, COLORIDAS Y ESTÉTICAS */
-    .lyrics-scroll { 
-      height: 250px; /* Caja más alta para que se aprecie mejor */
-      overflow-y: auto; 
-      text-align: center; 
-      padding: 15px; 
+    /* =========================================
+       ESTILO SPOTIFY PARA LAS LETRAS (PERFECTO) 
+       ========================================= */
+    .spotify-lyrics-container {
+      /* Degradado oscuro fusionando el Morado y Turquesa */
+      background: linear-gradient(145deg, #1A0B2E 0%, #00363A 100%);
+      border-radius: 20px;
+      height: 350px;
+      overflow-y: auto;
       position: relative;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 15px;
-      border: 1px dashed #e8c5cb;
+      padding: 0;
+      box-shadow: inset 0 10px 30px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2);
+      /* Ocultar barra de scroll para que se vea más limpio */
+      scrollbar-width: none; 
     }
-    .lyrics-scroll::-webkit-scrollbar { width: 6px; }
-    .lyrics-scroll::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 6px; }
-
-    .lyric-item { 
-      font-family: 'Playfair Display', serif;
-      opacity: 0.35; 
-      transition: all 0.4s ease; 
-      margin-bottom: 22px; 
-      color: #8e6c73;
+    .spotify-lyrics-container::-webkit-scrollbar { display: none; }
+    
+    .lyrics-inner {
+      /* Mucho padding arriba y abajo para que la primera y última frase queden en el centro */
+      padding: 150px 25px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      padding: 10px;
-      border-radius: 12px;
-    }
-    .lyric-en {
-      font-size: 1.25rem; /* Inglés más grande */
-      font-weight: 600;
-    }
-    .lyric-es {
-      font-size: 1rem; /* Español estético */
-      font-style: italic;
-      color: #ba7d87;
+      gap: 25px;
     }
 
-    /* Efecto cuando la línea está sonando */
-    .lyric-item.active { 
-      opacity: 1; 
-      transform: scale(1.08); 
-      background: linear-gradient(135deg, rgba(255,240,243,0.9), rgba(255,255,255,0.95));
-      box-shadow: 0 4px 15px rgba(158, 42, 59, 0.1);
-      border: 1px solid #ebd2d7;
+    .lyric-item {
+      text-align: left;
+      opacity: 0.3;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: left center;
+      cursor: pointer;
     }
-    .lyric-item.active .lyric-en { 
-      color: #9e2a3b; 
-      text-shadow: 0 1px 5px rgba(158, 42, 59, 0.15); 
+    .lyric-item:hover { opacity: 0.6; }
+
+    .lyric-en {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
     }
-    .lyric-item.active .lyric-es { 
-      color: #d64962; 
-      font-weight: 600; 
+    .lyric-es {
+      display: block;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--turquoise-light);
+      margin-top: 4px;
+    }
+
+    /* Estado ACTIVO (La que está sonando) */
+    .lyric-item.active {
+      opacity: 1;
+      transform: scale(1.05);
+      filter: drop-shadow(0 2px 10px rgba(0, 188, 212, 0.4));
+    }
+    .lyric-item.active .lyric-en {
+      color: #ffffff;
+    }
+    .lyric-item.active .lyric-es {
+      color: var(--turquoise-main);
+      font-weight: 700;
     }
 
     /* YOUTUBE PLAYLIST */
-    .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; border: 2px solid #ebd2d7; }
+    .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
     /* CASETE Y PLAYLIST MP3 */
     .mp3-box { display: flex; flex-direction: column; gap: 15px; }
     
     .cassette-card {
-      background: linear-gradient(135deg, #d8b4bc, #b88691);
-      border-radius: 16px;
-      padding: 15px;
-      box-shadow: inset 0 2px 5px rgba(255,255,255,0.4), 0 5px 15px rgba(0,0,0,0.08);
-      border: 2px solid #a3727d;
+      background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main));
+      border-radius: 16px; padding: 15px;
+      box-shadow: inset 0 2px 10px rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.15);
     }
     .cassette-label-inner {
-      background: #fff8f3;
-      padding: 10px 15px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: #fff; padding: 12px 20px; border-radius: 10px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .cassette-title-text { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: bold; color: #6e4e54; }
+    .cassette-title-text { font-size: 0.95rem; font-weight: 800; color: var(--purple-dark); }
     .cassette-wheels { display: flex; gap: 15px; }
-    .gear { width: 22px; height: 22px; border: 3px dashed #6e4e54; border-radius: 50%; }
+    .gear { width: 24px; height: 24px; border: 4px dashed var(--purple-main); border-radius: 50%; }
     .gear.spin { animation: rotateGear 2s linear infinite; }
     @keyframes rotateGear { 100% { transform: rotate(360deg); } }
 
-    .cassette-controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 8px; }
+    .cassette-controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 12px; }
     .control-btn {
-      background: #fff8f3; border: 2px solid #dca3ab; color: #9e2a3b; width: 38px; height: 38px;
+      background: #fff; border: none; color: var(--purple-dark); width: 40px; height: 40px;
       border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center;
-      font-size: 0.9rem; transition: all 0.2s; box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      font-size: 1rem; transition: all 0.2s; box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
-    .control-btn:hover { background: #9e2a3b; color: white; transform: scale(1.08); }
-    .control-btn.main-play { width: 46px; height: 46px; font-size: 1.1rem; background: #9e2a3b; color: white; }
+    .control-btn:hover { background: var(--turquoise-main); color: white; transform: scale(1.1); }
+    .control-btn.main-play { width: 50px; height: 50px; font-size: 1.3rem; color: var(--turquoise-main); }
+    .control-btn.main-play:hover { background: var(--purple-main); color: white; }
 
     /* Lista de canciones */
-    .tracklist { max-height: 260px; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 8px;}
-    .tracklist::-webkit-scrollbar { width: 5px; }
-    .tracklist::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 4px; }
+    .tracklist { max-height: 350px; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 10px;}
+    .tracklist::-webkit-scrollbar { width: 6px; }
+    .tracklist::-webkit-scrollbar-thumb { background: var(--purple-light); border-radius: 6px; }
 
     .track-row { 
-      display: flex; align-items: center; padding: 10px 14px; 
-      background: #fffcf9; border-radius: 25px 10px 25px 10px; 
-      border: 1px solid #ebd2d7; transition: all 0.2s;
+      display: flex; align-items: center; padding: 12px 15px; 
+      background: #fff; border-radius: 15px; 
+      transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    .track-row:hover { background: #fdf2f4; transform: translateX(3px); }
-    .track-index { margin-right: 12px; color: #b88691; font-weight: bold; font-size: 0.85rem; }
-    .track-meta { flex: 1; font-size: 0.9rem; font-weight: 600; color: #5c453e; }
+    .track-row:hover { transform: translateX(5px); border-left: 4px solid var(--turquoise-main); }
+    .track-index { margin-right: 15px; color: var(--turquoise-main); font-weight: 800; font-size: 0.9rem; }
+    .track-meta { flex: 1; font-size: 0.95rem; font-weight: 700; color: #444; }
     .track-btn { 
-      background: #9e2a3b; color: white; border: none; width: 32px; height: 32px; 
-      border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 3px 8px rgba(158, 42, 59, 0.3); transition: transform 0.2s;
+      background: var(--purple-main); color: white; border: none; width: 34px; height: 34px; 
+      border-radius: 50%; cursor: pointer; transition: transform 0.2s;
     }
-    .track-btn:hover { transform: scale(1.1); }
+    .track-btn:hover { background: var(--turquoise-main); transform: scale(1.1); }
 
     /* FILA INFERIOR */
     .bottom-row { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; align-items: center; }
 
     .organic-btn {
-      background: linear-gradient(135deg, #9e2a3b, #ba3c4e); color: white; font-family: 'Playfair Display', serif; font-size: 1.25rem;
-      padding: 16px 45px; cursor: pointer; border: none; border-radius: 35px 15px 35px 15px / 15px 35px 15px 35px;
-      box-shadow: 0 8px 20px rgba(158, 42, 59, 0.35); transition: all 0.3s ease;
+      background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.3rem;
+      padding: 18px 50px; cursor: pointer; border: none; border-radius: 40px;
+      box-shadow: 0 10px 25px rgba(103, 58, 183, 0.4); transition: all 0.3s ease; letter-spacing: 1px;
     }
-    .organic-btn:hover { background: linear-gradient(135deg, #822230, #9e2a3b); transform: translateY(-3px) scale(1.02); }
+    .organic-btn:hover { box-shadow: 0 12px 30px rgba(0, 188, 212, 0.5); transform: translateY(-4px) scale(1.02); }
 
     /* MINIJUEGO */
     .minigame-box { width: 100%; max-width: 550px; text-align: center; }
-    .level-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; }
+    .level-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
     .level-btn {
-      background: #fff8f3; border: 2px solid #dca3ab; color: #8e4a55;
-      padding: 5px 15px; border-radius: 15px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s;
+      background: #fff; border: 2px solid var(--purple-light); color: var(--purple-main);
+      padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.2s;
     }
-    .level-btn.active, .level-btn:hover { background: #9e2a3b; color: white; border-color: #9e2a3b; }
+    .level-btn.active, .level-btn:hover { background: var(--turquoise-main); color: white; border-color: var(--turquoise-main); }
 
-    .memory-board { display: grid; gap: 10px; margin-top: 10px; justify-content: center; }
+    .memory-board { display: grid; gap: 12px; margin-top: 10px; justify-content: center; }
     .memory-card {
-      background: #ebd2d7; height: 60px; width: 60px; border-radius: 15px 8px 15px 8px;
-      display: flex; justify-content: center; align-items: center; font-size: 1.6rem; cursor: pointer; transition: transform 0.3s, background 0.3s;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      background: linear-gradient(135deg, var(--purple-light), #fff); height: 65px; width: 65px; border-radius: 12px;
+      display: flex; justify-content: center; align-items: center; font-size: 1.8rem; cursor: pointer; transition: transform 0.4s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #fff;
     }
-    .memory-card.flipped { background: #fff8f3; transform: rotateY(180deg); border: 2px solid #9e2a3b; }
+    .memory-card.flipped { background: #fff; transform: rotateY(180deg); border-color: var(--turquoise-main); }
     
     .game-msg { 
-      margin-top: 15px; color: #9e2a3b; font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.15rem; background: #fce4ec; padding: 10px; border-radius: 15px;
-      border: 1px dashed #dca3ab; animation: bounceMsg 0.5s ease;
+      margin-top: 15px; color: var(--purple-dark); font-weight: 800; font-size: 1.2rem; background: var(--turquoise-light); padding: 12px; border-radius: 15px;
+      animation: bounceMsg 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes bounceMsg { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes bounceMsg { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
     /* MODAL CARTA */
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(50, 30, 35, 0.5); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; }
-    .letter-paper { width: 90%; max-width: 500px; position: relative; background: #fffcf9; }
-    .handwritten { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #5c453e; margin-top: 15px; line-height: 1.4; }
-    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.6rem; background: none; border: none; cursor: pointer; color: #8e4a55; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 11, 46, 0.6); backdrop-filter: blur(8px); z-index: 100; display: flex; justify-content: center; align-items: center; }
+    .letter-paper { width: 90%; max-width: 500px; position: relative; background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+    .handwritten { font-family: 'Caveat', cursive; font-size: 1.8rem; color: #333; margin-top: 20px; line-height: 1.5; }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--purple-main); transition: 0.2s; }
+    .close-btn:hover { color: var(--turquoise-main); transform: scale(1.1); }
 
     @media (max-width: 768px) { .dashboard-layout { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-  <!-- Audios principales -->
   <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
   <audio id="mixtape-audio"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
   <div id="envelope-screen" class="screen">
     <div class="envelope" id="envelope-btn">
-      <div class="envelope-stamp">🌸</div>
-      <p class="tap-text">Tap to open, Male 💌</p>
+      <div class="envelope-stamp">💜</div>
+      <p class="tap-text">Tap to open, Male</p>
     </div>
   </div>
 
@@ -279,11 +272,11 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="left-col">
         
-        <!-- 1. Reproductor ALWAYS con Letra y Control Play/Pausa -->
+        <!-- REPRODUCTOR ALWAYS -->
         <div class="organic-box player-box">
           <div class="always-header-flex">
-            <h3 class="box-title" style="margin: 0;">♪ Now Playing: Always</h3>
-            <button class="always-play-btn" id="always-toggle-btn" title="Reproducir / Pausar Always">
+            <h3 class="box-title">♪ Now Playing: Always</h3>
+            <button class="always-play-btn" id="always-toggle-btn">
               <span id="always-btn-icon">❚❚</span>
             </button>
           </div>
@@ -300,11 +293,14 @@
             </div>
           </div>
 
-          <!-- Letra Sincronizada -->
-          <div class="lyrics-scroll" id="lyrics-container"></div>
+          <!-- CAJA DE LETRAS ESTILO SPOTIFY -->
+          <div class="spotify-lyrics-container" id="lyrics-container">
+            <div class="lyrics-inner" id="lyrics-inner">
+              <!-- Las letras se insertan aquí vía JS -->
+            </div>
+          </div>
         </div>
 
-        <!-- 2. Playlist YouTube -->
         <div class="organic-box yt-box">
           <h3 class="box-title">✨ Nuestra Playlist YouTube</h3>
           <div class="iframe-container">
@@ -317,9 +313,8 @@
       <!-- COLUMNA DERECHA -->
       <div class="right-col">
         
-        <!-- 3. Playlist MP3 con Casete interactivo -->
         <div class="organic-box mp3-box">
-          <h3 class="box-title">💖 Nuestra Playlist de Recuerdos</h3>
+          <h3 class="box-title">🎧 Nuestra Playlist de Recuerdos</h3>
           
           <div class="cassette-card">
             <div class="cassette-label-inner">
@@ -330,14 +325,13 @@
               </div>
             </div>
             <div class="cassette-controls">
-              <button class="control-btn" id="prev-btn" title="Anterior">⏮</button>
-              <button class="control-btn main-play" id="main-play-btn" title="Play / Pausa">▶</button>
-              <button class="control-btn" id="next-btn" title="Siguiente">⏭</button>
+              <button class="control-btn" id="prev-btn">⏮</button>
+              <button class="control-btn main-play" id="main-play-btn">▶</button>
+              <button class="control-btn" id="next-btn">⏭</button>
             </div>
           </div>
 
           <div class="tracklist">
-            <!-- Pistas mp3 -->
             <div class="track-row" data-src="assets/Aqui-Donde-Te-Extrano.mp3" data-name="Aquí Donde Te Extraño">
               <span class="track-index">01</span><div class="track-meta">Aquí Donde Te Extraño</div><button class="track-btn">▶</button>
             </div>
@@ -375,9 +369,9 @@
 
       <!-- FILA INFERIOR -->
       <div class="bottom-row">
-        <button class="organic-btn letter-trigger" id="open-letter-btn">Carta para mi male 💌</button>
+        <button class="organic-btn letter-trigger" id="open-letter-btn">Una carta para Male 💌</button>
         <div class="organic-box minigame-box">
-          <h3 class="box-title">🌸 Minijuego de Memoria para Male 🌸</h3>
+          <h3 class="box-title">🧩 Minijuego de Memoria</h3>
           <div class="level-selector">
             <button class="level-btn active" onclick="setDifficulty('easy')">Fácil (4 pares)</button>
             <button class="level-btn" onclick="setDifficulty('medium')">Medio (6 pares)</button>
@@ -391,60 +385,72 @@
     </div>
   </div>
 
-  <!-- MODAL: La Carta Secreta -->
+  <!-- MODAL CARTA -->
   <div id="letter-modal" class="modal-backdrop hidden">
-    <div class="organic-box letter-paper">
+    <div class="letter-paper">
       <button class="close-btn" id="close-letter-btn">&times;</button>
-      <h2 style="font-family: 'Playfair Display', serif; color: #9e2a3b;">Para mi amada Male,</h2>
+      <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark);">Para ti,</h2>
       <p class="handwritten">
-        Aquí escribiremos todo lo que brote del corazón... Guarda este rinconcito creado especialmente para ti. 🌸✨
+        Escribe aquí lo que quieras decirle...
       </p>
     </div>
   </div>
 
   <script>
-    // --- LETRA EXACTA DE MUSIXMATCH (CON INTRO Y TRADUCCIÓN) ---
+    // ==========================================
+    // LETRA EXACTA - DANIEL CAESAR (ALWAYS)
+    // ==========================================
+    // NOTA: Ajusté los tiempos basándome en la versión de estudio.
+    // Si tu MP3 empieza un poco antes o después, solo suma o resta segundos a los números de la "t".
     const lyrics = [
-      { t: 0, en: "(Instrumental Intro)", es: "(Música de entrada)" },
+      { t: 0, en: "(Intro musical)", es: "..." },
       { t: 15, en: "Baby, baby", es: "Bebé, bebé" },
       { t: 18, en: "There will always be a space for you and me", es: "Siempre habrá un espacio para ti y para mí" },
       { t: 26, en: "Right where you left it", es: "Justo donde lo dejaste" },
       { t: 29, en: "And just maybe", es: "Y tal vez" },
       { t: 32, en: "Enough time will pass", es: "Pasará suficiente tiempo" },
       { t: 35, en: "We'll look back and laugh", es: "Miraremos atrás y reiremos" },
-      { t: 39, en: "Just don't forget it", es: "Solo no lo olvides" },
-      { t: 44, en: "And maybe I'm wrong", es: "Y tal vez me equivoco" },
+      { t: 38, en: "Just don't forget it", es: "Solo no lo olvides" },
+      { t: 44, en: "And maybe I'm wrong", es: "Y tal vez me equivoque" },
       { t: 47, en: "For writing this song", es: "Por escribir esta canción" },
       { t: 51, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
       { t: 58, en: "And I'll be here", es: "Y estaré aquí" },
       { t: 62, en: "'Cause we both know how it goes", es: "Porque ambos sabemos cómo va esto" },
-      { t: 68, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
+      { t: 67, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
       { t: 73, en: "I pray they stay the same, always", es: "Ruego que se queden igual, siempre" },
       { t: 81, en: "And I don't care", es: "Y no me importa" },
       { t: 85, en: "If you're with somebody else", es: "Si estás con alguien más" },
       { t: 88, en: "I'll give you time and space", es: "Te daré tiempo y espacio" },
-      { t: 93, en: "Just know I'm not afraid", es: "Solo quiero que sepas que no tengo miedo" },
+      { t: 93, en: "Just know I'm not afraid", es: "Solo debes saber que no tengo miedo" },
       { t: 98, en: "Always", es: "Siempre" },
-      { t: 113, en: "I know how it feels to be alone", es: "Sé lo que se siente estar solo" },
+      { t: 112, en: "I know how it feels to be alone", es: "Sé lo que se siente estar solo" },
       { t: 124, en: "And I know how it feels to have a home", es: "Y sé lo que se siente tener un hogar" },
-      { t: 134, en: "You're my home, always", es: "Tú eres mi hogar, siempre" }
+      { t: 133, en: "You're my home, always", es: "Tú eres mi hogar, siempre" }
     ];
 
     const bgAudio = document.getElementById("bg-audio");
     const mixtapeAudio = document.getElementById("mixtape-audio");
+    const lyricsInner = document.getElementById("lyrics-inner");
     const lyricsContainer = document.getElementById("lyrics-container");
     const seekBar = document.getElementById("seek-bar");
     const volumeBar = document.getElementById("volume-bar");
     const currentTimeEl = document.getElementById("current-time");
     const durationEl = document.getElementById("duration");
 
-    if (lyricsContainer) {
+    // Llenar HTML de las letras
+    if (lyricsInner) {
       lyrics.forEach((line, i) => {
         const div = document.createElement("div");
         div.className = "lyric-item";
         div.id = `lyric-${i}`;
         div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
-        lyricsContainer.appendChild(div);
+        
+        // Al hacer click en una frase, saltar a ese segundo
+        div.addEventListener("click", () => {
+          if(bgAudio) bgAudio.currentTime = line.t;
+        });
+
+        lyricsInner.appendChild(div);
       });
     }
 
@@ -462,7 +468,7 @@
       });
     }
 
-    // --- CONTROLES ALWAYS Y SCROLL PERFECTO ---
+    // --- CONTROLES Y SCROLL DE SPOTIFY EXACTO ---
     function formatTime(seconds) {
       if (isNaN(seconds)) return "0:00";
       const min = Math.floor(seconds / 60);
@@ -481,24 +487,28 @@
         if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
 
         const current = bgAudio.currentTime;
-        lyrics.forEach((item, i) => {
-          const next = lyrics[i + 1];
-          const el = document.getElementById(`lyric-${i}`);
-          if (el) {
-            // Verifica si el tiempo actual está entre esta frase y la siguiente
-            if (current >= item.t && (!next || current < next.t)) {
-              if (!el.classList.contains("active")) {
-                document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
-                el.classList.add("active");
-                
-                // Cálculo de scroll interno (no traba la rueda del mouse)
-                const container = document.getElementById("lyrics-container");
-                const targetScroll = el.offsetTop - container.offsetTop - (container.clientHeight / 2) + (el.clientHeight / 2);
-                container.scrollTo({ top: targetScroll, behavior: 'smooth' });
-              }
-            }
+        
+        // Buscar la línea actual basada en el tiempo
+        let activeIndex = -1;
+        for (let i = 0; i < lyrics.length; i++) {
+          if (current >= lyrics[i].t && (!lyrics[i + 1] || current < lyrics[i + 1].t)) {
+            activeIndex = i;
+            break;
           }
-        });
+        }
+
+        if (activeIndex !== -1) {
+          const el = document.getElementById(`lyric-${activeIndex}`);
+          if (el && !el.classList.contains("active")) {
+            // Quitar clase active a todas
+            document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
+            el.classList.add("active");
+            
+            // Lógica de Scroll exacto (Centrar la línea actual en la caja)
+            const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2);
+            lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
+          }
+        }
       });
 
       if (seekBar) {
@@ -609,7 +619,7 @@
 
     // --- MINIJUEGO CON NIVELES ---
     let currentPairs = 4;
-    const allEmojis = ["🌸", "💌", "💖", "🎶", "✨", "🌷", "🦋", "🧸"];
+    const allEmojis = ["💜", "💚", "✨", "🎵", "🌸", "🦋", "🌷", "🧸"];
 
     function setDifficulty(level) {
       document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
@@ -630,7 +640,7 @@
       let gameDeck = [...selectedEmojis, ...selectedEmojis];
       gameDeck.sort(() => 0.5 - Math.random());
 
-      board.style.gridTemplateColumns = `repeat(${currentPairs === 4 ? 4 : 4}, 60px)`;
+      board.style.gridTemplateColumns = `repeat(${currentPairs === 4 ? 4 : 4}, 65px)`;
 
       let flippedCards = [];
       let matchedCount = 0;
