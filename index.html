@@ -17,7 +17,7 @@
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
-      overflow-y: auto !important;
+      overflow-y: auto !important; /* Desbloqueo definitivo de scroll */
     }
 
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; }
@@ -38,12 +38,12 @@
     .envelope-stamp { font-size: 2.8rem; margin-bottom: 8px; }
     .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: #a36b74; font-size: 1rem; font-weight: 600; }
 
-    /* DISEÑO PRINCIPAL */
+    /* DISEÑO PRINCIPAL CÁLIDO Y VIVO */
     .dashboard-layout {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
+      grid-template-columns: 1.1fr 1fr; /* Columna de la letra un poco más ancha */
       gap: 30px;
-      max-width: 1050px;
+      max-width: 1100px;
       width: 100%;
       padding: 20px;
     }
@@ -51,7 +51,7 @@
     .organic-box {
       background: rgba(255, 250, 247, 0.94);
       backdrop-filter: blur(8px);
-      padding: 25px;
+      padding: 30px;
       border-radius: 45px 20px 55px 25px / 25px 45px 20px 40px;
       border: 2px solid #e6ccd2;
       box-shadow: 8px 12px 30px rgba(163, 107, 116, 0.12);
@@ -63,89 +63,100 @@
 
     .box-title { 
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem; color: #8e4a55; margin-bottom: 15px; text-align: center; font-weight: 600;
+      font-size: 1.4rem; color: #8e4a55; margin-bottom: 20px; text-align: center; font-weight: 600;
     }
 
     .left-col { display: flex; flex-direction: column; gap: 25px; }
 
-    /* REPRODUCTOR ALWAYS */
+    /* REPRODUCTOR ALWAYS CON LETRA Y CONTROLES */
     .player-box { background: linear-gradient(145deg, rgba(255,250,247,0.95), rgba(252, 235, 238, 0.95)); }
     
     .always-header-flex {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
     }
     .always-play-btn {
       background: #9e2a3b; color: white; border: none;
-      width: 38px; height: 38px; border-radius: 50%;
-      font-size: 0.95rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+      width: 44px; height: 44px; border-radius: 50%;
+      font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
       box-shadow: 0 4px 10px rgba(158, 42, 59, 0.3);
       transition: transform 0.2s, background 0.2s;
     }
     .always-play-btn:hover { background: #822230; transform: scale(1.1); }
 
-    .audio-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-    .progress-container { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: #8e4a55; font-weight: 600; }
+    .audio-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .progress-container { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: #8e4a55; font-weight: 600; }
     .volume-container { display: flex; align-items: center; gap: 12px; justify-content: center; }
 
     input[type=range] {
       flex: 1;
       -webkit-appearance: none;
       background: #ebd2d7;
-      height: 7px;
+      height: 8px;
       border-radius: 10px;
       outline: none;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 16px; height: 16px;
-      background: #a34851;
+      width: 18px; height: 18px;
+      background: #9e2a3b;
       border-radius: 50%; cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
 
-    /* LETRAS ESTÉTICAS SINCRONIZADAS CON TRADUCCIÓN */
+    /* LETRAS MÁS GRANDES, COLORIDAS Y ESTÉTICAS */
     .lyrics-scroll { 
-      height: 160px; /* Un poco más alto para las traducciones */
+      height: 250px; /* Caja más alta para que se aprecie mejor */
       overflow-y: auto; 
       text-align: center; 
-      padding-right: 5px; 
+      padding: 15px; 
       position: relative;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      border: 1px dashed #e8c5cb;
     }
-    .lyrics-scroll::-webkit-scrollbar { width: 4px; }
-    .lyrics-scroll::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 4px; }
+    .lyrics-scroll::-webkit-scrollbar { width: 6px; }
+    .lyrics-scroll::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 6px; }
 
     .lyric-item { 
       font-family: 'Playfair Display', serif;
       opacity: 0.35; 
       transition: all 0.4s ease; 
-      margin-bottom: 14px; 
-      color: #6e4e54;
+      margin-bottom: 22px; 
+      color: #8e6c73;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
+      padding: 10px;
+      border-radius: 12px;
     }
     .lyric-en {
-      font-size: 1rem;
+      font-size: 1.25rem; /* Inglés más grande */
       font-weight: 600;
     }
     .lyric-es {
-      font-size: 0.8rem;
+      font-size: 1rem; /* Español estético */
       font-style: italic;
-      color: #a36b74;
+      color: #ba7d87;
     }
+
+    /* Efecto cuando la línea está sonando */
     .lyric-item.active { 
       opacity: 1; 
-      transform: scale(1.05); 
+      transform: scale(1.08); 
+      background: linear-gradient(135deg, rgba(255,240,243,0.9), rgba(255,255,255,0.95));
+      box-shadow: 0 4px 15px rgba(158, 42, 59, 0.1);
+      border: 1px solid #ebd2d7;
     }
-    .lyric-item.active .lyric-en {
+    .lyric-item.active .lyric-en { 
       color: #9e2a3b; 
-      text-shadow: 0 2px 8px rgba(158, 42, 59, 0.15);
+      text-shadow: 0 1px 5px rgba(158, 42, 59, 0.15); 
     }
-    .lyric-item.active .lyric-es {
-      color: #ba3c4e;
+    .lyric-item.active .lyric-es { 
+      color: #d64962; 
+      font-weight: 600; 
     }
 
     /* YOUTUBE PLAYLIST */
@@ -276,7 +287,6 @@
               <span id="always-btn-icon">❚❚</span>
             </button>
           </div>
-          <br>
 
           <div class="audio-controls">
             <div class="progress-container">
@@ -327,7 +337,7 @@
           </div>
 
           <div class="tracklist">
-            <!-- Pistas mp3... -->
+            <!-- Pistas mp3 -->
             <div class="track-row" data-src="assets/Aqui-Donde-Te-Extrano.mp3" data-name="Aquí Donde Te Extraño">
               <span class="track-index">01</span><div class="track-meta">Aquí Donde Te Extraño</div><button class="track-btn">▶</button>
             </div>
@@ -393,14 +403,31 @@
   </div>
 
   <script>
-    // --- LETRA REAL CON ESPAÑOL DE ALWAYS ---
-    // (Ajusta la "t" a los segundos exactos de tu MP3)
+    // --- LETRA EXACTA DE MUSIXMATCH (CON INTRO Y TRADUCCIÓN) ---
     const lyrics = [
-      { t: 0, en: "And I'll be here", es: "Y estaré aquí" },
-      { t: 4, en: "'Cause we both know how it goes", es: "Porque ambos sabemos cómo va esto" },
-      { t: 9, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
-      { t: 14, en: "I pray they stay the same, always", es: "Ruego que se queden igual, siempre" },
-      // Puedes añadir el resto de la letra buscando la oficial y copiando este mismo formato de líneas
+      { t: 0, en: "(Instrumental Intro)", es: "(Música de entrada)" },
+      { t: 15, en: "Baby, baby", es: "Bebé, bebé" },
+      { t: 18, en: "There will always be a space for you and me", es: "Siempre habrá un espacio para ti y para mí" },
+      { t: 26, en: "Right where you left it", es: "Justo donde lo dejaste" },
+      { t: 29, en: "And just maybe", es: "Y tal vez" },
+      { t: 32, en: "Enough time will pass", es: "Pasará suficiente tiempo" },
+      { t: 35, en: "We'll look back and laugh", es: "Miraremos atrás y reiremos" },
+      { t: 39, en: "Just don't forget it", es: "Solo no lo olvides" },
+      { t: 44, en: "And maybe I'm wrong", es: "Y tal vez me equivoco" },
+      { t: 47, en: "For writing this song", es: "Por escribir esta canción" },
+      { t: 51, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
+      { t: 58, en: "And I'll be here", es: "Y estaré aquí" },
+      { t: 62, en: "'Cause we both know how it goes", es: "Porque ambos sabemos cómo va esto" },
+      { t: 68, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
+      { t: 73, en: "I pray they stay the same, always", es: "Ruego que se queden igual, siempre" },
+      { t: 81, en: "And I don't care", es: "Y no me importa" },
+      { t: 85, en: "If you're with somebody else", es: "Si estás con alguien más" },
+      { t: 88, en: "I'll give you time and space", es: "Te daré tiempo y espacio" },
+      { t: 93, en: "Just know I'm not afraid", es: "Solo quiero que sepas que no tengo miedo" },
+      { t: 98, en: "Always", es: "Siempre" },
+      { t: 113, en: "I know how it feels to be alone", es: "Sé lo que se siente estar solo" },
+      { t: 124, en: "And I know how it feels to have a home", es: "Y sé lo que se siente tener un hogar" },
+      { t: 134, en: "You're my home, always", es: "Tú eres mi hogar, siempre" }
     ];
 
     const bgAudio = document.getElementById("bg-audio");
@@ -458,14 +485,13 @@
           const next = lyrics[i + 1];
           const el = document.getElementById(`lyric-${i}`);
           if (el) {
+            // Verifica si el tiempo actual está entre esta frase y la siguiente
             if (current >= item.t && (!next || current < next.t)) {
-              // Verifica si ya está activa para no hacer scroll constantemente
               if (!el.classList.contains("active")) {
-                // Remueve la clase active de todas
                 document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
                 el.classList.add("active");
                 
-                // Scroll interno matemático que no bloquea la página
+                // Cálculo de scroll interno (no traba la rueda del mouse)
                 const container = document.getElementById("lyrics-container");
                 const targetScroll = el.offsetTop - container.offsetTop - (container.clientHeight / 2) + (el.clientHeight / 2);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
