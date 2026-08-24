@@ -48,17 +48,16 @@
     }
 
     .organic-box {
-      background: rgba(255, 250, 247, 0.92);
+      background: rgba(255, 250, 247, 0.94);
       backdrop-filter: blur(8px);
       padding: 25px;
       border-radius: 45px 20px 55px 25px / 25px 45px 20px 40px;
       border: 2px solid #e6ccd2;
-      box-shadow: 8px 12px 30px rgba(163, 107, 116, 0.1);
+      box-shadow: 8px 12px 30px rgba(163, 107, 116, 0.12);
       transition: all 0.4s ease;
     }
     .organic-box:hover {
       border-radius: 25px 45px 20px 40px / 45px 20px 55px 25px;
-      box-shadow: 10px 15px 35px rgba(163, 107, 116, 0.18);
     }
 
     .box-title { 
@@ -90,9 +89,24 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* LETRAS ESTÉTICAS PARA ELLA */
+    /* BOTONES DE ALWAYS */
+    .always-btn-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .always-play-btn {
+      background: #9e2a3b; color: white; border: none;
+      padding: 8px 22px; border-radius: 20px; font-family: 'Quicksand', sans-serif;
+      font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 12px rgba(158, 42, 59, 0.3);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .always-play-btn:hover { background: #822230; transform: scale(1.05); }
+
+    /* LETRAS ESTÉTICAS */
     .lyrics-scroll { 
-      height: 140px; 
+      height: 130px; 
       overflow-y: auto; 
       text-align: center; 
       padding-right: 5px; 
@@ -125,7 +139,6 @@
     /* CASETE Y PLAYLIST MP3 */
     .mp3-box { display: flex; flex-direction: column; gap: 15px; }
     
-    /* Ilustración del Casete estético */
     .cassette-card {
       background: linear-gradient(135deg, #d8b4bc, #b88691);
       border-radius: 16px;
@@ -151,13 +164,12 @@
     .gear.spin { animation: rotateGear 2s linear infinite; }
     @keyframes rotateGear { 100% { transform: rotate(360deg); } }
 
-    /* Botonera del Casete (Play/Pausa, Siguiente, Anterior) */
     .cassette-controls {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 15px;
-      margin-top: 5px;
+      margin-top: 8px;
     }
     .control-btn {
       background: #fff8f3;
@@ -175,7 +187,7 @@
     .control-btn.main-play { width: 46px; height: 46px; font-size: 1.1rem; background: #9e2a3b; color: white; }
 
     /* Lista de canciones */
-    .tracklist { max-height: 280px; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 8px;}
+    .tracklist { max-height: 260px; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 8px;}
     .tracklist::-webkit-scrollbar { width: 5px; }
     .tracklist::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 4px; }
 
@@ -264,10 +276,16 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="left-col">
         
-        <!-- 1. Reproductor ALWAYS con letra real y controles -->
+        <!-- 1. Reproductor ALWAYS con Letra Real y Botones Play/Pausa -->
         <div class="organic-box player-box">
           <h3 class="box-title">♪ Now Playing: Always</h3>
           
+          <div class="always-btn-container">
+            <button class="always-play-btn" id="always-toggle-btn">
+              <span id="always-btn-icon">❚❚</span> <span id="always-btn-text">Pausar Always</span>
+            </button>
+          </div>
+
           <div class="audio-controls">
             <div class="progress-container">
               <span id="current-time">0:00</span>
@@ -280,7 +298,7 @@
             </div>
           </div>
 
-          <!-- Letra Sincronizada Real -->
+          <!-- Letra Sincronizada Real de Always -->
           <div class="lyrics-scroll" id="lyrics-container"></div>
         </div>
 
@@ -301,7 +319,6 @@
         <div class="organic-box mp3-box">
           <h3 class="box-title">💖 Nuestra Playlist de Recuerdos</h3>
           
-          <!-- Casete Visual con Controles -->
           <div class="cassette-card">
             <div class="cassette-label-inner">
               <span class="cassette-title-text" id="now-playing-title">Selecciona una canción 👇</span>
@@ -317,7 +334,6 @@
             </div>
           </div>
 
-          <!-- Lista de canciones corregidas sin tildes ni espacios raros -->
           <div class="tracklist">
             <div class="track-row" data-src="assets/Aqui-Donde-Te-Extrano.mp3" data-name="Aquí Donde Te Extraño">
               <span class="track-index">01</span>
@@ -380,7 +396,6 @@
           Carta para mi male 💌
         </button>
 
-        <!-- Minijuego con Niveles -->
         <div class="organic-box minigame-box">
           <h3 class="box-title">🌸 Minijuego de Memoria para Male 🌸</h3>
           <div class="level-selector">
@@ -408,19 +423,20 @@
   </div>
 
   <script>
-    // --- 1. Letra Real Completa Sincronizada de Always (Daniel Caesar) ---
+    // --- LETRA REAL DE ALWAYS (Daniel Caesar) ---
     const lyrics = [
-      { t: 0, text: "And I'll be here..." },
-      { t: 4, text: "'Cause we both know how it goes" },
-      { t: 9, text: "I don't want things to change" },
-      { t: 14, text: "I pray they stay the same, always" },
-      { t: 22, text: "And I don't care if you're with somebody else" },
-      { t: 28, text: "I'll give you time and space" },
-      { t: 33, text: "Just know I'm not afraid, always" },
-      { t: 42, text: "Ooh-ooh, always..." },
-      { t: 55, text: "I know how it feels to be alone" },
-      { t: 65, text: "And I know how it feels to have a home" },
-      { t: 75, text: "You're my home, always." }
+      { t: 0, text: "Baby, baby..." },
+      { t: 5, text: "There will always be a space for you and me" },
+      { t: 12, text: "Right where you left it" },
+      { t: 17, text: "And just maybe, enough time will pass" },
+      { t: 24, text: "We'll look back and laugh, just don't forget it" },
+      { t: 32, text: "And maybe I'm wrong for writing this song" },
+      { t: 39, text: "Losing my head over you" },
+      { t: 46, text: "And I'll be here, 'cause we both know how it goes" },
+      { t: 54, text: "I don't want things to change, I pray they stay the same, always" },
+      { t: 64, text: "And I don't care if you're with somebody else" },
+      { t: 71, text: "I'll give you time and space, just know I'm not afraid" },
+      { t: 79, text: "Always..." }
     ];
 
     const bgAudio = document.getElementById("bg-audio");
@@ -480,7 +496,11 @@
           if (el) {
             if (current >= item.t && (!next || current < next.t)) {
               el.classList.add("active");
-              el.scrollIntoView({ behavior: "smooth", block: "center" });
+              // Solo scrollear internamente sin bloquear la rueda del mouse de la página
+              el.parentElement.scrollTo({
+                top: el.offsetTop - el.parentElement.clientHeight / 2 + el.clientHeight / 2,
+                behavior: 'smooth'
+              });
             } else {
               el.classList.remove("active");
             }
@@ -497,6 +517,30 @@
       volumeBar.addEventListener("input", () => { 
         bgAudio.volume = volumeBar.value; 
         mixtapeAudio.volume = volumeBar.value; 
+      });
+    }
+
+    // Botón Play/Pausa de Always
+    const alwaysToggleBtn = document.getElementById("always-toggle-btn");
+    const alwaysBtnIcon = document.getElementById("always-btn-icon");
+    const alwaysBtnText = document.getElementById("always-btn-text");
+
+    if (alwaysToggleBtn && bgAudio) {
+      alwaysToggleBtn.addEventListener("click", () => {
+        if (bgAudio.paused) {
+          mixtapeAudio.pause(); // Pausar casete si suena
+          document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+          document.getElementById("main-play-btn").textContent = "▶";
+          document.querySelectorAll(".gear").forEach(g => g.classList.remove("spin"));
+          
+          bgAudio.play();
+          alwaysBtnIcon.textContent = "❚❚";
+          alwaysBtnText.textContent = "Pausar Always";
+        } else {
+          bgAudio.pause();
+          alwaysBtnIcon.textContent = "▶";
+          alwaysBtnText.textContent = "Reproducir Always";
+        }
       });
     }
 
@@ -517,7 +561,13 @@
       const src = row.getAttribute("data-src");
       const name = row.getAttribute("data-name");
 
-      if (bgAudio) bgAudio.pause();
+      if (bgAudio) {
+        bgAudio.pause();
+        if (alwaysBtnIcon && alwaysBtnText) {
+          alwaysBtnIcon.textContent = "▶";
+          alwaysBtnText.textContent = "Reproducir Always";
+        }
+      }
 
       mixtapeAudio.src = src;
       mixtapeAudio.play().then(() => {
@@ -525,7 +575,7 @@
         mainPlayBtn.innerText = "❚❚";
         gears.forEach(g => g.classList.add("spin"));
       }).catch(err => {
-        alert("No se pudo reproducir '" + name + "'. Revisa que el archivo exista en la carpeta assets.");
+        alert("No se pudo reproducir '" + name + "'. Verifica que el archivo exista en la carpeta assets y que la extensión sea correcta (.mp3).");
       });
     }
 
@@ -536,7 +586,13 @@
           mixtapeAudio.pause();
           mainPlayBtn.innerText = "▶";
           gears.forEach(g => g.classList.remove("spin"));
-          if (bgAudio) bgAudio.play();
+          if (bgAudio) {
+            bgAudio.play();
+            if (alwaysBtnIcon && alwaysBtnText) {
+              alwaysBtnIcon.textContent = "❚❚";
+              alwaysBtnText.textContent = "Pausar Always";
+            }
+          }
         } else {
           playTrack(idx);
         }
@@ -551,7 +607,13 @@
         mixtapeAudio.pause();
         mainPlayBtn.innerText = "▶";
         gears.forEach(g => g.classList.remove("spin"));
-        if (bgAudio) bgAudio.play();
+        if (bgAudio) {
+          bgAudio.play();
+          if (alwaysBtnIcon && alwaysBtnText) {
+            alwaysBtnIcon.textContent = "❚❚";
+            alwaysBtnText.textContent = "Pausar Always";
+          }
+        }
       }
     });
 
@@ -636,7 +698,6 @@
       });
     }
 
-    // Iniciar juego por defecto en fácil
     initGame();
   </script>
 </body>
