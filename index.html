@@ -17,9 +17,10 @@
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
+      overflow-y: auto !important; /* Habilita el scroll de la página de forma permanente */
     }
 
-    .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px 0; }
+    .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; }
     .hidden { display: none !important; }
 
     /* SOBRE ROMÁNTICO */
@@ -89,28 +90,28 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* BOTONES DE ALWAYS */
-    .always-btn-container {
+    /* BOTONES DE ALWAYS INTEGRADOS */
+    .always-header-flex {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 15px;
     }
     .always-play-btn {
       background: #9e2a3b; color: white; border: none;
-      padding: 8px 22px; border-radius: 20px; font-family: 'Quicksand', sans-serif;
-      font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;
-      box-shadow: 0 4px 12px rgba(158, 42, 59, 0.3);
+      width: 40px; height: 40px; border-radius: 50%;
+      font-size: 1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 4px 10px rgba(158, 42, 59, 0.3);
       transition: transform 0.2s, background 0.2s;
     }
-    .always-play-btn:hover { background: #822230; transform: scale(1.05); }
+    .always-play-btn:hover { background: #822230; transform: scale(1.1); }
 
-    /* LETRAS ESTÉTICAS */
+    /* LETRAS ESTÉTICAS (Con scroll interno libre) */
     .lyrics-scroll { 
       height: 130px; 
       overflow-y: auto; 
       text-align: center; 
       padding-right: 5px; 
-      scroll-behavior: smooth;
     }
     .lyrics-scroll::-webkit-scrollbar { width: 4px; }
     .lyrics-scroll::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 4px; }
@@ -276,15 +277,15 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="left-col">
         
-        <!-- 1. Reproductor ALWAYS con Letra Real y Botones Play/Pausa -->
+        <!-- 1. Reproductor ALWAYS con Botón de Play/Pausa Integrado -->
         <div class="organic-box player-box">
-          <h3 class="box-title">♪ Now Playing: Always</h3>
-          
-          <div class="always-btn-container">
-            <button class="always-play-btn" id="always-toggle-btn">
-              <span id="always-btn-icon">❚❚</span> <span id="always-btn-text">Pausar Always</span>
+          <div class="always-header-flex">
+            <h3 class="box-title" style="margin: 0;">♪ Now Playing: Always</h3>
+            <button class="always-play-btn" id="always-toggle-btn" title="Reproducir / Pausar Always">
+              <span id="always-btn-icon">❚❚</span>
             </button>
           </div>
+          <br>
 
           <div class="audio-controls">
             <div class="progress-container">
@@ -298,7 +299,7 @@
             </div>
           </div>
 
-          <!-- Letra Sincronizada Real de Always -->
+          <!-- Letras Sincronizadas -->
           <div class="lyrics-scroll" id="lyrics-container"></div>
         </div>
 
@@ -423,7 +424,6 @@
   </div>
 
   <script>
-    // --- LETRA REAL DE ALWAYS (Daniel Caesar) ---
     const lyrics = [
       { t: 0, text: "Baby, baby..." },
       { t: 5, text: "There will always be a space for you and me" },
@@ -457,7 +457,6 @@
       });
     }
 
-    // --- SOBRE ---
     const envelopeBtn = document.getElementById("envelope-btn");
     if (envelopeBtn) {
       envelopeBtn.addEventListener("click", () => {
@@ -471,7 +470,6 @@
       });
     }
 
-    // --- CONTROLES ALWAYS ---
     function formatTime(seconds) {
       if (isNaN(seconds)) return "0:00";
       const min = Math.floor(seconds / 60);
@@ -496,11 +494,7 @@
           if (el) {
             if (current >= item.t && (!next || current < next.t)) {
               el.classList.add("active");
-              // Solo scrollear internamente sin bloquear la rueda del mouse de la página
-              el.parentElement.scrollTo({
-                top: el.offsetTop - el.parentElement.clientHeight / 2 + el.clientHeight / 2,
-                behavior: 'smooth'
-              });
+              // Se removió el comando scrollIntoView para evitar bloquear la rueda de la página
             } else {
               el.classList.remove("active");
             }
@@ -520,31 +514,27 @@
       });
     }
 
-    // Botón Play/Pausa de Always
+    // Botón Play/Pausa de Always integrado limpiamente
     const alwaysToggleBtn = document.getElementById("always-toggle-btn");
     const alwaysBtnIcon = document.getElementById("always-btn-icon");
-    const alwaysBtnText = document.getElementById("always-btn-text");
 
     if (alwaysToggleBtn && bgAudio) {
       alwaysToggleBtn.addEventListener("click", () => {
         if (bgAudio.paused) {
-          mixtapeAudio.pause(); // Pausar casete si suena
+          mixtapeAudio.pause();
           document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
           document.getElementById("main-play-btn").textContent = "▶";
           document.querySelectorAll(".gear").forEach(g => g.classList.remove("spin"));
           
           bgAudio.play();
           alwaysBtnIcon.textContent = "❚❚";
-          alwaysBtnText.textContent = "Pausar Always";
         } else {
           bgAudio.pause();
           alwaysBtnIcon.textContent = "▶";
-          alwaysBtnText.textContent = "Reproducir Always";
         }
       });
     }
 
-    // --- PLAYLIST MP3 & CASETE CONTROL ---
     const trackRows = document.querySelectorAll(".track-row");
     const nowPlayingTitle = document.getElementById("now-playing-title");
     const mainPlayBtn = document.getElementById("main-play-btn");
@@ -563,10 +553,7 @@
 
       if (bgAudio) {
         bgAudio.pause();
-        if (alwaysBtnIcon && alwaysBtnText) {
-          alwaysBtnIcon.textContent = "▶";
-          alwaysBtnText.textContent = "Reproducir Always";
-        }
+        if (alwaysBtnIcon) alwaysBtnIcon.textContent = "▶";
       }
 
       mixtapeAudio.src = src;
@@ -575,7 +562,7 @@
         mainPlayBtn.innerText = "❚❚";
         gears.forEach(g => g.classList.add("spin"));
       }).catch(err => {
-        alert("No se pudo reproducir '" + name + "'. Verifica que el archivo exista en la carpeta assets y que la extensión sea correcta (.mp3).");
+        alert("No se pudo reproducir '" + name + "'. Verifica que el archivo exista en la carpeta assets.");
       });
     }
 
@@ -588,10 +575,7 @@
           gears.forEach(g => g.classList.remove("spin"));
           if (bgAudio) {
             bgAudio.play();
-            if (alwaysBtnIcon && alwaysBtnText) {
-              alwaysBtnIcon.textContent = "❚❚";
-              alwaysBtnText.textContent = "Pausar Always";
-            }
+            if (alwaysBtnIcon) alwaysBtnIcon.textContent = "❚❚";
           }
         } else {
           playTrack(idx);
@@ -609,10 +593,7 @@
         gears.forEach(g => g.classList.remove("spin"));
         if (bgAudio) {
           bgAudio.play();
-          if (alwaysBtnIcon && alwaysBtnText) {
-            alwaysBtnIcon.textContent = "❚❚";
-            alwaysBtnText.textContent = "Pausar Always";
-          }
+          if (alwaysBtnIcon) alwaysBtnIcon.textContent = "❚❚";
         }
       }
     });
@@ -633,12 +614,10 @@
       playTrack(nextIdx);
     });
 
-    // --- CARTA MODAL ---
     const modal = document.getElementById("letter-modal");
     document.getElementById("open-letter-btn").addEventListener("click", () => modal.classList.remove("hidden"));
     document.getElementById("close-letter-btn").addEventListener("click", () => modal.classList.add("hidden"));
 
-    // --- MINIJUEGO CON NIVELES ---
     let currentPairs = 4;
     const allEmojis = ["🌸", "💌", "💖", "🎶", "✨", "🌷", "🦋", "🧸"];
 
