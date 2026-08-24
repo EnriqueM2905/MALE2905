@@ -62,15 +62,22 @@ body {
 .flower-overlay {
   position: fixed;
   inset: 0;
+  /* Fondo rosado de respaldo por si no tienes la imagen flores.png */
   background: radial-gradient(circle, #f8c8d4 10%, #fbe8ec 60%, #f6efe7 100%);
+  background-image: url('assets/flores.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   opacity: 0;
   pointer-events: none;
   z-index: 50;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  transform: scale(0.9);
 }
 
 .flower-overlay.active {
-  opacity: 0.95;
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* LAYOUT PRINCIPAL */
@@ -253,11 +260,26 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Pistas */
+/* Pistas con Scroll */
 .tracklist {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 240px; 
+  overflow-y: auto;  
+  padding-right: 5px; 
+}
+
+.tracklist::-webkit-scrollbar {
+  width: 6px;
+}
+.tracklist::-webkit-scrollbar-track {
+  background: #fbf7ef; 
+  border-radius: 4px;
+}
+.tracklist::-webkit-scrollbar-thumb {
+  background: #d8c4b2; 
+  border-radius: 4px;
 }
 
 .track-row {
