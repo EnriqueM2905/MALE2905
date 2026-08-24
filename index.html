@@ -68,26 +68,69 @@
 
     .left-col { display: flex; flex-direction: column; gap: 25px; }
 
-    /* CONTENEDOR DE VIDEO LOCAL */
+    /* REPRODUCTOR ALWAYS CON LETRA Y CONTROLES */
     .player-box { background: linear-gradient(145deg, rgba(255,250,247,0.95), rgba(252, 235, 238, 0.95)); }
     
-    .local-video-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 60%;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 2px solid #ebd2d7;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      background: #000;
+    .always-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
     }
-    .local-video-container video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .always-play-btn {
+      background: #9e2a3b; color: white; border: none;
+      width: 38px; height: 38px; border-radius: 50%;
+      font-size: 0.95rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 4px 10px rgba(158, 42, 59, 0.3);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .always-play-btn:hover { background: #822230; transform: scale(1.1); }
+
+    .audio-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+    .progress-container { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: #8e4a55; font-weight: 600; }
+    .volume-container { display: flex; align-items: center; gap: 12px; justify-content: center; }
+
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      background: #ebd2d7;
+      height: 7px;
+      border-radius: 10px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      background: #a34851;
+      border-radius: 50%; cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    /* LETRAS ESTÉTICAS SINCRONIZADAS */
+    .lyrics-scroll { 
+      height: 120px; 
+      overflow-y: auto; 
+      text-align: center; 
+      padding-right: 5px; 
+    }
+    .lyrics-scroll::-webkit-scrollbar { width: 4px; }
+    .lyrics-scroll::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 4px; }
+
+    .lyric-item { 
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; 
+      font-style: italic;
+      opacity: 0.45; 
+      transition: all 0.4s ease; 
+      margin-bottom: 10px; 
+      color: #6e4e54;
+    }
+    .lyric-item.active { 
+      opacity: 1; 
+      font-weight: bold; 
+      color: #9e2a3b; 
+      transform: scale(1.06); 
+      text-shadow: 0 2px 8px rgba(158, 42, 59, 0.15);
     }
 
     /* YOUTUBE PLAYLIST */
@@ -215,7 +258,8 @@
 </head>
 <body>
 
-  <!-- Audio de respaldo local -->
+  <!-- Audios principales -->
+  <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
   <audio id="mixtape-audio"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
@@ -233,15 +277,30 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="left-col">
         
-        <!-- 1. Video Local de Always con Letras -->
+        <!-- 1. Reproductor ALWAYS con Letra y Control Play/Pausa -->
         <div class="organic-box player-box">
-          <h3 class="box-title">♪ Always (Daniel Caesar)</h3>
-          <div class="local-video-container">
-            <video id="always-video" controls autoplay muted loop playsinline>
-              <source src="assets/Always-Lyrics.mp4" type="video/mp4">
-              Tu navegador no soporta videos HTML5.
-            </video>
+          <div class="always-header-flex">
+            <h3 class="box-title" style="margin: 0;">♪ Now Playing: Always</h3>
+            <button class="always-play-btn" id="always-toggle-btn" title="Reproducir / Pausar Always">
+              <span id="always-btn-icon">❚❚</span>
+            </button>
           </div>
+          <br>
+
+          <div class="audio-controls">
+            <div class="progress-container">
+              <span id="current-time">0:00</span>
+              <input type="range" id="seek-bar" value="0" min="0" max="100">
+              <span id="duration">0:00</span>
+            </div>
+            <div class="volume-container">
+              <span>🔊</span>
+              <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="0.6">
+            </div>
+          </div>
+
+          <!-- Letra Sincronizada -->
+          <div class="lyrics-scroll" id="lyrics-container"></div>
         </div>
 
         <!-- 2. Playlist YouTube -->
@@ -365,7 +424,39 @@
   </div>
 
   <script>
-    const alwaysVideo = document.getElementById("always-video");
+    // --- LETRA REAL DE ALWAYS (Daniel Caesar) ---
+    const lyrics = [
+      { t: 0, text: "Baby, baby..." },
+      { t: 5, text: "There will always be a space for you and me" },
+      { t: 12, text: "Right where you left it" },
+      { t: 17, text: "And just maybe, enough time will pass" },
+      { t: 24, text: "We'll look back and laugh, just don't forget it" },
+      { t: 32, text: "And maybe I'm wrong for writing this song" },
+      { t: 39, text: "Losing my head over you" },
+      { t: 46, text: "And I'll be here, 'cause we both know how it goes" },
+      { t: 54, text: "I don't want things to change, I pray they stay the same, always" },
+      { t: 64, text: "And I don't care if you're with somebody else" },
+      { t: 71, text: "I'll give you time and space, just know I'm not afraid" },
+      { t: 79, text: "Always..." }
+    ];
+
+    const bgAudio = document.getElementById("bg-audio");
+    const mixtapeAudio = document.getElementById("mixtape-audio");
+    const lyricsContainer = document.getElementById("lyrics-container");
+    const seekBar = document.getElementById("seek-bar");
+    const volumeBar = document.getElementById("volume-bar");
+    const currentTimeEl = document.getElementById("current-time");
+    const durationEl = document.getElementById("duration");
+
+    if (lyricsContainer) {
+      lyrics.forEach((line, i) => {
+        const div = document.createElement("div");
+        div.className = "lyric-item";
+        div.id = `lyric-${i}`;
+        div.innerText = line.text;
+        lyricsContainer.appendChild(div);
+      });
+    }
 
     // --- SOBRE ---
     const envelopeBtn = document.getElementById("envelope-btn");
@@ -373,8 +464,75 @@
       envelopeBtn.addEventListener("click", () => {
         document.getElementById("envelope-screen").classList.add("hidden");
         document.getElementById("main-screen").classList.remove("hidden");
-        if (alwaysVideo) {
-          alwaysVideo.play().catch(e => console.log("Autoplay con video prevenido:", e));
+        
+        if (bgAudio) {
+          if (volumeBar) bgAudio.volume = volumeBar.value;
+          bgAudio.play().catch(e => console.log("Autoplay prevenido:", e));
+        }
+      });
+    }
+
+    // --- CONTROLES ALWAYS ---
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return "0:00";
+      const min = Math.floor(seconds / 60);
+      const sec = Math.floor(seconds % 60);
+      return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+    if (bgAudio) {
+      bgAudio.addEventListener("loadedmetadata", () => {
+        if (seekBar) seekBar.max = bgAudio.duration;
+        if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
+      });
+
+      bgAudio.addEventListener("timeupdate", () => {
+        if (seekBar) seekBar.value = bgAudio.currentTime;
+        if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
+
+        const current = bgAudio.currentTime;
+        lyrics.forEach((item, i) => {
+          const next = lyrics[i + 1];
+          const el = document.getElementById(`lyric-${i}`);
+          if (el) {
+            if (current >= item.t && (!next || current < next.t)) {
+              el.classList.add("active");
+            } else {
+              el.classList.remove("active");
+            }
+          }
+        });
+      });
+
+      if (seekBar) {
+        seekBar.addEventListener("input", () => { bgAudio.currentTime = seekBar.value; });
+      }
+    }
+
+    if (volumeBar && bgAudio && mixtapeAudio) {
+      volumeBar.addEventListener("input", () => { 
+        bgAudio.volume = volumeBar.value; 
+        mixtapeAudio.volume = volumeBar.value; 
+      });
+    }
+
+    // Botón Play/Pausa de Always
+    const alwaysToggleBtn = document.getElementById("always-toggle-btn");
+    const alwaysBtnIcon = document.getElementById("always-btn-icon");
+
+    if (alwaysToggleBtn && bgAudio) {
+      alwaysToggleBtn.addEventListener("click", () => {
+        if (bgAudio.paused) {
+          mixtapeAudio.pause();
+          document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+          document.getElementById("main-play-btn").textContent = "▶";
+          document.querySelectorAll(".gear").forEach(g => g.classList.remove("spin"));
+          
+          bgAudio.play();
+          alwaysBtnIcon.textContent = "❚❚";
+        } else {
+          bgAudio.pause();
+          alwaysBtnIcon.textContent = "▶";
         }
       });
     }
@@ -382,7 +540,6 @@
     // --- PLAYLIST MP3 & CASETE CONTROL ---
     const trackRows = document.querySelectorAll(".track-row");
     const nowPlayingTitle = document.getElementById("now-playing-title");
-    const mixtapeAudio = document.getElementById("mixtape-audio");
     const mainPlayBtn = document.getElementById("main-play-btn");
     const prevBtn = document.getElementById("prev-btn");
     const nextBtn = document.getElementById("next-btn");
@@ -397,7 +554,10 @@
       const src = row.getAttribute("data-src");
       const name = row.getAttribute("data-name");
 
-      if (alwaysVideo) alwaysVideo.pause();
+      if (bgAudio) {
+        bgAudio.pause();
+        if (alwaysBtnIcon) alwaysBtnIcon.textContent = "▶";
+      }
 
       mixtapeAudio.src = src;
       mixtapeAudio.play().then(() => {
@@ -405,7 +565,7 @@
         mainPlayBtn.innerText = "❚❚";
         gears.forEach(g => g.classList.add("spin"));
       }).catch(err => {
-        alert("No se pudo reproducir '" + name + "'. Verifica que el archivo exista en la carpeta assets y que la extensión sea correcta (.mp3).");
+        alert("No se pudo reproducir '" + name + "'. Verifica que el archivo exista en la carpeta assets.");
       });
     }
 
@@ -416,7 +576,10 @@
           mixtapeAudio.pause();
           mainPlayBtn.innerText = "▶";
           gears.forEach(g => g.classList.remove("spin"));
-          if (alwaysVideo) alwaysVideo.play();
+          if (bgAudio) {
+            bgAudio.play();
+            if (alwaysBtnIcon) alwaysBtnIcon.textContent = "❚❚";
+          }
         } else {
           playTrack(idx);
         }
@@ -431,7 +594,10 @@
         mixtapeAudio.pause();
         mainPlayBtn.innerText = "▶";
         gears.forEach(g => g.classList.remove("spin"));
-        if (alwaysVideo) alwaysVideo.play();
+        if (bgAudio) {
+          bgAudio.play();
+          if (alwaysBtnIcon) alwaysBtnIcon.textContent = "❚❚";
+        }
       }
     });
 
