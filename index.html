@@ -3,88 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Songs for You</title>
+  <title>Para Ti · Songs & Words</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Audio de fondo (Daniel Caesar - Always) -->
-  <audio id="bg-audio" loop src="assets/always.mp3"></audio>
-  <!-- Audio para la mixtape -->
-  <audio id="mixtape-audio"></audio>
+  <!-- Audios -->
+  <audio id="bg-audio" loop preload="auto" src="./assets/always.mp3"></audio>
+  <audio id="mixtape-audio" preload="auto"></audio>
 
-  <!-- PANTALLA 1: Sobre cerrado -->
-  <section id="envelope-screen" class="screen active">
-    <div class="envelope" id="envelope-btn">
-      <div class="envelope-stamp">🌸</div>
-      <p class="tap-text">Tap to open</p>
+  <!-- PANTALLA 1: Sobre Cerrado -->
+  <section id="envelope-screen" class="screen">
+    <div class="envelope-wrapper" id="envelope-btn">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">🌸</div>
+        <div class="envelope-letter-preview"></div>
+      </div>
+      <p class="tap-hint">Toca para abrir 💌</p>
     </div>
   </section>
 
-  <!-- PANTALLA 2: Contenido interactivo -->
+  <!-- PANTALLA 2: Contenido Principal -->
   <section id="main-screen" class="screen hidden">
-    <div class="app-container">
-      
-      <!-- Panel Izquierdo: Letra sincronizada -->
-      <aside class="lyrics-panel">
-        <div class="lyrics-header">
-          <span class="music-note">♪</span>
-          <p class="track-playing">Daniel Caesar — Always</p>
+    <div class="container">
+
+      <!-- Columna Izquierda: Letras con Traducción -->
+      <aside class="card lyrics-card">
+        <div class="card-header">
+          <span class="badge">EN REPRODUCCIÓN</span>
+          <h2 id="now-playing-title">Daniel Caesar — Always</h2>
         </div>
-        <div class="lyrics-container" id="lyrics-container">
-          <!-- Las líneas se sincronizan mediante JS -->
+        <div class="lyrics-scroll" id="lyrics-container">
+          <!-- Letras inyectadas por JS -->
         </div>
       </aside>
 
-      <!-- Panel Central: Mixtape / Casete -->
-      <main class="mixtape-card">
-        <header class="card-header">
-          <p class="to-from">FOR YOU · WITH LOVE</p>
-          <h1>Songs for you</h1>
-        </header>
-
-        <!-- Ilustración Casete -->
-        <div class="cassette">
-          <div class="cassette-label">
-            <span>Mixtape Vol. 1</span>
-            <div class="cassette-wheels">
-              <div class="wheel" id="wheel-1"></div>
-              <div class="wheel" id="wheel-2"></div>
-            </div>
-          </div>
+      <!-- Columna Central: Disquete / Mixtape -->
+      <main class="card player-card">
+        <div class="card-header text-center">
+          <p class="subtitle">A SPECIAL PLAYLIST</p>
+          <h1>Songs for You</h1>
         </div>
 
-        <!-- Lista de Canciones -->
+        <!-- Disquete / Cassette Retro -->
+        <div class="floppy-disk">
+          <div class="floppy-metal">
+            <div class="floppy-shutter"></div>
+          </div>
+          <div class="floppy-label">
+            <div class="label-header">
+              <span class="label-title">Side A · Memories</span>
+              <span class="label-tag">HQ AUDIO</span>
+            </div>
+            <div class="floppy-center">
+              <div class="hub" id="hub-left"></div>
+              <div class="hub-window">
+                <span id="disk-status">Presiona play</span>
+              </div>
+              <div class="hub" id="hub-right"></div>
+            </div>
+          </div>
+          <div class="floppy-corner"></div>
+        </div>
+
+        <!-- Lista de canciones -->
         <div class="tracklist">
-          <div class="track-item" data-src="assets/perfect.mp3" data-name="Ed Sheeran - Perfect">
-            <span class="track-number">01</span>
-            <div class="track-info">
+          <div class="track" data-src="./assets/perfect.mp3" data-name="Ed Sheeran — Perfect">
+            <span class="track-num">01</span>
+            <div class="track-meta">
               <strong>Perfect</strong>
               <span>Ed Sheeran</span>
             </div>
-            <button class="play-track-btn">▶</button>
+            <button class="track-btn">▶</button>
           </div>
 
-          <div class="track-item" data-src="assets/all-of-me.mp3" data-name="John Legend - All of Me">
-            <span class="track-number">02</span>
-            <div class="track-info">
+          <div class="track" data-src="./assets/all-of-me.mp3" data-name="John Legend — All of Me">
+            <span class="track-num">02</span>
+            <div class="track-meta">
               <strong>All of Me</strong>
               <span>John Legend</span>
             </div>
-            <button class="play-track-btn">▶</button>
+            <button class="track-btn">▶</button>
           </div>
         </div>
 
-        <!-- Nota manuscrita -->
-        <div class="liner-note">
-          <p><strong>Liner note:</strong></p>
-          <p class="handwriting">
-            Te hice este mixtape para que lo escuches cuando me extrañes. Dale play a cualquier canción cuando quieras.
-          </p>
-        </div>
+        <!-- Botón para abrir la carta -->
+        <button id="open-letter-btn" class="open-letter-btn">📜 Leer mi carta para ti</button>
       </main>
 
+    </div>
+
+    <!-- Modal: Carta personal -->
+    <div id="letter-modal" class="modal hidden">
+      <div class="modal-content">
+        <button id="close-letter-btn" class="close-btn">&times;</button>
+        <div class="letter-paper">
+          <h2 class="letter-heading">Para alguien muy especial,</h2>
+          <p class="letter-body">
+            Quería darte este pequeño detalle para recordarte lo importante que eres para mí. 
+            Cada una de estas canciones tiene un pedacito de lo que siento. Puedes darle play al disquete 
+            cuando quieras escuchar algo bonito.
+          </p>
+          <p class="letter-signature">Siempre contigo, ✨</p>
+        </div>
+      </div>
     </div>
   </section>
 
