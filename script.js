@@ -1,120 +1,105 @@
-const lyricsData = [
-  { time: 0, text: "And I'll be here", trans: "Y estaré aquí" },
-  { time: 3, text: "'Cause we both know how it goes", trans: "Porque ambos sabemos cómo termina esto" },
-  { time: 6, text: "I don't want things to change", trans: "No quiero que las cosas cambien" },
-  { time: 10, text: "I pray they stay the same, always", trans: "Ruego que sigan igual, siempre" },
-  { time: 15, text: "And I don't care if you're with somebody else", trans: "Y no me importa si estás con alguien más" },
-  { time: 20, text: "I'll give you time and space", trans: "Te daré tiempo y espacio" },
-  { time: 23, text: "Just know I'm not afraid, always", trans: "Solo ten claro que no tengo miedo, siempre" },
-  { time: 30, text: "Always, always...", trans: "Siempre, siempre..." }
+// Letras de Always (Daniel Caesar) con traducción y marcas de tiempo
+const lyrics = [
+  { t: 0, en: "And I'll be here", es: "Y estaré aquí" },
+  { t: 3, en: "'Cause we both know how it goes", es: "Porque ambos sabemos cómo va esto" },
+  { t: 6, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
+  { t: 10, en: "I pray they stay the same, always", es: "Ruego que se queden igual, siempre" },
+  { t: 15, en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
+  { t: 20, en: "I'll give you time and space", es: "Te daré tiempo y espacio" },
+  { t: 23, en: "Just know I'm not afraid, always", es: "Solo ten claro que no tengo miedo, siempre" }
 ];
 
 const envelopeBtn = document.getElementById("envelope-btn");
 const envelopeScreen = document.getElementById("envelope-screen");
+const flowerOverlay = document.getElementById("flower-overlay");
 const mainScreen = document.getElementById("main-screen");
 
 const bgAudio = document.getElementById("bg-audio");
 const mixtapeAudio = document.getElementById("mixtape-audio");
 const lyricsContainer = document.getElementById("lyrics-container");
-const diskStatus = document.getElementById("disk-status");
 
-const hubs = [document.getElementById("hub-left"), document.getElementById("hub-right")];
+const gears = [document.getElementById("gear-1"), document.getElementById("gear-2")];
 
-// 1. Cargar letras en pantalla
-lyricsData.forEach((item, index) => {
-  const lineDiv = document.createElement("div");
-  lineDiv.classList.add("lyric-line");
-  lineDiv.id = `lyric-${index}`;
-  lineDiv.innerHTML = `
-    <span>${item.text}</span>
-    <span class="translation">${item.trans}</span>
-  `;
-  lyricsContainer.appendChild(lineDiv);
+// 1. Montar las líneas de letra en el contenedor
+lyrics.forEach((line, i) => {
+  const div = document.createElement("div");
+  div.className = "lyric-item";
+  div.id = `lyric-${i}`;
+  div.innerHTML = `<span>${line.en}</span><span class="lyric-trans">${line.es}</span>`;
+  lyricsContainer.appendChild(div);
 });
 
-// 2. Abrir sobre y comenzar audio de fondo
+// 2. Apertura del sobre + Efecto floral + Autoplay de Always
 envelopeBtn.addEventListener("click", () => {
-  envelopeScreen.classList.add("hidden");
-  mainScreen.classList.remove("hidden");
-  
-  bgAudio.volume = 0.6;
-  bgAudio.play().then(() => {
-    diskStatus.textContent = "Reproduciendo fondo...";
-  }).catch(err => {
-    console.warn("Autoplay bloqueado por el navegador:", err);
-    diskStatus.textContent = "Toca para activar audio";
-  });
+  flowerOverlay.classList.remove("hidden");
+  flowerOverlay.classList.add("active");
+
+  // Iniciar audio
+  bgAudio.volume = 0.5;
+  bgAudio.play().catch(err => console.log("Autoplay bloqueado:", err));
+
+  // Transición suave
+  setTimeout(() => {
+    envelopeScreen.classList.add("hidden");
+    mainScreen.classList.remove("hidden");
+    flowerOverlay.classList.remove("active");
+    setTimeout(() => flowerOverlay.classList.add("hidden"), 800);
+  }, 900);
 });
 
-// 3. Sincronizar letra con la pista de fondo
+// 3. Sincronización de letras
 bgAudio.addEventListener("timeupdate", () => {
-  const currentTime = bgAudio.currentTime;
-
-  lyricsData.forEach((item, index) => {
-    const nextItem = lyricsData[index + 1];
-    const isCurrent = currentTime >= item.time && (!nextItem || currentTime < nextItem.time);
-    const elem = document.getElementById(`lyric-${index}`);
-
-    if (elem) {
+  const current = bgAudio.currentTime;
+  lyrics.forEach((item, i) => {
+    const next = lyrics[i + 1];
+    const isCurrent = current >= item.t && (!next || current < next.t);
+    const el = document.getElementById(`lyric-${i}`);
+    if (el) {
       if (isCurrent) {
-        elem.classList.add("active");
-        elem.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("active");
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
-        elem.classList.remove("active");
+        el.classList.remove("active");
       }
     }
   });
 });
 
-// 4. Control de reproducción de pistas de la mixtape
-const trackButtons = document.querySelectorAll(".track-btn");
+// 4. Control de reproducción de pistas MP3
+const trackRows = document.querySelectorAll(".track-row");
 
-trackButtons.forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    const trackItem = e.target.closest(".track");
-    const audioSrc = trackItem.getAttribute("data-src");
-    const trackName = trackItem.getAttribute("data-name");
+trackRows.forEach(row => {
+  const btn = row.querySelector(".track-btn");
+  btn.addEventListener("click", () => {
+    const src = row.getAttribute("data-src");
 
-    // Si ya está sonando la misma canción, pausar y reactivar fondo
-    if (mixtapeAudio.src.includes(audioSrc.replace("./", "")) && !mixtapeAudio.paused) {
+    if (mixtapeAudio.src.includes(src) && !mixtapeAudio.paused) {
       mixtapeAudio.pause();
       btn.textContent = "▶";
-      hubs.forEach(h => h.classList.remove("spinning"));
-      diskStatus.textContent = "En pausa";
+      gears.forEach(g => g.classList.remove("spin"));
       bgAudio.play();
     } else {
-      // Pausar música de fondo y cambiar a la canción elegida
       bgAudio.pause();
-      trackButtons.forEach(b => b.textContent = "▶");
-      
-      mixtapeAudio.src = audioSrc;
-      mixtapeAudio.play().then(() => {
-        btn.textContent = "❚❚";
-        hubs.forEach(h => h.classList.add("spinning"));
-        diskStatus.textContent = trackName;
-      }).catch(err => {
-        alert("Asegúrate de que los archivos de audio estén dentro de la carpeta assets/");
-        console.error(err);
-      });
+      document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+
+      mixtapeAudio.src = src;
+      mixtapeAudio.play();
+      btn.textContent = "❚❚";
+      gears.forEach(g => g.classList.add("spin"));
     }
   });
 });
 
-// 5. Al terminar una canción de la mixtape, volver al audio de fondo
 mixtapeAudio.addEventListener("ended", () => {
-  trackButtons.forEach(b => b.textContent = "▶");
-  hubs.forEach(h => h.classList.remove("spinning"));
-  diskStatus.textContent = "Reproduciendo fondo...";
+  document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+  gears.forEach(g => g.classList.remove("spin"));
   bgAudio.play();
 });
 
-// 6. Modal de la carta
-const openLetterBtn = document.getElementById("open-letter-btn");
-const closeLetterBtn = document.getElementById("close-letter-btn");
-const letterModal = document.getElementById("letter-modal");
-
-openLetterBtn.addEventListener("click", () => letterModal.classList.remove("hidden"));
-closeLetterBtn.addEventListener("click", () => letterModal.classList.add("hidden"));
-letterModal.addEventListener("click", (e) => {
-  if (e.target === letterModal) letterModal.classList.add("hidden");
+// 5. Apertura y cierre de la carta emergente
+const modal = document.getElementById("letter-modal");
+document.getElementById("open-letter-btn").addEventListener("click", () => modal.classList.remove("hidden"));
+document.getElementById("close-letter-btn").addEventListener("click", () => modal.classList.add("hidden"));
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) modal.classList.add("hidden");
 });
