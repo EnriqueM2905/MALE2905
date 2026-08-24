@@ -29,22 +29,24 @@ lyrics.forEach((line, i) => {
   lyricsContainer.appendChild(div);
 });
 
-// 2. Apertura del sobre + Efecto floral + Autoplay de Always
+// 2. Apertura del sobre + Efecto floral + Autoplay
 envelopeBtn.addEventListener("click", () => {
+  // Activar animación floral
   flowerOverlay.classList.remove("hidden");
   flowerOverlay.classList.add("active");
 
-  // Iniciar audio
+  // Iniciar audio (Always.mp3)
   bgAudio.volume = 0.5;
   bgAudio.play().catch(err => console.log("Autoplay bloqueado:", err));
 
-  // Transición suave
+  // Transición a la pantalla principal
   setTimeout(() => {
     envelopeScreen.classList.add("hidden");
     mainScreen.classList.remove("hidden");
     flowerOverlay.classList.remove("active");
-    setTimeout(() => flowerOverlay.classList.add("hidden"), 800);
-  }, 900);
+    // Ocultar la capa de flores después de que se desvanezca
+    setTimeout(() => flowerOverlay.classList.add("hidden"), 1000);
+  }, 1000);
 });
 
 // 3. Sincronización de letras
@@ -65,7 +67,7 @@ bgAudio.addEventListener("timeupdate", () => {
   });
 });
 
-// 4. Control de reproducción de pistas MP3
+// 4. Control de reproducción de pistas MP3 (El Casete)
 const trackRows = document.querySelectorAll(".track-row");
 
 trackRows.forEach(row => {
@@ -73,12 +75,14 @@ trackRows.forEach(row => {
   btn.addEventListener("click", () => {
     const src = row.getAttribute("data-src");
 
+    // Si la misma canción está sonando, pausarla y reanudar Always
     if (mixtapeAudio.src.includes(src) && !mixtapeAudio.paused) {
       mixtapeAudio.pause();
       btn.textContent = "▶";
       gears.forEach(g => g.classList.remove("spin"));
       bgAudio.play();
     } else {
+      // Si es una canción nueva, pausar Always y reproducir
       bgAudio.pause();
       document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
 
@@ -90,6 +94,7 @@ trackRows.forEach(row => {
   });
 });
 
+// Al terminar una canción del casete, volver a la canción de fondo
 mixtapeAudio.addEventListener("ended", () => {
   document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
   gears.forEach(g => g.classList.remove("spin"));
