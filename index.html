@@ -403,26 +403,24 @@
 
   <script>
     // ==========================================
-    // LETRAS DE LA CANCIÓN
+    // LETRAS DE LA CANCIÓN SINCRONIZADAS
     // ==========================================
-    // Para completar la canción, busca la letra oficial en Google 
-    // y pégala aquí reemplazando "t" con el segundo en el que canta la frase.
     const lyrics = [
-      { t: 0,  en: "Instrumental", es: "..." },
+      { t: 0,   en: "Instrumental", es: "..." },
       { t: 15,  en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
-      { t: 22, en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
-      { t: 29, en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
-      { t: 36, en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
-      { t: 42, en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
-      { t: 49, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-      { t: 57, en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-      { t: 61, en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-      { t: 71, en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-      { t: 75, en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-      { t: 83, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-      { t: 85, en: "Always, ways, ways", es: "Siempre, formas, formas" },
-      { t: 89, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-      { t: 96, en: "Pretty lady, used to walk with me", es: "Bella dama, solía caminar conmigo" },
+      { t: 22,  en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
+      { t: 29,  en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
+      { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
+      { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
+      { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
+      { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
+      { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
+      { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
+      { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
+      { t: 83,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
+      { t: 85,  en: "Always, ways, ways", es: "Siempre, formas, formas" },
+      { t: 89,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
+      { t: 96,  en: "Pretty lady, used to walk with me", es: "Bella dama, solía caminar conmigo" },
       { t: 103, en: "Down Bloor street, oh, what a time", es: "Por la calle Bloor, oh, qué tiempo" },
       { t: 111, en: "And I still remember the fussin', the fightin', the fuckin', the lyin'", es: "Y todavía recuerdo el alboroto, la pelea, el sexo, las mentiras" },
       { t: 116, en: "It's all fine, you'll always be mine", es: "Todo está bien, siempre serás mía" },
@@ -439,10 +437,7 @@
       { t: 178, en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ella seguro como las estrellas en el cielo" },
       { t: 184, en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
       { t: 191, en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
-      { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" },
-      
-      
-      // Añade el resto de tu letra aquí con los segundos exactos
+      { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
     ];
 
     const bgAudio = document.getElementById("bg-audio");
