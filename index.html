@@ -18,7 +18,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      /* Fondo fusionando Morado y Turquesa pastel */
       background: linear-gradient(135deg, #e1bee7 0%, #e0f7fa 50%, #d1c4e9 100%);
       font-family: 'Quicksand', sans-serif;
       color: #333;
@@ -59,15 +58,14 @@
     }
 
     .organic-box {
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
       padding: 30px;
       border-radius: 35px;
-      border: 2px solid rgba(255,255,255,0.6);
+      border: 2px solid rgba(255,255,255,0.8);
       box-shadow: 0 10px 30px rgba(103, 58, 183, 0.1);
       transition: all 0.4s ease;
     }
-    .organic-box:hover { box-shadow: 0 12px 35px rgba(0, 188, 212, 0.2); transform: translateY(-3px); }
 
     .box-title { 
       font-size: 1.4rem; color: var(--purple-dark); margin-bottom: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px;
@@ -78,45 +76,58 @@
     /* REPRODUCTOR ALWAYS (Caja principal) */
     .player-box { background: linear-gradient(145deg, #ffffff, #f0f4ff); padding: 25px; }
     
-    .always-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .always-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
     .always-play-btn {
       background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none;
-      width: 48px; height: 48px; border-radius: 50%;
+      width: 50px; height: 50px; border-radius: 50%;
       font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
       box-shadow: 0 5px 15px rgba(103, 58, 183, 0.4); transition: transform 0.2s;
     }
-    .always-play-btn:hover { transform: scale(1.1) rotate(5deg); }
+    .always-play-btn:hover { transform: scale(1.08); }
 
-    .audio-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-    .progress-container { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--purple-dark); font-weight: 700; }
-    .volume-container { display: flex; align-items: center; gap: 12px; justify-content: center; color: var(--purple-main); }
+    .audio-controls { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+    .progress-container { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: var(--purple-dark); font-weight: 700; }
+    .volume-container { display: flex; align-items: center; gap: 15px; justify-content: center; color: var(--purple-main); }
 
-    input[type=range] { flex: 1; -webkit-appearance: none; background: var(--purple-light); height: 6px; border-radius: 10px; outline: none; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--turquoise-main); border-radius: 50%; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+    /* ESTILO DE BARRAS DESLIZABLES (Tipo Spotify/Apple Music) */
+    input[type=range] { 
+      flex: 1; 
+      -webkit-appearance: none; 
+      background: var(--purple-light); 
+      height: 6px; 
+      border-radius: 10px; 
+      outline: none; 
+      transition: background 0.1s;
+    }
+    input[type=range]::-webkit-slider-thumb { 
+      -webkit-appearance: none; 
+      width: 16px; height: 16px; 
+      background: var(--turquoise-main); 
+      border-radius: 50%; 
+      cursor: pointer; 
+      box-shadow: 0 2px 8px rgba(0, 188, 212, 0.6); 
+      transition: transform 0.2s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
-    /* =========================================
-       ESTILO SPOTIFY PARA LAS LETRAS (PERFECTO) 
-       ========================================= */
+    /* LETRAS - ESTILO SPOTIFY OSCURO */
     .spotify-lyrics-container {
-      /* Degradado oscuro fusionando el Morado y Turquesa */
       background: linear-gradient(145deg, #1A0B2E 0%, #00363A 100%);
-      border-radius: 20px;
-      height: 350px;
+      border-radius: 25px;
+      height: 380px;
       overflow-y: auto;
       position: relative;
       padding: 0;
-      box-shadow: inset 0 10px 30px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2);
-      /* Ocultar barra de scroll para que se vea más limpio */
+      box-shadow: inset 0 10px 30px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.1);
       scrollbar-width: none; 
     }
     .spotify-lyrics-container::-webkit-scrollbar { display: none; }
     
     .lyrics-inner {
-      /* Mucho padding arriba y abajo para que la primera y última frase queden en el centro */
-      padding: 150px 25px;
+      padding: 160px 30px; /* Centra la letra activa */
       display: flex;
       flex-direction: column;
-      gap: 25px;
+      gap: 30px;
     }
 
     .lyric-item {
@@ -126,7 +137,6 @@
       transform-origin: left center;
       cursor: pointer;
     }
-    .lyric-item:hover { opacity: 0.6; }
 
     .lyric-en {
       display: block;
@@ -138,25 +148,20 @@
     }
     .lyric-es {
       display: block;
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: 1.05rem;
+      font-weight: 600;
       color: var(--turquoise-light);
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
-    /* Estado ACTIVO (La que está sonando) */
+    /* Estado ACTIVO de la letra */
     .lyric-item.active {
       opacity: 1;
       transform: scale(1.05);
-      filter: drop-shadow(0 2px 10px rgba(0, 188, 212, 0.4));
+      filter: drop-shadow(0 2px 10px rgba(0, 188, 212, 0.3));
     }
-    .lyric-item.active .lyric-en {
-      color: #ffffff;
-    }
-    .lyric-item.active .lyric-es {
-      color: var(--turquoise-main);
-      font-weight: 700;
-    }
+    .lyric-item.active .lyric-en { color: #ffffff; }
+    .lyric-item.active .lyric-es { color: var(--turquoise-main); font-weight: 700; }
 
     /* YOUTUBE PLAYLIST */
     .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
@@ -275,7 +280,7 @@
         <!-- REPRODUCTOR ALWAYS -->
         <div class="organic-box player-box">
           <div class="always-header-flex">
-            <h3 class="box-title">♪ Now Playing: Always</h3>
+            <h3 class="box-title">♪ Always - Daniel Caesar</h3>
             <button class="always-play-btn" id="always-toggle-btn">
               <span id="always-btn-icon">❚❚</span>
             </button>
@@ -398,34 +403,16 @@
 
   <script>
     // ==========================================
-    // LETRA EXACTA - DANIEL CAESAR (ALWAYS)
+    // LETRAS DE LA CANCIÓN
     // ==========================================
-    // NOTA: Ajusté los tiempos basándome en la versión de estudio.
-    // Si tu MP3 empieza un poco antes o después, solo suma o resta segundos a los números de la "t".
+    // Para completar la canción, busca la letra oficial en Google 
+    // y pégala aquí reemplazando "t" con el segundo en el que canta la frase.
     const lyrics = [
-      { t: 0, en: "(Intro musical)", es: "..." },
-      { t: 15, en: "Baby, baby", es: "Bebé, bebé" },
-      { t: 18, en: "There will always be a space for you and me", es: "Siempre habrá un espacio para ti y para mí" },
-      { t: 26, en: "Right where you left it", es: "Justo donde lo dejaste" },
-      { t: 29, en: "And just maybe", es: "Y tal vez" },
-      { t: 32, en: "Enough time will pass", es: "Pasará suficiente tiempo" },
-      { t: 35, en: "We'll look back and laugh", es: "Miraremos atrás y reiremos" },
-      { t: 38, en: "Just don't forget it", es: "Solo no lo olvides" },
-      { t: 44, en: "And maybe I'm wrong", es: "Y tal vez me equivoque" },
-      { t: 47, en: "For writing this song", es: "Por escribir esta canción" },
-      { t: 51, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-      { t: 58, en: "And I'll be here", es: "Y estaré aquí" },
-      { t: 62, en: "'Cause we both know how it goes", es: "Porque ambos sabemos cómo va esto" },
-      { t: 67, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
-      { t: 73, en: "I pray they stay the same, always", es: "Ruego que se queden igual, siempre" },
-      { t: 81, en: "And I don't care", es: "Y no me importa" },
-      { t: 85, en: "If you're with somebody else", es: "Si estás con alguien más" },
-      { t: 88, en: "I'll give you time and space", es: "Te daré tiempo y espacio" },
-      { t: 93, en: "Just know I'm not afraid", es: "Solo debes saber que no tengo miedo" },
-      { t: 98, en: "Always", es: "Siempre" },
-      { t: 112, en: "I know how it feels to be alone", es: "Sé lo que se siente estar solo" },
-      { t: 124, en: "And I know how it feels to have a home", es: "Y sé lo que se siente tener un hogar" },
-      { t: 133, en: "You're my home, always", es: "Tú eres mi hogar, siempre" }
+      { t: 0,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto" },
+      { t: 7,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales" },
+      { t: 15, en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
+      { t: 22, en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase" },
+      // Añade el resto de tu letra aquí con los segundos exactos
     ];
 
     const bgAudio = document.getElementById("bg-audio");
@@ -445,13 +432,18 @@
         div.id = `lyric-${i}`;
         div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
         
-        // Al hacer click en una frase, saltar a ese segundo
         div.addEventListener("click", () => {
           if(bgAudio) bgAudio.currentTime = line.t;
         });
 
         lyricsInner.appendChild(div);
       });
+    }
+
+    // Funciones visuales para rellenar las barras tipo Spotify
+    function updateProgressFill(input) {
+      const value = (input.value - input.min) / (input.max - input.min) * 100;
+      input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`;
     }
 
     // --- SOBRE ---
@@ -462,7 +454,10 @@
         document.getElementById("main-screen").classList.remove("hidden");
         
         if (bgAudio) {
-          if (volumeBar) bgAudio.volume = volumeBar.value;
+          if (volumeBar) {
+            bgAudio.volume = volumeBar.value;
+            updateProgressFill(volumeBar);
+          }
           bgAudio.play().catch(e => console.log("Autoplay prevenido:", e));
         }
       });
@@ -478,17 +473,22 @@
 
     if (bgAudio) {
       bgAudio.addEventListener("loadedmetadata", () => {
-        if (seekBar) seekBar.max = bgAudio.duration;
+        if (seekBar) {
+          seekBar.max = bgAudio.duration;
+          updateProgressFill(seekBar);
+        }
         if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
       });
 
       bgAudio.addEventListener("timeupdate", () => {
-        if (seekBar) seekBar.value = bgAudio.currentTime;
+        if (seekBar) {
+          seekBar.value = bgAudio.currentTime;
+          updateProgressFill(seekBar);
+        }
         if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
 
         const current = bgAudio.currentTime;
         
-        // Buscar la línea actual basada en el tiempo
         let activeIndex = -1;
         for (let i = 0; i < lyrics.length; i++) {
           if (current >= lyrics[i].t && (!lyrics[i + 1] || current < lyrics[i + 1].t)) {
@@ -500,11 +500,10 @@
         if (activeIndex !== -1) {
           const el = document.getElementById(`lyric-${activeIndex}`);
           if (el && !el.classList.contains("active")) {
-            // Quitar clase active a todas
             document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
             el.classList.add("active");
             
-            // Lógica de Scroll exacto (Centrar la línea actual en la caja)
+            // Scroll exacto para mantener la línea al centro
             const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2);
             lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
           }
@@ -512,18 +511,24 @@
       });
 
       if (seekBar) {
-        seekBar.addEventListener("input", () => { bgAudio.currentTime = seekBar.value; });
+        seekBar.addEventListener("input", function() { 
+          bgAudio.currentTime = this.value; 
+          updateProgressFill(this);
+        });
       }
     }
 
     if (volumeBar && bgAudio && mixtapeAudio) {
-      volumeBar.addEventListener("input", () => { 
-        bgAudio.volume = volumeBar.value; 
-        mixtapeAudio.volume = volumeBar.value; 
+      volumeBar.addEventListener("input", function() { 
+        bgAudio.volume = this.value; 
+        mixtapeAudio.volume = this.value; 
+        updateProgressFill(this);
       });
+      // Inicializar barra de volumen
+      updateProgressFill(volumeBar);
     }
 
-    // Botón Play/Pausa de Always
+    // Botón Play/Pausa
     const alwaysToggleBtn = document.getElementById("always-toggle-btn");
     const alwaysBtnIcon = document.getElementById("always-btn-icon");
 
@@ -544,7 +549,7 @@
       });
     }
 
-    // --- PLAYLIST MP3 & CASETE CONTROL ---
+    // --- PLAYLIST MP3 & CASETE ---
     const trackRows = document.querySelectorAll(".track-row");
     const nowPlayingTitle = document.getElementById("now-playing-title");
     const mainPlayBtn = document.getElementById("main-play-btn");
@@ -572,7 +577,7 @@
         mainPlayBtn.innerText = "❚❚";
         gears.forEach(g => g.classList.add("spin"));
       }).catch(err => {
-        alert("No se pudo reproducir '" + name + "'. Verifica que el archivo exista en la carpeta assets.");
+        alert("No se pudo reproducir '" + name + "'. Verifica la carpeta assets.");
       });
     }
 
@@ -612,12 +617,11 @@
     prevBtn.addEventListener("click", () => { let prevIdx = (currentTrackIndex - 1 + trackRows.length) % trackRows.length; playTrack(prevIdx); });
     mixtapeAudio.addEventListener("ended", () => { gears.forEach(g => g.classList.remove("spin")); let nextIdx = (currentTrackIndex + 1) % trackRows.length; playTrack(nextIdx); });
 
-    // --- CARTA MODAL ---
+    // --- MODALES Y JUEGO ---
     const modal = document.getElementById("letter-modal");
     document.getElementById("open-letter-btn").addEventListener("click", () => modal.classList.remove("hidden"));
     document.getElementById("close-letter-btn").addEventListener("click", () => modal.classList.add("hidden"));
 
-    // --- MINIJUEGO CON NIVELES ---
     let currentPairs = 4;
     const allEmojis = ["💜", "💚", "✨", "🎵", "🌸", "🦋", "🌷", "🧸"];
 
