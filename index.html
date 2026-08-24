@@ -13,16 +13,16 @@
   <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
   <audio id="mixtape-audio"></audio>
 
-  <!-- Pantalla 1: Apertura (Se mantiene igual) -->
-  <section id="envelope-screen" class="screen">
+  <!-- PANTALLA 1: Sobre cerrado -->
+  <div id="envelope-screen" class="screen">
     <div class="envelope" id="envelope-btn">
       <div class="envelope-stamp">🌸</div>
       <p class="tap-text">Tap to open</p>
     </div>
-  </section>
+  </div>
 
-  <!-- Pantalla 2: Dashboard Principal -->
-  <section id="main-screen" class="screen hidden">
+  <!-- PANTALLA 2: Dashboard Principal -->
+  <div id="main-screen" class="screen hidden">
     <div class="dashboard-layout">
       
       <!-- COLUMNA IZQUIERDA -->
@@ -66,7 +66,6 @@
         <div class="organic-box mp3-box">
           <h3 class="box-title">Nuestra Playlist</h3>
           <div class="tracklist">
-            <!-- NOTA: Si cambiaste los nombres sin tildes, actualiza el data-src aquí -->
             <div class="track-row" data-src="assets/Aqui-Donde-Te-Extrano.mp3">
               <span class="track-index">01</span>
               <div class="track-meta"><strong>Aquí Donde Te Extraño</strong></div>
@@ -92,7 +91,6 @@
               <div class="track-meta"><strong>Love Me Not</strong></div>
               <button class="track-btn">▶</button>
             </div>
-            <!-- Agrega el resto de tus canciones siguiendo este formato... -->
           </div>
         </div>
 
@@ -108,15 +106,13 @@
         <!-- Minijuego de Memoria -->
         <div class="organic-box minigame-box">
           <h3 class="box-title">Minijuego: Encuentra los pares 🌸</h3>
-          <div class="memory-board" id="memory-board">
-            <!-- Las cartas se generan por JS -->
-          </div>
+          <div class="memory-board" id="memory-board"></div>
           <p id="game-message" class="game-msg hidden">¡Ganaste! Eres increíble 💖</p>
         </div>
       </div>
 
     </div>
-  </section>
+  </div>
 
   <!-- MODAL: La Carta Secreta -->
   <div id="letter-modal" class="modal-backdrop hidden">
