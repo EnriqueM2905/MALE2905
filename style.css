@@ -1,378 +1,126 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background-color: #f6efe7;
+  background-color: #f3ece4; /* Color de fondo mientras ponemos los videos */
   font-family: 'Playfair Display', serif;
-  color: #3b2c28;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-}
-
-.screen {
-  width: 100%;
+  color: #4a3b38;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.hidden {
-  display: none !important;
-}
+.screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+.hidden { display: none !important; }
 
-/* SOBRE INICIAL */
+/* SOBRE (Se mantiene igual) */
 .envelope {
-  width: 240px;
-  height: 160px;
-  background: #ecdccb;
-  border: 1px solid #d4bea7;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(78, 52, 46, 0.12);
-  transition: transform 0.3s ease;
+  width: 240px; height: 160px; background: #ecdccb;
+  border-radius: 8px; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; cursor: pointer;
+  transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(78,52,46,0.12);
 }
+.envelope:hover { transform: scale(1.05); }
 
-.envelope:hover {
-  transform: scale(1.04);
-}
-
-.envelope-stamp {
-  font-size: 2.5rem;
-  margin-bottom: 6px;
-}
-
-.tap-text {
-  font-style: italic;
-  color: #7a5e56;
-  font-size: 0.95rem;
-}
-
-/* EXPLOSIÓN FLORAL */
-.flower-overlay {
-  position: fixed;
-  inset: 0;
-  /* Fondo rosado de respaldo por si no tienes la imagen flores.png */
-  background: radial-gradient(circle, #f8c8d4 10%, #fbe8ec 60%, #f6efe7 100%);
-  background-image: url('assets/flores.png'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 50;
-  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-  transform: scale(0.9);
-}
-
-.flower-overlay.active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* LAYOUT PRINCIPAL */
-.app-layout {
+/* --- DISEÑO ORGÁNICO Y LAYOUT --- */
+.dashboard-layout {
   display: grid;
-  grid-template-columns: 360px 440px;
-  gap: 28px;
-  padding: 24px;
-  max-width: 900px;
-  animation: fadeIn 1.2s ease-out;
+  grid-template-columns: 1fr 1.2fr; /* Columna derecha un poco más ancha */
+  gap: 25px;
+  max-width: 1000px;
+  padding: 30px;
+  animation: fadeIn 1s ease-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Aquí está la magia de los bordes irregulares y suaves */
+.organic-box {
+  background: rgba(255, 253, 249, 0.85); /* Ligeramente transparente */
+  backdrop-filter: blur(5px);
+  padding: 25px;
+  /* Bordes orgánicos asimétricos */
+  border-radius: 40px 15px 50px 20px / 20px 40px 15px 30px;
+  border: 2px solid #e0cabd;
+  box-shadow: 5px 8px 20px rgba(0,0,0,0.04);
+  transition: border-radius 0.4s ease;
 }
 
-/* COMPONENTES LATERALES */
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.organic-box:hover {
+  /* Cambia levemente de forma al pasar el mouse */
+  border-radius: 20px 40px 15px 30px / 40px 15px 30px 20px;
 }
 
-.widget-card {
-  background: #fffdf9;
-  border: 1px solid #ebd9c8;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+.box-title { font-size: 1.2rem; color: #8e6c64; margin-bottom: 15px; text-align: center; }
+
+/* Columna Izquierda */
+.left-col { display: flex; flex-direction: column; gap: 25px; }
+
+/* Controles de Audio Always */
+.audio-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+.progress-container { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+.volume-container { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+
+input[type=range] {
+  flex: 1;
+  -webkit-appearance: none;
+  background: #e0cabd;
+  height: 6px;
+  border-radius: 10px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  background: #a34851;
+  border-radius: 50%; cursor: pointer;
 }
 
-.tag {
-  font-size: 0.65rem;
-  letter-spacing: 1.5px;
-  color: #a87e74;
-  font-weight: 600;
-}
+/* Letras de Always */
+.lyrics-scroll { height: 120px; overflow-y: auto; text-align: center; padding-right: 5px; }
+.lyric-item { font-size: 0.9rem; opacity: 0.4; transition: 0.3s; margin-bottom: 8px; }
+.lyric-item.active { opacity: 1; font-weight: bold; color: #a34851; transform: scale(1.05); }
 
-/* Carta Widget */
-.letter-trigger {
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
+/* YouTube */
+.iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 15px; overflow: hidden; }
+.iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-.letter-trigger:hover {
-  background-color: #fbf5ee;
-}
+/* Playlist MP3 */
+.tracklist { max-height: 400px; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 10px;}
+.track-row { display: flex; align-items: center; padding: 12px; background: #fffcf8; border-radius: 20px 10px 20px 10px; border: 1px solid #ebdccb; }
+.track-index { margin-right: 15px; color: #a88a82; font-weight: bold; }
+.track-meta { flex: 1; font-size: 0.95rem; }
+.track-btn { background: #a34851; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
 
-.letter-trigger h3 {
-  font-size: 1.1rem;
-  margin: 4px 0;
-}
+/* Fila Inferior (Carta y Juego) */
+.bottom-row { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; align-items: center; }
 
-.letter-trigger p {
-  font-size: 0.8rem;
-  color: #7a635c;
-}
-
-.open-badge {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 0.75rem;
-  color: #b05c65;
-  font-weight: 600;
-}
-
-/* YouTube Iframe */
-.iframe-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  margin-top: 8px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.iframe-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Letras sincronizadas */
-.lyrics-widget {
-  max-height: 170px;
-  display: flex;
-  flex-direction: column;
-}
-
-.lyrics-scroll {
-  overflow-y: auto;
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.lyric-item {
-  font-size: 0.85rem;
-  opacity: 0.35;
+.organic-btn {
+  background: #a34851; color: white; font-family: inherit; font-size: 1.2rem;
+  padding: 15px 40px; cursor: pointer; border: none;
+  border-radius: 30px 10px 30px 10px / 10px 30px 10px 30px;
+  box-shadow: 0 4px 15px rgba(163, 72, 81, 0.3);
   transition: all 0.3s ease;
 }
+.organic-btn:hover { background: #8e3e46; transform: translateY(-3px); }
 
-.lyric-item.active {
-  opacity: 1;
-  font-weight: 600;
-  color: #a34851;
+/* Minijuego Memoria */
+.minigame-box { width: 100%; max-width: 500px; text-align: center; }
+.memory-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+.memory-card {
+  background: #e0cabd; height: 60px; border-radius: 15px 8px 15px 8px;
+  display: flex; justify-content: center; align-items: center;
+  font-size: 1.8rem; cursor: pointer; transition: transform 0.3s;
 }
+.memory-card.flipped { background: #fff; transform: rotateY(180deg); border: 2px solid #a34851; }
+.game-msg { margin-top: 15px; color: #a34851; font-weight: bold; font-size: 1.1rem; }
 
-.lyric-trans {
-  display: block;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: #7a635c;
-}
-
-/* MIXTAPE CARD */
-.mixtape-card {
-  background: #fffdf9;
-  border: 1px solid #ebd9c8;
-  border-radius: 12px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.to-from {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  color: #9c7a72;
-}
-
-.card-header h1 {
-  font-size: 1.8rem;
-}
-
-/* Casete */
-.cassette-body {
-  background: #d8c4b2;
-  border: 2px solid #bfa48f;
-  border-radius: 10px;
-  padding: 16px;
-}
-
-.cassette-label {
-  background: #fbf7ef;
-  padding: 12px 16px;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.label-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.cassette-holes {
-  display: flex;
-  gap: 14px;
-}
-
-.gear {
-  width: 24px;
-  height: 24px;
-  border: 3px dashed #6f584e;
-  border-radius: 50%;
-}
-
-.gear.spin {
-  animation: rotateGear 2s linear infinite;
-}
-
-@keyframes rotateGear {
-  100% { transform: rotate(360deg); }
-}
-
-/* Pistas con Scroll */
-.tracklist {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 240px; 
-  overflow-y: auto;  
-  padding-right: 5px; 
-}
-
-.tracklist::-webkit-scrollbar {
-  width: 6px;
-}
-.tracklist::-webkit-scrollbar-track {
-  background: #fbf7ef; 
-  border-radius: 4px;
-}
-.tracklist::-webkit-scrollbar-thumb {
-  background: #d8c4b2; 
-  border-radius: 4px;
-}
-
-.track-row {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  background: #fbf7f0;
-  border: 1px solid #ebdccb;
-  border-radius: 6px;
-}
-
-.track-index {
-  font-size: 0.8rem;
-  color: #9c7a72;
-  margin-right: 12px;
-}
-
-.track-meta {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  font-size: 0.85rem;
-}
-
-.track-meta span {
-  font-size: 0.75rem;
-  color: #7a635c;
-}
-
-.track-btn {
-  background: #a34851;
-  color: white;
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* Liner note */
-.liner-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.handwritten {
-  font-family: 'Caveat', cursive;
-  font-size: 1.25rem;
-  color: #5c453e;
-  line-height: 1.3;
-}
-
-/* MODAL CARTA */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(40, 30, 25, 0.4);
-  backdrop-filter: blur(3px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.letter-paper {
-  background: #fcf9f2;
-  border: 1px solid #e2d1c0;
-  width: 90%;
-  max-width: 460px;
-  padding: 30px;
-  border-radius: 8px;
-  position: relative;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #7a635c;
-}
-
-.letter-text {
-  margin-top: 15px;
-  font-size: 1.35rem;
-}
+/* Modal Carta */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; }
+.letter-paper { width: 90%; max-width: 500px; position: relative; }
+.handwritten { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #5c453e; margin-top: 20px; line-height: 1.4; }
+.close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
 
 @media (max-width: 768px) {
-  .app-layout {
-    grid-template-columns: 1fr;
-  }
+  .dashboard-layout { grid-template-columns: 1fr; }
 }
