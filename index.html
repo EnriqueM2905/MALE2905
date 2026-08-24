@@ -68,10 +68,10 @@
 
     .left-col { display: flex; flex-direction: column; gap: 25px; }
 
-    /* REPRODUCTOR VIDEO ALWAYS (Más grande y estético) */
+    /* CONTENEDOR DE VIDEO LOCAL */
     .player-box { background: linear-gradient(145deg, rgba(255,250,247,0.95), rgba(252, 235, 238, 0.95)); }
     
-    .video-container {
+    .local-video-container {
       position: relative;
       width: 100%;
       padding-bottom: 60%; /* Cuadro más grande y amplio */
@@ -79,13 +79,15 @@
       overflow: hidden;
       border: 2px solid #ebd2d7;
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      background: #000;
     }
-    .video-container iframe {
+    .local-video-container video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
 
     /* YOUTUBE PLAYLIST */
@@ -213,7 +215,7 @@
 </head>
 <body>
 
-  <!-- Audio de respaldo local (opcional si se desea usar) -->
+  <!-- Audio por si se usa de respaldo -->
   <audio id="mixtape-audio"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
@@ -231,11 +233,11 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="left-col">
         
-        <!-- 1. Video de Always (Más grande y estético) -->
+        <!-- 1. Video Local de Always con Letras -->
         <div class="organic-box player-box">
           <h3 class="box-title">♪ Always (Daniel Caesar)</h3>
-          <div class="video-container">
-            <iframe src="https://www.youtube-nocookie.com/embed/NnAvnNtGL0Y?autoplay=1" title="Daniel Caesar - Always" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="local-video-container">
+            <video id="always-video" src="assets/Always-Lyrics.mp4" controls autoplay loop playsinline></video>
           </div>
         </div>
 
@@ -360,12 +362,17 @@
   </div>
 
   <script>
+    const alwaysVideo = document.getElementById("always-video");
+
     // --- SOBRE ---
     const envelopeBtn = document.getElementById("envelope-btn");
     if (envelopeBtn) {
       envelopeBtn.addEventListener("click", () => {
         document.getElementById("envelope-screen").classList.add("hidden");
         document.getElementById("main-screen").classList.remove("hidden");
+        if (alwaysVideo) {
+          alwaysVideo.play().catch(e => console.log("Autoplay con video prevenido:", e));
+        }
       });
     }
 
@@ -387,6 +394,9 @@
       const src = row.getAttribute("data-src");
       const name = row.getAttribute("data-name");
 
+      // Si suena una canción del casete, pausar el video de Always
+      if (alwaysVideo) alwaysVideo.pause();
+
       mixtapeAudio.src = src;
       mixtapeAudio.play().then(() => {
         nowPlayingTitle.innerText = "Reproduciendo: " + name;
@@ -404,6 +414,7 @@
           mixtapeAudio.pause();
           mainPlayBtn.innerText = "▶";
           gears.forEach(g => g.classList.remove("spin"));
+          if (alwaysVideo) alwaysVideo.play();
         } else {
           playTrack(idx);
         }
@@ -418,6 +429,7 @@
         mixtapeAudio.pause();
         mainPlayBtn.innerText = "▶";
         gears.forEach(g => g.classList.remove("spin"));
+        if (alwaysVideo) alwaysVideo.play();
       }
     });
 
