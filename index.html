@@ -38,7 +38,7 @@
     .envelope-stamp { font-size: 2.8rem; margin-bottom: 8px; }
     .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: #a36b74; font-size: 1rem; font-weight: 600; }
 
-    /* DISEÑO PRINCIPAL CÁLIDO Y VIVO */
+    /* DISEÑO PRINCIPAL */
     .dashboard-layout {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
@@ -68,7 +68,7 @@
 
     .left-col { display: flex; flex-direction: column; gap: 25px; }
 
-    /* REPRODUCTOR ALWAYS CON LETRA Y CONTROLES */
+    /* REPRODUCTOR ALWAYS */
     .player-box { background: linear-gradient(145deg, rgba(255,250,247,0.95), rgba(252, 235, 238, 0.95)); }
     
     .always-header-flex {
@@ -106,31 +106,46 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* LETRAS ESTÉTICAS SINCRONIZADAS */
+    /* LETRAS ESTÉTICAS SINCRONIZADAS CON TRADUCCIÓN */
     .lyrics-scroll { 
-      height: 120px; 
+      height: 160px; /* Un poco más alto para las traducciones */
       overflow-y: auto; 
       text-align: center; 
       padding-right: 5px; 
+      position: relative;
     }
     .lyrics-scroll::-webkit-scrollbar { width: 4px; }
     .lyrics-scroll::-webkit-scrollbar-thumb { background: #dca3ab; border-radius: 4px; }
 
     .lyric-item { 
       font-family: 'Playfair Display', serif;
-      font-size: 0.95rem; 
-      font-style: italic;
-      opacity: 0.45; 
+      opacity: 0.35; 
       transition: all 0.4s ease; 
-      margin-bottom: 10px; 
+      margin-bottom: 14px; 
       color: #6e4e54;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .lyric-en {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .lyric-es {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #a36b74;
     }
     .lyric-item.active { 
       opacity: 1; 
-      font-weight: bold; 
+      transform: scale(1.05); 
+    }
+    .lyric-item.active .lyric-en {
       color: #9e2a3b; 
-      transform: scale(1.06); 
       text-shadow: 0 2px 8px rgba(158, 42, 59, 0.15);
+    }
+    .lyric-item.active .lyric-es {
+      color: #ba3c4e;
     }
 
     /* YOUTUBE PLAYLIST */
@@ -157,32 +172,15 @@
     }
     .cassette-title-text { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: bold; color: #6e4e54; }
     .cassette-wheels { display: flex; gap: 15px; }
-    .gear {
-      width: 22px; height: 22px;
-      border: 3px dashed #6e4e54;
-      border-radius: 50%;
-    }
+    .gear { width: 22px; height: 22px; border: 3px dashed #6e4e54; border-radius: 50%; }
     .gear.spin { animation: rotateGear 2s linear infinite; }
     @keyframes rotateGear { 100% { transform: rotate(360deg); } }
 
-    .cassette-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-top: 8px;
-    }
+    .cassette-controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 8px; }
     .control-btn {
-      background: #fff8f3;
-      border: 2px solid #dca3ab;
-      color: #9e2a3b;
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex; justify-content: center; align-items: center;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      background: #fff8f3; border: 2px solid #dca3ab; color: #9e2a3b; width: 38px; height: 38px;
+      border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center;
+      font-size: 0.9rem; transition: all 0.2s; box-shadow: 0 3px 8px rgba(0,0,0,0.05);
     }
     .control-btn:hover { background: #9e2a3b; color: white; transform: scale(1.08); }
     .control-btn.main-play { width: 46px; height: 46px; font-size: 1.1rem; background: #9e2a3b; color: white; }
@@ -212,35 +210,30 @@
 
     .organic-btn {
       background: linear-gradient(135deg, #9e2a3b, #ba3c4e); color: white; font-family: 'Playfair Display', serif; font-size: 1.25rem;
-      padding: 16px 45px; cursor: pointer; border: none;
-      border-radius: 35px 15px 35px 15px / 15px 35px 15px 35px;
-      box-shadow: 0 8px 20px rgba(158, 42, 59, 0.35);
-      transition: all 0.3s ease;
+      padding: 16px 45px; cursor: pointer; border: none; border-radius: 35px 15px 35px 15px / 15px 35px 15px 35px;
+      box-shadow: 0 8px 20px rgba(158, 42, 59, 0.35); transition: all 0.3s ease;
     }
     .organic-btn:hover { background: linear-gradient(135deg, #822230, #9e2a3b); transform: translateY(-3px) scale(1.02); }
 
-    /* MINIJUEGO CON NIVELES */
+    /* MINIJUEGO */
     .minigame-box { width: 100%; max-width: 550px; text-align: center; }
     .level-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; }
     .level-btn {
       background: #fff8f3; border: 2px solid #dca3ab; color: #8e4a55;
-      padding: 5px 15px; border-radius: 15px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
-      transition: all 0.2s;
+      padding: 5px 15px; border-radius: 15px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s;
     }
     .level-btn.active, .level-btn:hover { background: #9e2a3b; color: white; border-color: #9e2a3b; }
 
     .memory-board { display: grid; gap: 10px; margin-top: 10px; justify-content: center; }
     .memory-card {
       background: #ebd2d7; height: 60px; width: 60px; border-radius: 15px 8px 15px 8px;
-      display: flex; justify-content: center; align-items: center;
-      font-size: 1.6rem; cursor: pointer; transition: transform 0.3s, background 0.3s;
+      display: flex; justify-content: center; align-items: center; font-size: 1.6rem; cursor: pointer; transition: transform 0.3s, background 0.3s;
       box-shadow: 0 3px 8px rgba(0,0,0,0.05);
     }
     .memory-card.flipped { background: #fff8f3; transform: rotateY(180deg); border: 2px solid #9e2a3b; }
     
     .game-msg { 
-      margin-top: 15px; color: #9e2a3b; font-family: 'Playfair Display', serif; 
-      font-weight: bold; font-size: 1.15rem; background: #fce4ec; padding: 10px; border-radius: 15px;
+      margin-top: 15px; color: #9e2a3b; font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.15rem; background: #fce4ec; padding: 10px; border-radius: 15px;
       border: 1px dashed #dca3ab; animation: bounceMsg 0.5s ease;
     }
     @keyframes bounceMsg { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -251,9 +244,7 @@
     .handwritten { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #5c453e; margin-top: 15px; line-height: 1.4; }
     .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.6rem; background: none; border: none; cursor: pointer; color: #8e4a55; }
 
-    @media (max-width: 768px) {
-      .dashboard-layout { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 768px) { .dashboard-layout { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -336,55 +327,36 @@
           </div>
 
           <div class="tracklist">
+            <!-- Pistas mp3... -->
             <div class="track-row" data-src="assets/Aqui-Donde-Te-Extrano.mp3" data-name="Aquí Donde Te Extraño">
-              <span class="track-index">01</span>
-              <div class="track-meta">Aquí Donde Te Extraño</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">01</span><div class="track-meta">Aquí Donde Te Extraño</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Como-me-duele-perderte.mp3" data-name="Como me duele perderte">
-              <span class="track-index">02</span>
-              <div class="track-meta">Como me duele perderte</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">02</span><div class="track-meta">Como me duele perderte</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Extranos.mp3" data-name="Extraños">
-              <span class="track-index">03</span>
-              <div class="track-meta">Extraños</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">03</span><div class="track-meta">Extraños</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Glimpse-of-Us.mp3" data-name="Glimpse of Us">
-              <span class="track-index">04</span>
-              <div class="track-meta">Glimpse of Us</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">04</span><div class="track-meta">Glimpse of Us</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Love-Me-Not.mp3" data-name="Love Me Not">
-              <span class="track-index">05</span>
-              <div class="track-meta">Love Me Not</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">05</span><div class="track-meta">Love Me Not</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/On-Melancholy-Hill.mp3" data-name="On Melancholy Hill">
-              <span class="track-index">06</span>
-              <div class="track-meta">On Melancholy Hill</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">06</span><div class="track-meta">On Melancholy Hill</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Punto-y-Aparte.mp3" data-name="Punto y Aparte">
-              <span class="track-index">07</span>
-              <div class="track-meta">Punto y Aparte</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">07</span><div class="track-meta">Punto y Aparte</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Solo-Faltas-Tu.mp3" data-name="Solo Faltas Tú">
-              <span class="track-index">08</span>
-              <div class="track-meta">Solo Faltas Tú</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">08</span><div class="track-meta">Solo Faltas Tú</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/Y-solo-se-me-ocurre-amarte.mp3" data-name="Y solo se me ocurre amarte">
-              <span class="track-index">09</span>
-              <div class="track-meta">Y solo se me ocurre amarte</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">09</span><div class="track-meta">Y solo se me ocurre amarte</div><button class="track-btn">▶</button>
             </div>
             <div class="track-row" data-src="assets/esperando-que-vuelvas.mp3" data-name="Esperando que vuelvas">
-              <span class="track-index">10</span>
-              <div class="track-meta">Esperando que vuelvas</div>
-              <button class="track-btn">▶</button>
+              <span class="track-index">10</span><div class="track-meta">Esperando que vuelvas</div><button class="track-btn">▶</button>
             </div>
           </div>
         </div>
@@ -393,10 +365,7 @@
 
       <!-- FILA INFERIOR -->
       <div class="bottom-row">
-        <button class="organic-btn letter-trigger" id="open-letter-btn">
-          Carta para mi male 💌
-        </button>
-
+        <button class="organic-btn letter-trigger" id="open-letter-btn">Carta para mi male 💌</button>
         <div class="organic-box minigame-box">
           <h3 class="box-title">🌸 Minijuego de Memoria para Male 🌸</h3>
           <div class="level-selector">
@@ -424,20 +393,14 @@
   </div>
 
   <script>
-    // --- LETRA REAL DE ALWAYS (Daniel Caesar) ---
+    // --- LETRA REAL CON ESPAÑOL DE ALWAYS ---
+    // (Ajusta la "t" a los segundos exactos de tu MP3)
     const lyrics = [
-      { t: 0, text: "Baby, baby..." },
-      { t: 5, text: "There will always be a space for you and me" },
-      { t: 12, text: "Right where you left it" },
-      { t: 17, text: "And just maybe, enough time will pass" },
-      { t: 24, text: "We'll look back and laugh, just don't forget it" },
-      { t: 32, text: "And maybe I'm wrong for writing this song" },
-      { t: 39, text: "Losing my head over you" },
-      { t: 46, text: "And I'll be here, 'cause we both know how it goes" },
-      { t: 54, text: "I don't want things to change, I pray they stay the same, always" },
-      { t: 64, text: "And I don't care if you're with somebody else" },
-      { t: 71, text: "I'll give you time and space, just know I'm not afraid" },
-      { t: 79, text: "Always..." }
+      { t: 0, en: "And I'll be here", es: "Y estaré aquí" },
+      { t: 4, en: "'Cause we both know how it goes", es: "Porque ambos sabemos cómo va esto" },
+      { t: 9, en: "I don't want things to change", es: "No quiero que las cosas cambien" },
+      { t: 14, en: "I pray they stay the same, always", es: "Ruego que se queden igual, siempre" },
+      // Puedes añadir el resto de la letra buscando la oficial y copiando este mismo formato de líneas
     ];
 
     const bgAudio = document.getElementById("bg-audio");
@@ -453,7 +416,7 @@
         const div = document.createElement("div");
         div.className = "lyric-item";
         div.id = `lyric-${i}`;
-        div.innerText = line.text;
+        div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
         lyricsContainer.appendChild(div);
       });
     }
@@ -472,7 +435,7 @@
       });
     }
 
-    // --- CONTROLES ALWAYS ---
+    // --- CONTROLES ALWAYS Y SCROLL PERFECTO ---
     function formatTime(seconds) {
       if (isNaN(seconds)) return "0:00";
       const min = Math.floor(seconds / 60);
@@ -496,9 +459,17 @@
           const el = document.getElementById(`lyric-${i}`);
           if (el) {
             if (current >= item.t && (!next || current < next.t)) {
-              el.classList.add("active");
-            } else {
-              el.classList.remove("active");
+              // Verifica si ya está activa para no hacer scroll constantemente
+              if (!el.classList.contains("active")) {
+                // Remueve la clase active de todas
+                document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
+                el.classList.add("active");
+                
+                // Scroll interno matemático que no bloquea la página
+                const container = document.getElementById("lyrics-container");
+                const targetScroll = el.offsetTop - container.offsetTop - (container.clientHeight / 2) + (el.clientHeight / 2);
+                container.scrollTo({ top: targetScroll, behavior: 'smooth' });
+              }
             }
           }
         });
@@ -601,21 +572,9 @@
       }
     });
 
-    nextBtn.addEventListener("click", () => {
-      let nextIdx = (currentTrackIndex + 1) % trackRows.length;
-      playTrack(nextIdx);
-    });
-
-    prevBtn.addEventListener("click", () => {
-      let prevIdx = (currentTrackIndex - 1 + trackRows.length) % trackRows.length;
-      playTrack(prevIdx);
-    });
-
-    mixtapeAudio.addEventListener("ended", () => {
-      gears.forEach(g => g.classList.remove("spin"));
-      let nextIdx = (currentTrackIndex + 1) % trackRows.length;
-      playTrack(nextIdx);
-    });
+    nextBtn.addEventListener("click", () => { let nextIdx = (currentTrackIndex + 1) % trackRows.length; playTrack(nextIdx); });
+    prevBtn.addEventListener("click", () => { let prevIdx = (currentTrackIndex - 1 + trackRows.length) % trackRows.length; playTrack(prevIdx); });
+    mixtapeAudio.addEventListener("ended", () => { gears.forEach(g => g.classList.remove("spin")); let nextIdx = (currentTrackIndex + 1) % trackRows.length; playTrack(nextIdx); });
 
     // --- CARTA MODAL ---
     const modal = document.getElementById("letter-modal");
@@ -657,7 +616,6 @@
         
         card.addEventListener("click", () => {
           if (card.classList.contains("flipped") || flippedCards.length === 2) return;
-          
           card.classList.add("flipped");
           card.innerText = emoji;
           flippedCards.push(card);
@@ -667,9 +625,7 @@
               const [c1, c2] = flippedCards;
               if (c1.dataset.val === c2.dataset.val) {
                 matchedCount += 2;
-                if (matchedCount === gameDeck.length) {
-                  msg.classList.remove("hidden");
-                }
+                if (matchedCount === gameDeck.length) { msg.classList.remove("hidden"); }
               } else {
                 c1.classList.remove("flipped"); c1.innerText = "";
                 c2.classList.remove("flipped"); c2.innerText = "";
