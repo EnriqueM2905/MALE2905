@@ -1,3 +1,5 @@
+console.log("Cargando script de la carta...");
+
 // --- 1. Letras de Always ---
 const lyrics = [
   { t: 0, text: "And I'll be here" },
@@ -17,133 +19,166 @@ const volumeBar = document.getElementById("volume-bar");
 const currentTimeEl = document.getElementById("current-time");
 const durationEl = document.getElementById("duration");
 
-// Cargar Letras
-lyrics.forEach((line, i) => {
-  const div = document.createElement("div");
-  div.className = "lyric-item";
-  div.id = `lyric-${i}`;
-  div.innerText = line.text;
-  lyricsContainer.appendChild(div);
-});
+// Cargar Letras de forma segura
+if (lyricsContainer) {
+  lyrics.forEach((line, i) => {
+    const div = document.createElement("div");
+    div.className = "lyric-item";
+    div.id = `lyric-${i}`;
+    div.innerText = line.text;
+    lyricsContainer.appendChild(div);
+  });
+}
 
-// Apertura del sobre
-document.getElementById("envelope-btn").addEventListener("click", () => {
-  document.getElementById("envelope-screen").classList.add("hidden");
-  document.getElementById("main-screen").classList.remove("hidden");
-  
-  bgAudio.volume = volumeBar.value;
-  bgAudio.play().catch(e => console.log("Autoplay bloquedo", e));
-});
+// --- 2. APERTURA DEL SOBRE (Con protección contra errores nulos) ---
+const envelopeBtn = document.getElementById("envelope-btn");
+if (envelopeBtn) {
+  envelopeBtn.addEventListener("click", () => {
+    console.log("Sobre abierto correctamente");
+    
+    const envelopeScreen = document.getElementById("envelope-screen");
+    const mainScreen = document.getElementById("main-screen");
 
-// --- 2. Controles de Always ---
+    if (envelopeScreen) envelopeScreen.classList.add("hidden");
+    if (mainScreen) mainScreen.classList.remove("hidden");
+    
+    if (bgAudio) {
+      if (volumeBar) bgAudio.volume = volumeBar.value;
+      bgAudio.play().catch(e => console.log("Autoplay prevenido por el navegador:", e));
+    }
+  });
+} else {
+  console.error("No se encontró el elemento id='envelope-btn' en el HTML.");
+}
+
+// --- 3. Controles de Always ---
 function formatTime(seconds) {
+  if (isNaN(seconds)) return "0:00";
   const min = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);
   return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-bgAudio.addEventListener("loadedmetadata", () => {
-  seekBar.max = bgAudio.duration;
-  durationEl.innerText = formatTime(bgAudio.duration);
-});
-
-bgAudio.addEventListener("timeupdate", () => {
-  seekBar.value = bgAudio.currentTime;
-  currentTimeEl.innerText = formatTime(bgAudio.currentTime);
-
-  // Sincronizar Letras
-  const current = bgAudio.currentTime;
-  lyrics.forEach((item, i) => {
-    const next = lyrics[i + 1];
-    const el = document.getElementById(`lyric-${i}`);
-    if (el) {
-      if (current >= item.t && (!next || current < next.t)) {
-        el.classList.add("active");
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        el.classList.remove("active");
-      }
-    }
+if (bgAudio) {
+  bgAudio.addEventListener("loadedmetadata", () => {
+    if (seekBar) seekBar.max = bgAudio.duration;
+    if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
   });
-});
 
-seekBar.addEventListener("input", () => { bgAudio.currentTime = seekBar.value; });
-volumeBar.addEventListener("input", () => { 
-  bgAudio.volume = volumeBar.value; 
-  mixtapeAudio.volume = volumeBar.value; // El volumen controla ambas músicas
-});
+  bgAudio.addEventListener("timeupdate", () => {
+    if (seekBar) seekBar.value = bgAudio.currentTime;
+    if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
 
-// --- 3. Playlist MP3 ---
+    // Sincronizar Letras
+    const current = bgAudio.currentTime;
+    lyrics.forEach((item, i) => {
+      const next = lyrics[i + 1];
+      const el = document.getElementById(`lyric-${i}`);
+      if (el) {
+        if (current >= item.t && (!next || current < next.t)) {
+          el.classList.add("active");
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          el.classList.remove("active");
+        }
+      }
+    });
+  });
+
+  if (seekBar) {
+    seekBar.addEventListener("input", () => { 
+      bgAudio.currentTime = seekBar.value; 
+    });
+  }
+}
+
+if (volumeBar && bgAudio && mixtapeAudio) {
+  volumeBar.addEventListener("input", () => { 
+    bgAudio.volume = volumeBar.value; 
+    mixtapeAudio.volume = volumeBar.value; 
+  });
+}
+
+// --- 4. Playlist MP3 ---
 const trackRows = document.querySelectorAll(".track-row");
 trackRows.forEach(row => {
   const btn = row.querySelector(".track-btn");
-  btn.addEventListener("click", () => {
-    const src = row.getAttribute("data-src");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const src = row.getAttribute("data-src");
 
-    if (mixtapeAudio.src.includes(src) && !mixtapeAudio.paused) {
-      mixtapeAudio.pause();
-      btn.textContent = "▶";
-      bgAudio.play();
-    } else {
-      bgAudio.pause();
-      document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
-      
-      mixtapeAudio.src = src;
-      mixtapeAudio.play().catch(e => alert("No se pudo reproducir. Revisa que el nombre del archivo MP3 no tenga espacios ni tildes."));
-      btn.textContent = "❚❚";
-    }
+      if (mixtapeAudio && mixtapeAudio.src.includes(src) && !mixtapeAudio.paused) {
+        mixtapeAudio.pause();
+        btn.textContent = "▶";
+        if (bgAudio) bgAudio.play();
+      } else {
+        if (bgAudio) bgAudio.pause();
+        document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+        
+        if (mixtapeAudio) {
+          mixtapeAudio.src = src;
+          mixtapeAudio.play().catch(e => alert("No se pudo reproducir la pista. Verifica que el archivo MP3 exista en la carpeta assets y no tenga espacios o tildes."));
+        }
+        btn.textContent = "❚❚";
+      }
+    });
+  }
+});
+
+if (mixtapeAudio) {
+  mixtapeAudio.addEventListener("ended", () => {
+    document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
+    if (bgAudio) bgAudio.play();
   });
-});
+}
 
-mixtapeAudio.addEventListener("ended", () => {
-  document.querySelectorAll(".track-btn").forEach(b => b.textContent = "▶");
-  bgAudio.play();
-});
-
-// --- 4. Carta ---
+// --- 5. Carta ---
 const modal = document.getElementById("letter-modal");
-document.getElementById("open-letter-btn").addEventListener("click", () => modal.classList.remove("hidden"));
-document.getElementById("close-letter-btn").addEventListener("click", () => modal.classList.add("hidden"));
+const openBtn = document.getElementById("open-letter-btn");
+const closeBtn = document.getElementById("close-letter-btn");
 
-// --- 5. Minijuego: Memorama ---
+if (modal && openBtn && closeBtn) {
+  openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+}
+
+// --- 6. Minijuego: Memorama ---
 const board = document.getElementById("memory-board");
 const msg = document.getElementById("game-message");
-const emojis = ["🌸", "💌", "💖", "🎶", "🌸", "💌", "💖", "🎶"]; // 4 pares
-let flippedCards = [];
-let matchedCount = 0;
+if (board && msg) {
+  const emojis = ["🌸", "💌", "💖", "🎶", "🌸", "💌", "💖", "🎶"];
+  let flippedCards = [];
+  let matchedCount = 0;
 
-// Barajar
-emojis.sort(() => 0.5 - Math.random());
+  emojis.sort(() => 0.5 - Math.random());
 
-emojis.forEach((emoji, i) => {
-  const card = document.createElement("div");
-  card.className = "memory-card";
-  card.dataset.val = emoji;
-  card.dataset.index = i;
-  
-  card.addEventListener("click", () => {
-    // Si ya está volteada o hay 2 seleccionadas, no hacer nada
-    if (card.classList.contains("flipped") || flippedCards.length === 2) return;
+  emojis.forEach((emoji, i) => {
+    const card = document.createElement("div");
+    card.className = "memory-card";
+    card.dataset.val = emoji;
+    card.dataset.index = i;
     
-    card.classList.add("flipped");
-    card.innerText = emoji;
-    flippedCards.push(card);
+    card.addEventListener("click", () => {
+      if (card.classList.contains("flipped") || flippedCards.length === 2) return;
+      
+      card.classList.add("flipped");
+      card.innerText = emoji;
+      flippedCards.push(card);
 
-    if (flippedCards.length === 2) {
-      setTimeout(checkMatch, 800);
-    }
+      if (flippedCards.length === 2) {
+        setTimeout(() => {
+          const [c1, c2] = flippedCards;
+          if (c1.dataset.val === c2.dataset.val) {
+            matchedCount += 2;
+            if (matchedCount === emojis.length) msg.classList.remove("hidden");
+          } else {
+            c1.classList.remove("flipped"); c1.innerText = "";
+            c2.classList.remove("flipped"); c2.innerText = "";
+          }
+          flippedCards = [];
+        }, 800);
+      }
+    });
+    board.appendChild(card);
   });
-  board.appendChild(card);
-});
-
-function checkMatch() {
-  const [c1, c2] = flippedCards;
-  if (c1.dataset.val === c2.dataset.val) {
-    matchedCount += 2;
-    if (matchedCount === emojis.length) msg.classList.remove("hidden");
-  } else {
-    c1.classList.remove("flipped"); c1.innerText = "";
-    c2.classList.remove("flipped"); c2.innerText = "";
-  }
-  flippedCards = [];
 }
