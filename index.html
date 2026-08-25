@@ -36,27 +36,8 @@
       top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover;
       z-index: -1;
-      opacity: 0.25;
+      opacity: 0.3;
       filter: saturate(1.2);
-    }
-
-    /* PANTALLA DE TRANSICIÓN DE ENTRADA */
-    #intro-transition-screen {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 1s ease;
-    }
-    #intro-transition-screen.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-    #intro-transition-screen video {
-      width: 100%; height: 100%; object-fit: cover;
     }
 
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
@@ -226,16 +207,11 @@
 </head>
 <body>
 
-  <!-- 1. VIDEO DE FONDO (LOOP Y SILENCIADO) -->
-  <video id="bg-video" autoplay muted loop playsinline src="assets/flores-explosion.mp4"></video>
+  <!-- VIDEO DE FONDO -->
+  <video id="bg-video" autoplay muted loop playsinline src="assets/fondo-flores.mp4"></video>
 
   <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
-
-  <!-- 2. PANTALLA DE TRANSICIÓN DE ENTRADA (EXPLOSIÓN DE FLORES) -->
-  <div id="intro-transition-screen">
-    <video id="intro-video" muted playsinline src="assets/flores-explosion.mp4"></video>
-  </div>
 
   <!-- PANTALLA 1: Sobre cerrado -->
   <div id="envelope-screen" class="screen">
@@ -305,7 +281,6 @@
                 Quizá no siempre encuentre las palabras perfectas para describir todo lo que siento, porque hay sentimientos que simplemente no se pueden decir con palabras o una frase.<br><br>
                 Solo quiero que sepas que cada día le agradezco a Diosito por haberte puesto en mi camino y me gustaría seguir construyendo recuerdos contigo, no importa lo que pase o lo difícil que sea el camino, <strong>si tú estás al final de él, con gusto lo cruzaría.</strong>
               </p>
-              <!-- Enlace directo oficial y estable para el gif de los ositos abrazándose -->
               <img src="https://media1.tenor.com/m/aKFaZbrZGYAAAAAd/milk-and-mocha-hug.gif" class="bears-gif" alt="Ositos abrazándose">
             </div>
           </div>
@@ -349,35 +324,23 @@
 
   <script>
     // ==========================================
-    // LÓGICA DE LOS DOS VIDEOS (ENTRADA Y LOOP)
+    // LÓGICA DE APERTURA Y AUDIO
     // ==========================================
     const envelopeBtn = document.getElementById("envelope-btn");
-    const introScreen = document.getElementById("intro-transition-screen");
-    const introVideo = document.getElementById("intro-video");
     const bgAudio = document.getElementById("bg-audio");
     const volumeBar = document.getElementById("volume-bar");
 
     if (envelopeBtn) {
       envelopeBtn.addEventListener("click", () => {
         document.getElementById("envelope-screen").classList.add("hidden");
-        introScreen.classList.remove("hidden");
+        document.getElementById("main-screen").classList.remove("hidden");
         
-        introVideo.play().catch(e => console.log("Video play error:", e));
         if (bgAudio) {
           if (volumeBar) bgAudio.volume = volumeBar.value;
           bgAudio.play().catch(e => console.log("Audio play error:", e));
         }
       });
     }
-
-    if (introVideo) {
-      introVideo.addEventListener("ended", () => {
-        introScreen.classList.add("fade-out");
-        document.getElementById("main-screen").classList.remove("hidden");
-        setTimeout(() => { introScreen.remove(); }, 1000);
-      });
-    }
-
 
     // ==========================================
     // JS DEL ÁRBOL Y LOS CORAZONES CAYENDO
@@ -479,7 +442,7 @@
       { t: 178, en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ella seguro como las estrellas en el cielo" },
       { t: 184, en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
       { t: 191, en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
-      { t: 199, en: "Always, I will be here", es: "Siempre, estaré здесь" }
+      { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
     ];
 
     const lyricsInner = document.getElementById("lyrics-inner");
