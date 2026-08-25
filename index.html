@@ -18,7 +18,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #120822;
+      background: linear-gradient(135deg, #fce4ec 0%, #e0f7fa 50%, #ede7f6 100%);
       font-family: 'Quicksand', sans-serif;
       color: #333;
       min-height: 100vh;
@@ -30,19 +30,26 @@
       position: relative;
     }
 
-    /* VIDEO DE FONDO Y CAPA OSCURA */
-    #bg-video {
+    /* EFECTO DE GOTITAS DE LLUVIA CAYENDO DE FONDO */
+    .rain-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -2;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
-    .video-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(26, 11, 46, 0.45);
-      backdrop-filter: blur(2px);
-      z-index: -1;
+    .raindrop {
+      position: absolute;
+      background: linear-gradient(transparent, rgba(103, 58, 183, 0.4));
+      width: 1.5px;
+      height: 25px;
+      opacity: 0.6;
+      animation: fallRain linear infinite;
+    }
+    @keyframes fallRain {
+      0% { transform: translateY(-30px); opacity: 0; }
+      20% { opacity: 0.6; }
+      100% { transform: translateY(105vh); opacity: 0; }
     }
 
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
@@ -71,16 +78,16 @@
       max-width: 1150px;
       width: 100%;
       padding: 20px;
-      align-items: start; /* Evita que las columnas se fuercen a la misma altura vacía */
+      align-items: start;
     }
 
     .organic-box {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       padding: 25px 30px;
       border-radius: 35px;
-      border: 2px solid rgba(255,255,255,0.8);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow: 0 10px 30px rgba(103, 58, 183, 0.12);
       transition: all 0.4s ease;
     }
 
@@ -155,7 +162,7 @@
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
     /* =========================================================
-       ÁRBOL Y CONTADOR COMPACTO (SIN ESPACIOS VACÍOS)
+       ÁRBOL Y CONTADOR COMPACTO (SIN ESPACIO VACÍO)
        ========================================================= */
     .canvas-tree-box {
       position: relative; 
@@ -165,7 +172,7 @@
       gap: 12px;
       background: linear-gradient(160deg, #fff0f5 0%, #e0f7fa 100%); 
       padding: 25px;
-      height: auto; /* Altura automática para que se ajuste exactamente al contenido */
+      height: auto;
     }
     .falling-hearts-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
     .tree-content-layout { display: flex; gap: 15px; align-items: center; position: relative; z-index: 2; }
@@ -239,9 +246,8 @@
 </head>
 <body>
 
-  <!-- VIDEO DE FONDO -->
-  <video id="bg-video" autoplay muted loop playsinline src="assets/fondo-flores.mp4"></video>
-  <div class="video-overlay"></div>
+  <!-- CONTENEDOR DE GOTITAS DE LLUVIA -->
+  <div class="rain-container" id="rain-container"></div>
 
   <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
@@ -358,6 +364,22 @@
 
   <script>
     // ==========================================
+    // LLUVIA DINÁMICA DE FONDO
+    // ==========================================
+    const rainContainer = document.getElementById("rain-container");
+    if (rainContainer) {
+      for (let i = 0; i < 40; i++) {
+        const drop = document.createElement("div");
+        drop.className = "raindrop";
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.top = `${Math.random() * -100}px`;
+        drop.style.animationDuration = `${Math.random() * 1.5 + 1}s`;
+        drop.style.animationDelay = `${Math.random() * 3}s`;
+        rainContainer.appendChild(drop);
+      }
+    }
+
+    // ==========================================
     // SCRIPT PRINCIPAL
     // ==========================================
     window.addEventListener("DOMContentLoaded", () => {
@@ -473,7 +495,7 @@
         { t: 178,  en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ella seguro como las estrellas en el cielo" },
         { t: 184,  en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
         { t: 191,  en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
-        { t: 199,  en: "Always, I will be here", es: "Siempre, estaré aquí" }
+        { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
       ];
 
       const lyricsInner = document.getElementById("lyrics-inner");
