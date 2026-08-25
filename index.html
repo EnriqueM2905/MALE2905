@@ -161,9 +161,7 @@
     }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* =========================================================
-       ÁRBOL Y CONTADOR COMPACTO (SIN ESPACIO VACÍO)
-       ========================================================= */
+    /* ÁRBOL Y CONTADOR COMPACTO */
     .canvas-tree-box {
       position: relative; 
       overflow: hidden; 
@@ -230,12 +228,94 @@
     }
     @keyframes bounceMsg { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-    /* MODAL CARTA */
+    /* =========================================================
+       MODAL DE CARTA CON CONTRASEÑA "mi male" Y ESTILO CLARO
+       ========================================================= */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 11, 46, 0.6); backdrop-filter: blur(8px); z-index: 100; display: flex; justify-content: center; align-items: center; }
-    .letter-paper { width: 90%; max-width: 500px; position: relative; background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-    .handwritten { font-family: 'Caveat', cursive; font-size: 1.8rem; color: #333; margin-top: 20px; line-height: 1.5; }
-    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--purple-main); transition: 0.2s; }
+    
+    .letter-paper { 
+      width: 90%; 
+      max-width: 580px; 
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative; 
+      background: #fffdf9; 
+      padding: 45px 35px; 
+      border-radius: 20px; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
+      border: 1px solid #e9e0d2;
+    }
+    
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--purple-main); transition: 0.2s; z-index: 10; }
     .close-btn:hover { color: var(--turquoise-main); transform: scale(1.1); }
+
+    /* Estilo del texto de la carta */
+    .handwritten-letter {
+      font-family: 'Caveat', cursive; 
+      font-size: 1.5rem; 
+      color: #382c22; 
+      line-height: 1.5; 
+      margin-top: 10px;
+    }
+    .handwritten-letter p {
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    /* Pantalla de contraseña dentro del modal */
+    .auth-box {
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .auth-box h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--purple-dark);
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+    .auth-box p {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .auth-input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .auth-input {
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: 1px solid #d1c4e9;
+      border-radius: 12px;
+      outline: none;
+      width: 220px;
+      background: #faf8f5;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .auth-input:focus {
+      border-color: var(--turquoise-main);
+    }
+    .auth-submit-btn {
+      padding: 12px 22px;
+      background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s;
+    }
+    .auth-submit-btn:hover {
+      transform: scale(1.05);
+    }
+    .auth-error {
+      color: #d9534f;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+      font-weight: 600;
+    }
 
     @media (max-width: 768px) { 
       .dashboard-layout { grid-template-columns: 1fr; }
@@ -304,7 +384,7 @@
 
       </div>
 
-      <!-- COLUMNA DERECHA (ÁRBOL Y CONTADOR COMPACTO) -->
+      <!-- COLUMNA DERECHA -->
       <div class="right-col">
         
         <div class="organic-box canvas-tree-box">
@@ -351,14 +431,40 @@
     </div>
   </div>
 
-  <!-- MODAL CARTA -->
+  <!-- MODAL CARTA CON CONTRASEÑA -->
   <div id="letter-modal" class="modal-backdrop hidden">
     <div class="letter-paper">
       <button class="close-btn" id="close-letter-btn">&times;</button>
-      <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark);">Para ti,</h2>
-      <p class="handwritten">
-        Escribe aquí lo que quieras decirle...
-      </p>
+      
+      <!-- PANTALLA DE CONTRASEÑA -->
+      <div id="auth-section" class="auth-box">
+        <h3>Para leer esta carta...</h3>
+        <p>Por favor, ingresa la contraseña secreta ("mi male")</p>
+        <div class="auth-input-group">
+          <input type="password" id="letter-password" class="auth-input" placeholder="Contraseña..." autocomplete="current-password">
+          <button id="auth-submit" class="auth-submit-btn">Abrir</button>
+        </div>
+        <div id="auth-error" class="auth-error">Contraseña incorrecta. Pista: "mi male"</div>
+      </div>
+
+      <!-- CONTENIDO DE LA CARTA (OCULTO HASTA PONER CONTRASEÑA) -->
+      <div id="letter-content-section" class="hidden handwritten-letter">
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;">Querida Malena,</h2>
+        
+        <p>Fuiste una persona muy especial para mí, nunca te quise perder, aunque merecía perderte. Soy consciente de que fui un idiota y de que tuve demasiadas actitudes que aguantaste, y no tenías por qué hacerlo. Muchas veces bromeaba con mis amigos para hacer una máquina del tiempo y arreglar mis estupideces. Soy consciente del daño que te causé, no lo digo para que suene bonito o por decirlo, lo digo porque me dolió darme cuenta de que fui yo quien lastimó a alguien que siempre estuvo para mí. Hay cosas que uno no puede deshacer por más que lo quiera con toda el alma, pero de todo eso aprendí, y ahora soy una mejor persona. Sí cambié mucho porque tuve muchas experiencias que me obligaron a hacerlo, pero en el fondo sé que sigo manteniendo mi esencia y sé que tú también.</p>
+
+        <p>Estuve pensando mucho en estos últimos días y en lo lindo que ha sido volver a hablar y compartir momentos contigo. La verdad es que te extrañé muchísimo, y estar otra vez a tu lado se siente como un sueño para mí. Muchas tardes me preguntaba qué estará haciendo, si estará bien, tal vez necesita hablar con alguien, si la estarán cuidando bien; me pasaba mucho tiempo pensando en eso. Pero volvimos a hablar, nuestras salidas y paseos... el tiempo se pasa volando cuando estoy contigo. Me gusta mucho escuchar tu risa, quiero que estés riendo siempre, aunque sé que es difícil en nuestras realidades, me gusta mantenerte feliz.</p>
+
+        <p>Quiero que sepas que admiro todo de ti, desde tus detalles más pequeños hasta esos momentos en los que te quedas pensando en tus cosas o desvariando jsjsjs; para mí, en cada instante, sigues siendo una persona maravillosa y muy especial.</p>
+
+        <p>Anoche... bueno, hoy en la madrugada, que se nos pasó el tiempo volando, te contaba de mis metas y de mis sueños, como el proyecto de la maestría. Pero la verdad es que tú también formas parte de ese panorama. Mi mayor ilusión es poder avanzar y tener la alegría de encontrarte al final del día con tus canchitas sin aceite.</p>
+
+        <p>Si estás conmigo, siento que tengo el impulso necesario para cumplir mis metas y, al mismo tiempo, estar ahí para apoyarte a alcanzar las tuyas. Sé que no quieres volver a abrir tu corazoncito porque lo lastimé mucho, pero no voy a cometer los errores dos veces, y mientras tenga la oportunidad voy a tratar de cuidarlo con todo y de todos, y darte la confianza de que siempre hay alguien que quiere que todo te vaya bien y que comparte tus sueños como si fueran suyos. Te quiero demasiado, Male, y espero poder recuperarte, voy a dar todo de mí para lograrlo.</p>
+
+        <div style="margin-top: 30px; text-align: right; font-weight: 700; color: #5c4033;">
+          Con todo mi afecto.
+        </div>
+      </div>
     </div>
   </div>
 
@@ -597,14 +703,52 @@
         });
       }
 
-      // --- MODAL Y JUEGO ---
+      // --- MODAL DE CARTA Y CONTRASEÑA ---
       const modal = document.getElementById("letter-modal");
       const openBtn = document.getElementById("open-letter-btn");
       const closeBtn = document.getElementById("close-letter-btn");
+      
+      const authSection = document.getElementById("auth-section");
+      const letterContentSection = document.getElementById("letter-content-section");
+      const passwordInput = document.getElementById("letter-password");
+      const submitBtn = document.getElementById("auth-submit");
+      const errorMsg = document.getElementById("auth-error");
 
-      if (openBtn && modal) openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
-      if (closeBtn && modal) closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+      if (openBtn && modal) {
+        openBtn.addEventListener("click", () => {
+          modal.classList.remove("hidden");
+          // Resetear al abrir
+          if (authSection) authSection.style.display = "block";
+          if (letterContentSection) letterContentSection.classList.add("hidden");
+          if (passwordInput) passwordInput.value = "";
+          if (errorMsg) errorMsg.style.display = "none";
+        });
+      }
 
+      if (closeBtn && modal) {
+        closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+      }
+
+      function verifyPassword() {
+        if (!passwordInput) return;
+        const val = passwordInput.value.trim().toLowerCase();
+        if (val === "mi male") {
+          if (authSection) authSection.style.display = "none";
+          if (letterContentSection) letterContentSection.classList.remove("hidden");
+        } else {
+          if (errorMsg) errorMsg.style.display = "block";
+          passwordInput.value = "";
+        }
+      }
+
+      if (submitBtn) submitBtn.addEventListener("click", verifyPassword);
+      if (passwordInput) {
+        passwordInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") verifyPassword();
+        });
+      }
+
+      // --- MINIJUEGO DE MEMORIA ---
       let currentPairs = 4;
       const allEmojis = ["💜", "💚", "✨", "🎵", "🌸", "🦋", "🌷", "🧸"];
 
