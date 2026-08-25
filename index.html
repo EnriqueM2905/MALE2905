@@ -27,9 +27,39 @@
       align-items: center;
       overflow-x: hidden;
       overflow-y: auto !important;
+      position: relative;
     }
 
-    .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; }
+    /* VIDEO DE FONDO SILENCIOSO EN BUCLE */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.25;
+      filter: saturate(1.2);
+    }
+
+    /* PANTALLA DE TRANSICIÓN DE ENTRADA */
+    #intro-transition-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease;
+    }
+    #intro-transition-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #intro-transition-screen video {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
     .hidden { display: none !important; }
 
     /* SOBRE */
@@ -58,7 +88,7 @@
     }
 
     .organic-box {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(12px);
       padding: 30px;
       border-radius: 35px;
@@ -119,144 +149,33 @@
     .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* =========================================
-       EL ÁRBOL, LA NOTA Y EL CONTADOR LINEAL
-       ========================================= */
+    /* ÁRBOL Y CONTADOR */
     .canvas-tree-box {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 15px;
-      /* Fondo cálido y romántico que combina con tu tema */
-      background: linear-gradient(160deg, #fff0f5 0%, #e0f7fa 100%);
-      height: 100%;
-      padding: 30px;
+      position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 15px;
+      background: linear-gradient(160deg, #fff0f5 0%, #e0f7fa 100%); height: 100%; padding: 30px;
     }
-    
-    .falling-hearts-container {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
+    .falling-hearts-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .tree-content-layout { display: flex; gap: 15px; align-items: center; position: relative; z-index: 2; }
 
-    .tree-content-layout {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      position: relative;
-      z-index: 2;
-    }
+    .tree-graphic { position: relative; width: 220px; height: 250px; flex-shrink: 0; }
+    .css-trunk { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 26px; height: 110px; background: #795548; border-radius: 10px 10px 0 0; }
+    .css-trunk::before { content: ''; position: absolute; top: 20px; left: -20px; width: 25px; height: 50px; background: #795548; transform: rotate(-35deg); border-radius: 10px; }
+    .css-trunk::after { content: ''; position: absolute; top: 40px; right: -15px; width: 20px; height: 40px; background: #795548; transform: rotate(40deg); border-radius: 10px; }
+    .css-leaves { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 200px; height: 180px; border-radius: 50%; }
+    .tree-heart { position: absolute; transform: translate(-50%, -50%); animation: gentleBreeze 3s ease-in-out infinite alternate; text-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    @keyframes gentleBreeze { from { transform: translate(-50%, -50%) rotate(-8deg); } to { transform: translate(-50%, -50%) rotate(8deg); } }
 
-    /* Estructura del Árbol CSS */
-    .tree-graphic {
-      position: relative;
-      width: 220px;
-      height: 250px;
-      flex-shrink: 0;
-    }
-    .css-trunk {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 110px;
-      background: #795548;
-      border-radius: 10px 10px 0 0;
-    }
-    .css-trunk::before { /* Rama izquierda */
-      content: ''; position: absolute; top: 20px; left: -20px; width: 25px; height: 50px; background: #795548; transform: rotate(-35deg); border-radius: 10px;
-    }
-    .css-trunk::after { /* Rama derecha */
-      content: ''; position: absolute; top: 40px; right: -15px; width: 20px; height: 40px; background: #795548; transform: rotate(40deg); border-radius: 10px;
-    }
-    .css-leaves {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 180px;
-      border-radius: 50%;
-    }
-    .tree-heart {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      animation: gentleBreeze 3s ease-in-out infinite alternate;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    @keyframes gentleBreeze {
-      from { transform: translate(-50%, -50%) rotate(-8deg); }
-      to { transform: translate(-50%, -50%) rotate(8deg); }
-    }
-
-    /* Nota y Ositos */
-    .tree-text-side {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      text-align: right;
-      flex: 1;
-    }
-    .typewriter-note {
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #4a3b38;
-      line-height: 1.5;
-      margin-bottom: 15px;
-    }
+    .tree-text-side { display: flex; flex-direction: column; align-items: flex-end; text-align: right; flex: 1; }
+    .typewriter-note { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.9rem; color: #4a3b38; line-height: 1.5; margin-bottom: 15px; }
     .typewriter-note strong { color: var(--purple-main); font-weight: 800; }
-    
-    .bears-gif {
-      width: 120px;
-      height: auto;
-      /* El mix-blend multiply borra el fondo blanco del GIF para que se fusione perfecto */
-      mix-blend-mode: multiply; 
-    }
+    .bears-gif { width: 120px; height: auto; mix-blend-mode: multiply; }
 
-    /* Contador Lineal */
-    .counter-linear {
-      text-align: center;
-      margin-top: 15px;
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 15px;
-      border-radius: 20px;
-      border: 1px dashed var(--turquoise-main);
-    }
-    .counter-label {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: #8e6c73;
-      font-size: 1.05rem;
-    }
-    .counter-exact {
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--purple-dark);
-      margin-top: 5px;
-      letter-spacing: 0.5px;
-    }
+    .counter-linear { text-align: center; margin-top: 15px; position: relative; z-index: 2; background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 20px; border: 1px dashed var(--turquoise-main); }
+    .counter-label { font-family: 'Playfair Display', serif; font-style: italic; color: #8e6c73; font-size: 1.05rem; }
+    .counter-exact { font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--purple-dark); margin-top: 5px; letter-spacing: 0.5px; }
 
-    /* Animación de corazones cayendo */
-    .falling-heart {
-      position: absolute;
-      opacity: 0.8;
-      animation: fallDown linear forwards;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    @keyframes fallDown {
-      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translateY(400px) rotate(360deg); opacity: 0; }
-    }
+    .falling-heart { position: absolute; opacity: 0.8; animation: fallDown linear forwards; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    @keyframes fallDown { 0% { transform: translateY(-20px) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(400px) rotate(360deg); opacity: 0; } }
 
     /* FILA INFERIOR */
     .bottom-row { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; align-items: center; }
@@ -307,7 +226,16 @@
 </head>
 <body>
 
+  <!-- 1. VIDEO DE FONDO (LOOP Y SILENCIADO) -->
+  <video id="bg-video" autoplay muted loop playsinline src="assets/flores-explosion.mp4"></video>
+
+  <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
+
+  <!-- 2. PANTALLA DE TRANSICIÓN DE ENTRADA (EXPLOSIÓN DE FLORES) -->
+  <div id="intro-transition-screen">
+    <video id="intro-video" muted playsinline src="assets/flores-explosion.mp4"></video>
+  </div>
 
   <!-- PANTALLA 1: Sobre cerrado -->
   <div id="envelope-screen" class="screen">
@@ -363,30 +291,24 @@
       <!-- COLUMNA DERECHA -->
       <div class="right-col">
         
-        <!-- NUEVA CAJA: ÁRBOL Y CONTADOR LINEAL -->
         <div class="organic-box canvas-tree-box">
-          <!-- Efecto de corazones cayendo -->
           <div id="falling-hearts" class="falling-hearts-container"></div>
 
           <div class="tree-content-layout">
-            <!-- Izquierda: Árbol interactivo -->
             <div class="tree-graphic">
               <div class="css-trunk"></div>
               <div id="tree-leaves" class="css-leaves"></div>
             </div>
 
-            <!-- Derecha: Tu nota romántica y ositos -->
             <div class="tree-text-side">
               <p class="typewriter-note">
                 Quizá no siempre encuentre las palabras perfectas para describir todo lo que siento, porque hay sentimientos que simplemente no se pueden decir con palabras o una frase.<br><br>
                 Solo quiero que sepas que cada día le agradezco a Diosito por haberte puesto en mi camino y me gustaría seguir construyendo recuerdos contigo, no importa lo que pase o lo difícil que sea el camino, <strong>si tú estás al final de él, con gusto lo cruzaría.</strong>
               </p>
-              <!-- GIF de Milk and Mocha (Abrazo) -->
-              <img src="https://media1.tenor.com/m/aKFaZbrZGYAAAAAd/milk-and-mocha-hug.gif" class="bears-gif" alt="Ositos abrazándose">
+              <img src="assets/milk-and-mocha-hug.gif" class="bears-gif" alt="Ositos abrazándose">
             </div>
           </div>
 
-          <!-- Contador Lineal Inferior -->
           <div class="counter-linear">
             <span class="counter-label">Nuestros caminos se cruzaron hace...</span>
             <div id="linear-counter" class="counter-exact">Calculando nuestro tiempo...</div>
@@ -426,23 +348,52 @@
 
   <script>
     // ==========================================
+    // LÓGICA DE LOS DOS VIDEOS (ENTRADA Y LOOP)
+    // ==========================================
+    const envelopeBtn = document.getElementById("envelope-btn");
+    const introScreen = document.getElementById("intro-transition-screen");
+    const introVideo = document.getElementById("intro-video");
+    const bgAudio = document.getElementById("bg-audio");
+    const volumeBar = document.getElementById("volume-bar");
+
+    if (envelopeBtn) {
+      envelopeBtn.addEventListener("click", () => {
+        document.getElementById("envelope-screen").classList.add("hidden");
+        introScreen.classList.remove("hidden");
+        
+        introVideo.play().catch(e => console.log("Video play error:", e));
+        if (bgAudio) {
+          if (volumeBar) bgAudio.volume = volumeBar.value;
+          bgAudio.play().catch(e => console.log("Audio play error:", e));
+        }
+      });
+    }
+
+    if (introVideo) {
+      introVideo.addEventListener("ended", () => {
+        introScreen.classList.add("fade-out");
+        document.getElementById("main-screen").classList.remove("hidden");
+        setTimeout(() => { introScreen.remove(); }, 1000);
+      });
+    }
+
+
+    // ==========================================
     // JS DEL ÁRBOL Y LOS CORAZONES CAYENDO
     // ==========================================
     const leafEmojis = ['💜', '💚', '💖', '💕', '✨', '🤍'];
     const leavesContainer = document.getElementById('tree-leaves');
     
-    // Crear el follaje del árbol
     if (leavesContainer) {
       for (let i = 0; i < 75; i++) {
         const heart = document.createElement('div');
         heart.className = 'tree-heart';
         heart.innerText = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
         
-        // Distribución en círculo para formar la copa del árbol
         const radius = Math.random() * 85; 
         const angle = Math.random() * 2 * Math.PI;
-        const x = 100 + radius * Math.cos(angle); // Centro X aproximado
-        const y = 90 + radius * Math.sin(angle);  // Centro Y aproximado
+        const x = 100 + radius * Math.cos(angle);
+        const y = 90 + radius * Math.sin(angle);
         
         heart.style.left = `${x}px`;
         heart.style.top = `${y}px`;
@@ -453,7 +404,6 @@
       }
     }
 
-    // Lluvia de corazones
     const fallingContainer = document.getElementById('falling-hearts');
     if (fallingContainer) {
       setInterval(() => {
@@ -464,24 +414,20 @@
         heart.style.left = `${Math.random() * 100}%`;
         heart.style.fontSize = `${Math.random() * 0.8 + 0.6}rem`;
         
-        const duration = Math.random() * 4 + 4; // Entre 4 y 8 segundos cayendo
+        const duration = Math.random() * 4 + 4;
         heart.style.animationDuration = `${duration}s`;
         
         fallingContainer.appendChild(heart);
-        
-        // Limpiar el corazón cuando termine de caer
         setTimeout(() => { heart.remove(); }, duration * 1000);
-      }, 500); // Cae un corazón nuevo cada medio segundo
+      }, 500);
     }
 
     // ==========================================
     // CONTADOR EXACTO (DÍAS, HORAS, MIN, SEG)
     // ==========================================
     function updateLinearCounter() {
-      // Fecha de inicio: 29 de mayo de 2024
       const startDate = new Date('2024-05-29T00:00:00');
       const now = new Date();
-      
       const diffInMs = now - startDate;
       
       const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
@@ -535,7 +481,6 @@
       { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
     ];
 
-    const bgAudio = document.getElementById("bg-audio");
     const lyricsInner = document.getElementById("lyrics-inner");
     const lyricsContainer = document.getElementById("lyrics-container");
     const seekBar = document.getElementById("seek-bar");
@@ -543,18 +488,15 @@
     const currentTimeEl = document.getElementById("current-time");
     const durationEl = document.getElementById("duration");
 
-    // Llenar HTML de las letras
     if (lyricsInner) {
       lyrics.forEach((line, i) => {
         const div = document.createElement("div");
         div.className = "lyric-item";
         div.id = `lyric-${i}`;
         div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
-        
         div.addEventListener("click", () => {
           if(bgAudio) bgAudio.currentTime = line.t;
         });
-
         lyricsInner.appendChild(div);
       });
     }
@@ -562,23 +504,6 @@
     function updateProgressFill(input) {
       const value = (input.value - input.min) / (input.max - input.min) * 100;
       input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`;
-    }
-
-    // --- SOBRE ---
-    const envelopeBtn = document.getElementById("envelope-btn");
-    if (envelopeBtn) {
-      envelopeBtn.addEventListener("click", () => {
-        document.getElementById("envelope-screen").classList.add("hidden");
-        document.getElementById("main-screen").classList.remove("hidden");
-        
-        if (bgAudio) {
-          if (volumeBar) {
-            bgAudio.volume = volumeBar.value;
-            updateProgressFill(volumeBar);
-          }
-          bgAudio.play().catch(e => console.log("Autoplay prevenido:", e));
-        }
-      });
     }
 
     function formatTime(seconds) {
@@ -605,7 +530,6 @@
         if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
 
         const current = bgAudio.currentTime;
-        
         let activeIndex = -1;
         for (let i = 0; i < lyrics.length; i++) {
           if (current >= lyrics[i].t && (!lyrics[i + 1] || current < lyrics[i + 1].t)) {
