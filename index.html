@@ -324,16 +324,18 @@
 
   <script>
     // ==========================================
-    // LÓGICA DE APERTURA Y AUDIO
+    // LÓGICA DE APERTURA Y AUDIO CORREGIDA
     // ==========================================
     const envelopeBtn = document.getElementById("envelope-btn");
+    const envelopeScreen = document.getElementById("envelope-screen");
+    const mainScreen = document.getElementById("main-screen");
     const bgAudio = document.getElementById("bg-audio");
     const volumeBar = document.getElementById("volume-bar");
 
     if (envelopeBtn) {
       envelopeBtn.addEventListener("click", () => {
-        document.getElementById("envelope-screen").classList.add("hidden");
-        document.getElementById("main-screen").classList.remove("hidden");
+        envelopeScreen.classList.add("hidden");
+        mainScreen.classList.remove("hidden");
         
         if (bgAudio) {
           if (volumeBar) bgAudio.volume = volumeBar.value;
