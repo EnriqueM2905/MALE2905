@@ -271,7 +271,6 @@
       border: 1px dashed rgba(229, 57, 53, 0.4);
     }
 
-    /* Estilo para el día de hoy */
     .calendar-day.day-today {
       border: 2px solid var(--purple-main);
       background-color: rgba(103, 58, 183, 0.08);
@@ -347,7 +346,6 @@
       border: 1px solid #e9e0d2;
     }
 
-    /* MODAL CARTA 2 MÁS GRANDE */
     .letter-paper.large-paper {
       max-width: 800px;
       max-height: 90vh;
@@ -475,7 +473,7 @@
             <div class="player-controls-btns">
               <button class="track-nav-btn" id="prev-track-btn" title="Canción anterior">⏮</button>
               <button class="play-toggle-btn" id="play-toggle-btn">
-                <span id="play-btn-icon">❚❚</span>
+                <span id="play-btn-icon">▶</span>
               </button>
               <button class="track-nav-btn" id="next-track-btn" title="Siguiente canción">⏭</button>
             </div>
@@ -677,7 +675,7 @@
           { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
           { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
           { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
+          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré hier, porque ambos sabemos cómo va esto." },
           { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
           { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
           { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
@@ -709,7 +707,7 @@
         src: "assets/coming-up-roses.mp3",
         lyrics: [
           { t: 0,   en: "Instrumental", es: "..." },
-          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como roses" },
+          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como rosas" },
           { t: 20,  en: "Looking at the way you smile", es: "Mirando la forma en que sonríes" },
           { t: 28,  en: "Feels like I've known you for a while", es: "Se siente como si te conociera de toda la vida" },
           { t: 36,  en: "Sunlight dancing in your eyes", es: "La luz del sol bailando en tus ojos" },
@@ -727,7 +725,7 @@
     let currentTrackIndex = 0;
 
     // ==========================================
-    // CÁLCULO DE CICLO MENSUAL (JULIO 20, AGOSTO 20, SEPTIEMBRE 22)
+    // CÁLCULO DE CICLO MENSUAL
     // ==========================================
     function getCycleWindows() {
       const windows = [];
@@ -796,7 +794,6 @@
 
       const firstDayIndex = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-
       const today = new Date();
 
       for (let i = 0; i < firstDayIndex; i++) {
@@ -831,7 +828,6 @@
           cell.title = "Margen probable (±3 días)";
         }
 
-        // Marcar el día de hoy
         if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
           cell.classList.add("day-today");
           cell.title += " (Hoy)";
@@ -859,13 +855,21 @@
       const lyricsContainer = document.getElementById("lyrics-container");
       const lyricsInner = document.getElementById("lyrics-inner");
 
-      function loadTrack(index) {
+      function loadTrack(index, autoPlay = false) {
         currentTrackIndex = index;
         const track = playlist[currentTrackIndex];
         bgAudio.src = track.src;
         bgAudio.load();
         if (trackTitleEl) trackTitleEl.innerText = track.title;
         renderLyrics(track.lyrics);
+
+        if (autoPlay) {
+          bgAudio.play().then(() => {
+            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          }).catch(e => console.log("Play error:", e));
+        } else {
+          if (playBtnIcon) playBtnIcon.textContent = "▶";
+        }
       }
 
       function renderLyrics(lyrics) {
@@ -895,7 +899,8 @@
         return `${min}:${sec < 10 ? '0' : ''}${sec}`;
       }
 
-      loadTrack(0);
+      // Cargar primer track inicial sin reproducir automático
+      loadTrack(0, false);
 
       if (envelopeBtn) {
         envelopeBtn.addEventListener("click", () => {
@@ -914,10 +919,15 @@
       if (bgAudio) {
         bgAudio.addEventListener("ended", () => {
           currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-          loadTrack(currentTrackIndex);
-          bgAudio.play().then(() => {
-            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
-          }).catch(e => console.log("Auto play error:", e));
+          loadTrack(currentTrackIndex, true);
+        });
+
+        bgAudio.addEventListener("play", () => {
+          if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+        });
+
+        bgAudio.addEventListener("pause", () => {
+          if (playBtnIcon) playBtnIcon.textContent = "▶";
         });
 
         bgAudio.addEventListener("loadedmetadata", () => {
@@ -968,11 +978,9 @@
       if (playToggleBtn && bgAudio) {
         playToggleBtn.addEventListener("click", () => {
           if (bgAudio.paused) {
-            bgAudio.play();
-            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+            bgAudio.play().catch(e => console.log("Play error:", e));
           } else {
             bgAudio.pause();
-            if (playBtnIcon) playBtnIcon.textContent = "▶";
           }
         });
       }
@@ -983,20 +991,14 @@
       if (prevTrackBtn) {
         prevTrackBtn.addEventListener("click", () => {
           currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-          loadTrack(currentTrackIndex);
-          bgAudio.play().then(() => {
-            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
-          });
+          loadTrack(currentTrackIndex, true);
         });
       }
 
       if (nextTrackBtn) {
         nextTrackBtn.addEventListener("click", () => {
           currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-          loadTrack(currentTrackIndex);
-          bgAudio.play().then(() => {
-            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
-          });
+          loadTrack(currentTrackIndex, true);
         });
       }
 
