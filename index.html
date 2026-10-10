@@ -13,6 +13,9 @@
       --turquoise-main: #00BCD4;
       --turquoise-dark: #006064;
       --turquoise-light: #B2EBF2;
+      --red-strong: #E53935;
+      --red-soft: #FFCDD2;
+      --red-soft-text: #B71C1C;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,7 +33,7 @@
       position: relative;
     }
 
-    /* EFECTO DE GOTITAS DE LLUVIA CAYENDO DE FONDO */
+    /* EFECTO DE GOTITAS DE LLUVIA */
     .rain-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -55,7 +58,7 @@
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
     .hidden { display: none !important; }
 
-    /* SOBRE */
+    /* SOBRE INICIAL */
     .envelope {
       width: 280px; height: 190px; background: #fff;
       border-radius: 20px 30px 25px 35px; display: flex; flex-direction: column;
@@ -98,17 +101,26 @@
     .left-col { display: flex; flex-direction: column; gap: 25px; }
     .right-col { display: flex; flex-direction: column; gap: 25px; }
 
-    /* REPRODUCTOR ALWAYS */
+    /* REPRODUCTOR MULTI-CANCIÓN */
     .player-box { background: linear-gradient(145deg, #ffffff, #f0f4ff); }
     
-    .always-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .always-play-btn {
+    .player-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .player-controls-btns { display: flex; align-items: center; gap: 10px; }
+    
+    .track-nav-btn {
+      background: none; border: 2px solid var(--purple-light); color: var(--purple-main);
+      width: 36px; height: 36px; border-radius: 50%; font-size: 0.9rem;
+      cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s;
+    }
+    .track-nav-btn:hover { background: var(--purple-light); color: var(--purple-dark); }
+
+    .play-toggle-btn {
       background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none;
       width: 45px; height: 45px; border-radius: 50%;
       font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
       box-shadow: 0 5px 15px rgba(103, 58, 183, 0.4); transition: transform 0.2s;
     }
-    .always-play-btn:hover { transform: scale(1.08); }
+    .play-toggle-btn:hover { transform: scale(1.08); }
 
     .audio-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
     .progress-container { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: var(--purple-dark); font-weight: 700; }
@@ -146,10 +158,7 @@
       align-items: center;
       text-align: center;
     }
-    .yt-box .box-title {
-      width: 100%;
-      justify-content: flex-start;
-    }
+    .yt-box .box-title { width: 100%; justify-content: flex-start; }
     .iframe-container { 
       position: relative; 
       width: 90%; 
@@ -161,7 +170,7 @@
     }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* ÁRBOL Y CONTADOR COMPACTO */
+    /* ÁRBOL Y CONTADOR */
     .canvas-tree-box {
       position: relative; 
       overflow: hidden; 
@@ -194,6 +203,90 @@
 
     .falling-heart { position: absolute; opacity: 0.8; animation: fallDown linear forwards; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     @keyframes fallDown { 0% { transform: translateY(-20px) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(350px) rotate(360deg); opacity: 0; } }
+
+    /* =========================================================
+       CALENDARIO DE CICLO (ESTIMACIÓN Y CUIDADOS)
+       ========================================================= */
+    .calendar-box {
+      background: linear-gradient(145deg, #ffffff, #fff5f8);
+    }
+    .calendar-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .calendar-month-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--purple-dark);
+      text-transform: capitalize;
+    }
+    .cal-btn {
+      background: white; border: 2px solid var(--purple-light); color: var(--purple-main);
+      width: 32px; height: 32px; border-radius: 50%; font-size: 0.9rem; cursor: pointer;
+      display: flex; justify-content: center; align-items: center; transition: all 0.2s;
+    }
+    .cal-btn:hover { background: var(--purple-light); }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      text-align: center;
+    }
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 12px;
+      color: #444;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .calendar-day.empty { background: transparent; }
+
+    /* Días estimados de sangrado (rojo fuerte) */
+    .calendar-day.day-period {
+      background-color: var(--red-strong);
+      color: white;
+      box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4);
+      transform: scale(1.04);
+    }
+
+    /* Margen de variación (+-3 días en rojo suave) */
+    .calendar-day.day-margin {
+      background-color: var(--red-soft);
+      color: var(--red-soft-text);
+      font-weight: 800;
+      border: 1px dashed rgba(229, 57, 53, 0.4);
+    }
+
+    .calendar-legend {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #666;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 4px; }
+    .legend-dot.strong { background-color: var(--red-strong); }
+    .legend-dot.soft { background-color: var(--red-soft); border: 1px dashed rgba(229, 57, 53, 0.5); }
 
     /* FILA INFERIOR */
     .bottom-row { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; align-items: center; }
@@ -228,9 +321,7 @@
     }
     @keyframes bounceMsg { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-    /* =========================================================
-       MODAL DE CARTA CON CONTRASEÑA SECRETA
-       ========================================================= */
+    /* MODAL DE CARTA */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 11, 46, 0.6); backdrop-filter: blur(8px); z-index: 100; display: flex; justify-content: center; align-items: center; }
     
     .letter-paper { 
@@ -246,7 +337,20 @@
       border: 1px solid #e9e0d2;
     }
     
-    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--purple-main); transition: 0.2s; z-index: 10; }
+    .close-btn { 
+      position: sticky; 
+      top: 0px; 
+      float: right;
+      font-size: 2.2rem; 
+      background: #fffdf9; 
+      border: none; 
+      cursor: pointer; 
+      color: var(--purple-main); 
+      transition: 0.2s; 
+      z-index: 50; 
+      line-height: 1;
+      padding: 0 5px;
+    }
     .close-btn:hover { color: var(--turquoise-main); transform: scale(1.1); }
 
     .handwritten-letter {
@@ -255,6 +359,7 @@
       color: #382c22; 
       line-height: 1.5; 
       margin-top: 10px;
+      clear: both;
     }
     .handwritten-letter p {
       margin-bottom: 20px;
@@ -264,6 +369,7 @@
     .auth-box {
       text-align: center;
       padding: 20px 10px;
+      clear: both;
     }
     .auth-box h3 {
       font-family: 'Playfair Display', serif;
@@ -328,7 +434,7 @@
   <div class="rain-container" id="rain-container"></div>
 
   <!-- AUDIO PRINCIPAL -->
-  <audio id="bg-audio" loop src="assets/Always.mp3"></audio>
+  <audio id="bg-audio" src="assets/Always.mp3"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
   <div id="envelope-screen" class="screen">
@@ -345,13 +451,17 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="left-col">
         
-        <!-- REPRODUCTOR ALWAYS -->
+        <!-- REPRODUCTOR MULTI-TRACK -->
         <div class="organic-box player-box">
-          <div class="always-header-flex">
-            <h3 class="box-title">♪ Always - Daniel Caesar</h3>
-            <button class="always-play-btn" id="always-toggle-btn">
-              <span id="always-btn-icon">❚❚</span>
-            </button>
+          <div class="player-header-flex">
+            <h3 class="box-title" id="current-track-title">♪ Always - Daniel Caesar</h3>
+            <div class="player-controls-btns">
+              <button class="track-nav-btn" id="prev-track-btn" title="Canción anterior">⏮</button>
+              <button class="play-toggle-btn" id="play-toggle-btn">
+                <span id="play-btn-icon">❚❚</span>
+              </button>
+              <button class="track-nav-btn" id="next-track-btn" title="Siguiente canción">⏭</button>
+            </div>
           </div>
 
           <div class="audio-controls">
@@ -385,6 +495,7 @@
       <!-- COLUMNA DERECHA -->
       <div class="right-col">
         
+        <!-- ÁRBOL Y CONTADOR -->
         <div class="organic-box canvas-tree-box">
           <div id="falling-hearts" class="falling-hearts-container"></div>
 
@@ -406,6 +517,34 @@
           <div class="counter-linear">
             <span class="counter-label">Nuestros caminos se cruzaron hace...</span>
             <div id="linear-counter" class="counter-exact">Calculando nuestro tiempo...</div>
+          </div>
+        </div>
+
+        <!-- CALENDARIO DE ESTIMACIÓN Y CUIDADOS -->
+        <div class="organic-box calendar-box">
+          <h3 class="box-title">🌸 Calendario Especial</h3>
+          
+          <div class="calendar-nav-header">
+            <button class="cal-btn" id="cal-prev-btn">&lt;</button>
+            <span class="calendar-month-title" id="cal-month-year">Octubre 2026</span>
+            <button class="cal-btn" id="cal-next-btn">&gt;</button>
+          </div>
+
+          <div class="calendar-weekdays">
+            <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+          </div>
+
+          <div class="calendar-grid" id="calendar-days-grid"></div>
+
+          <div class="calendar-legend">
+            <div class="legend-item">
+              <div class="legend-dot strong"></div>
+              <span>Días estimados (~3 días)</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot soft"></div>
+              <span>Margen probable (±3 días)</span>
+            </div>
           </div>
         </div>
 
@@ -445,7 +584,7 @@
         <div id="auth-error" class="auth-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
       </div>
 
-      <!-- CONTENIDO DE LA CARTA (OCULTO HASTA PONER CONTRASEÑA) -->
+      <!-- CONTENIDO DE LA CARTA -->
       <div id="letter-content-section" class="hidden handwritten-letter">
         <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;">Querida Malena,</h2>
         
@@ -460,7 +599,7 @@
         <p>Si estás conmigo, siento que tengo el impulso necesario para cumplir mis metas y, al mismo tiempo, estar ahí para apoyarte a alcanzar las tuyas. Sé que no quieres volver a abrir tu corazoncito porque lo lastimé mucho, pero no voy a cometer los errores dos veces, y mientras tenga la oportunidad voy a tratar de cuidarlo con todo y de todos, y darte la confianza de que siempre hay alguien que quiere que todo te vaya bien y que comparte tus sueños como si fueran suyos. Te quiero demasiado, Male, y espero poder recuperarte, voy a dar todo de mí para lograrlo.</p>
 
         <div style="margin-top: 30px; text-align: right; font-weight: 700; color: #5c4033;">
-          Con todo mi cariño, la persona que probablemente mas te quiere jsjsjs.
+          Con todo mi afecto.
         </div>
       </div>
     </div>
@@ -484,6 +623,178 @@
     }
 
     // ==========================================
+    // PLAYLIST Y REPRODUCTOR SECUENCIAL
+    // ==========================================
+    const playlist = [
+      {
+        title: "♪ Always - Daniel Caesar",
+        src: "assets/Always.mp3",
+        lyrics: [
+          { t: 0,   en: "Instrumental", es: "..." },
+          { t: 15,  en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
+          { t: 22,  en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
+          { t: 29,  en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
+          { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
+          { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
+          { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
+          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
+          { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
+          { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
+          { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
+          { t: 83,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
+          { t: 85,  en: "Always, ways, ways", es: "Siempre, formas, formas" },
+          { t: 89,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
+          { t: 96,  en: "Pretty lady, used to walk with me", es: "Bella dama, solía caminar conmigo" },
+          { t: 103, en: "Down Bloor street, oh, what a time", es: "Por la calle Bloor, oh, qué tiempo" },
+          { t: 111, en: "And I still remember the fussin', the fightin', the fuckin', the lyin'", es: "Y todavía recuerdo el alboroto, la pelea, el sexo, las mentiras" },
+          { t: 116, en: "It's all fine, you'll always be mine", es: "Todo está bien, siempre serás mía" },
+          { t: 123, en: "And maybe I'm wrong (hey, babe, you could)", es: "Y tal vez me equivoque (Oye, nena, podrías)" },
+          { t: 126, en: "For writing this song (write me a song)", es: "Por escribir esta canción (Escribirme una canción)" },
+          { t: 130, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
+          { t: 138, en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
+          { t: 142, en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
+          { t: 152, en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
+          { t: 157, en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
+          { t: 163, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
+          { t: 167, en: "Always, ways, ways", es: "Siempre, formas, formas" },
+          { t: 170, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
+          { t: 178, en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ello seguro como las estrellas en el cielo" },
+          { t: 184, en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
+          { t: 191, en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
+          { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
+        ]
+      },
+      {
+        title: "♪ Coming Up Roses - Harry Styles",
+        src: "assets/coming-up-roses.mp3",
+        lyrics: [
+          { t: 0,   en: "Instrumental", es: "..." },
+          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como rosas" },
+          { t: 20,  en: "Looking at the way you smile", es: "Mirando la forma en que sonríes" },
+          { t: 28,  en: "Feels like I've known you for a while", es: "Se siente como si te conociera de toda la vida" },
+          { t: 36,  en: "Sunlight dancing in your eyes", es: "La luz del sol bailando en tus ojos" },
+          { t: 45,  en: "No more worries, no goodbyes", es: "Sin más preocupaciones, sin despedidas" },
+          { t: 54,  en: "Coming up roses, soft and sweet", es: "Floreciendo rosas, suaves y dulces" },
+          { t: 63,  en: "Every heartbeat that we meet", es: "En cada latido que compartimos" },
+          { t: 72,  en: "I just wanna stay right here with you", es: "Solo quiero quedarme justo aquí contigo" },
+          { t: 82,  en: "Where the skies are clear and blue", es: "Donde el cielo es despejado y azul" },
+          { t: 95,  en: "Coming up roses all the way", es: "Rosas floreciendo en todo el camino" },
+          { t: 108, en: "Growing brighter every single day", es: "Brillando más con cada nuevo día" }
+        ]
+      }
+    ];
+
+    let currentTrackIndex = 0;
+
+    // ==========================================
+    // CÁLCULO DE CICLO MENSUAL
+    // ==========================================
+    // Referencias: 20 Jul, 20 Ago (31 días), 22 Sep (33 días). Promedio: ~31.5 días.
+    function getCycleWindows() {
+      const windows = [];
+      let currentDate = new Date(2026, 8, 22); // 22 de Septiembre de 2026 (mes 8 en JS)
+      const cycleLengthDays = 31.5;
+
+      for (let i = 0; i < 15; i++) {
+        // Los 3 días clave
+        const periodDays = [];
+        for (let p = 0; p < 3; p++) {
+          const d = new Date(currentDate);
+          d.setDate(d.getDate() + p);
+          periodDays.push(d);
+        }
+
+        // 3 días antes de margen
+        const marginBefore = [];
+        for (let m = 1; m <= 3; m++) {
+          const d = new Date(periodDays[0]);
+          d.setDate(d.getDate() - m);
+          marginBefore.push(d);
+        }
+
+        // 3 días después de margen
+        const marginAfter = [];
+        for (let m = 1; m <= 3; m++) {
+          const d = new Date(periodDays[periodDays.length - 1]);
+          d.setDate(d.getDate() + m);
+          marginAfter.push(d);
+        }
+
+        windows.push({
+          period: periodDays,
+          margins: [...marginBefore, ...marginAfter]
+        });
+
+        // Siguiente mes estimado
+        const nextMs = currentDate.getTime() + (cycleLengthDays * 24 * 60 * 60 * 1000);
+        currentDate = new Date(nextMs);
+      }
+      return windows;
+    }
+
+    const projectedCycle = getCycleWindows();
+
+    let calYear = 2026;
+    let calMonth = 9; // Octubre (mes 9 en JS: 0=Enero ... 9=Octubre)
+
+    const monthNames = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+
+    function renderCalendar(year, month) {
+      const monthTitle = document.getElementById("cal-month-year");
+      const grid = document.getElementById("calendar-days-grid");
+      if (!monthTitle || !grid) return;
+
+      monthTitle.innerText = `${monthNames[month]} ${year}`;
+      grid.innerHTML = "";
+
+      const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = Domingo
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Días vacíos iniciales
+      for (let i = 0; i < firstDayIndex; i++) {
+        const emptyCell = document.createElement("div");
+        emptyCell.className = "calendar-day empty";
+        grid.appendChild(emptyCell);
+      }
+
+      // Días del mes
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day";
+        cell.innerText = day;
+
+        const cellDate = new Date(year, month, day);
+
+        // Comprobar si cae en días de sangrado (rojo fuerte)
+        let isPeriod = false;
+        let isMargin = false;
+
+        for (const w of projectedCycle) {
+          if (w.period.some(d => d.getFullYear() === year && d.getMonth() === month && d.getDate() === day)) {
+            isPeriod = true;
+            break;
+          }
+          if (w.margins.some(d => d.getFullYear() === year && d.getMonth() === month && d.getDate() === day)) {
+            isMargin = true;
+          }
+        }
+
+        if (isPeriod) {
+          cell.classList.add("day-period");
+          cell.title = "Día estimado";
+        } else if (isMargin) {
+          cell.classList.add("day-margin");
+          cell.title = "Margen de variación (±3 días)";
+        }
+
+        grid.appendChild(cell);
+      }
+    }
+
+    // ==========================================
     // SCRIPT PRINCIPAL
     // ==========================================
     window.addEventListener("DOMContentLoaded", () => {
@@ -492,7 +803,55 @@
       const mainScreen = document.getElementById("main-screen");
       const bgAudio = document.getElementById("bg-audio");
       const volumeBar = document.getElementById("volume-bar");
+      const seekBar = document.getElementById("seek-bar");
+      const currentTimeEl = document.getElementById("current-time");
+      const durationEl = document.getElementById("duration");
+      const trackTitleEl = document.getElementById("current-track-title");
+      const playToggleBtn = document.getElementById("play-toggle-btn");
+      const playBtnIcon = document.getElementById("play-btn-icon");
+      const lyricsContainer = document.getElementById("lyrics-container");
+      const lyricsInner = document.getElementById("lyrics-inner");
 
+      // Cargar canción y letras
+      function loadTrack(index) {
+        currentTrackIndex = index;
+        const track = playlist[currentTrackIndex];
+        bgAudio.src = track.src;
+        if (trackTitleEl) trackTitleEl.innerText = track.title;
+        renderLyrics(track.lyrics);
+      }
+
+      function renderLyrics(lyrics) {
+        if (!lyricsInner) return;
+        lyricsInner.innerHTML = "";
+        lyrics.forEach((line, i) => {
+          const div = document.createElement("div");
+          div.className = "lyric-item";
+          div.id = `lyric-${i}`;
+          div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
+          div.addEventListener("click", () => {
+            if (bgAudio) bgAudio.currentTime = line.t;
+          });
+          lyricsInner.appendChild(div);
+        });
+      }
+
+      function updateProgressFill(input) {
+        const value = (input.value - input.min) / (input.max - input.min) * 100;
+        input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`;
+      }
+
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+      }
+
+      // Inicializar primer track
+      loadTrack(0);
+
+      // Abrir pantalla desde el sobre
       if (envelopeBtn) {
         envelopeBtn.addEventListener("click", () => {
           if (envelopeScreen) envelopeScreen.classList.add("hidden");
@@ -500,8 +859,128 @@
           
           if (bgAudio) {
             if (volumeBar) bgAudio.volume = volumeBar.value;
-            bgAudio.play().catch(e => console.log("Audio play error:", e));
+            bgAudio.play().then(() => {
+              if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+            }).catch(e => console.log("Audio play error:", e));
           }
+        });
+      }
+
+      // Reproducción continua automática a la siguiente canción
+      if (bgAudio) {
+        bgAudio.addEventListener("ended", () => {
+          currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+          loadTrack(currentTrackIndex);
+          bgAudio.play().then(() => {
+            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          }).catch(e => console.log("Auto play error:", e));
+        });
+
+        bgAudio.addEventListener("loadedmetadata", () => {
+          if (seekBar) {
+            seekBar.max = bgAudio.duration;
+            updateProgressFill(seekBar);
+          }
+          if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
+        });
+
+        bgAudio.addEventListener("timeupdate", () => {
+          if (seekBar) {
+            seekBar.value = bgAudio.currentTime;
+            updateProgressFill(seekBar);
+          }
+          if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
+
+          const current = bgAudio.currentTime;
+          const currentLyrics = playlist[currentTrackIndex].lyrics;
+          let activeIndex = -1;
+          for (let i = 0; i < currentLyrics.length; i++) {
+            if (current >= currentLyrics[i].t && (!currentLyrics[i + 1] || current < currentLyrics[i + 1].t)) {
+              activeIndex = i;
+              break;
+            }
+          }
+
+          if (activeIndex !== -1) {
+            const el = document.getElementById(`lyric-${activeIndex}`);
+            if (el && !el.classList.contains("active")) {
+              document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
+              el.classList.add("active");
+              
+              const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2);
+              lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
+            }
+          }
+        });
+
+        if (seekBar) {
+          seekBar.addEventListener("input", function() { 
+            bgAudio.currentTime = this.value; 
+            updateProgressFill(this);
+          });
+        }
+      }
+
+      if (playToggleBtn && bgAudio) {
+        playToggleBtn.addEventListener("click", () => {
+          if (bgAudio.paused) {
+            bgAudio.play();
+            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          } else {
+            bgAudio.pause();
+            if (playBtnIcon) playBtnIcon.textContent = "▶";
+          }
+        });
+      }
+
+      // Controles de canción anterior / siguiente
+      const prevTrackBtn = document.getElementById("prev-track-btn");
+      const nextTrackBtn = document.getElementById("next-track-btn");
+
+      if (prevTrackBtn) {
+        prevTrackBtn.addEventListener("click", () => {
+          currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+          loadTrack(currentTrackIndex);
+          bgAudio.play();
+          if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+        });
+      }
+
+      if (nextTrackBtn) {
+        nextTrackBtn.addEventListener("click", () => {
+          currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+          loadTrack(currentTrackIndex);
+          bgAudio.play();
+          if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+        });
+      }
+
+      if (volumeBar && bgAudio) {
+        volumeBar.addEventListener("input", function() { 
+          bgAudio.volume = this.value; 
+          updateProgressFill(this);
+        });
+        updateProgressFill(volumeBar);
+      }
+
+      // --- CALENDARIO CONTROLES ---
+      renderCalendar(calYear, calMonth);
+
+      const calPrevBtn = document.getElementById("cal-prev-btn");
+      const calNextBtn = document.getElementById("cal-next-btn");
+
+      if (calPrevBtn) {
+        calPrevBtn.addEventListener("click", () => {
+          calMonth--;
+          if (calMonth < 0) { calMonth = 11; calYear--; }
+          renderCalendar(calYear, calMonth);
+        });
+      }
+      if (calNextBtn) {
+        calNextBtn.addEventListener("click", () => {
+          calMonth++;
+          if (calMonth > 11) { calMonth = 0; calYear++; }
+          renderCalendar(calYear, calMonth);
         });
       }
 
@@ -566,141 +1045,6 @@
       setInterval(updateLinearCounter, 1000);
       updateLinearCounter();
 
-      // --- LETRAS SINCRONIZADAS ---
-      const lyrics = [
-        { t: 0,   en: "Instrumental", es: "..." },
-        { t: 15,  en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
-        { t: 22,  en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
-        { t: 29,  en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
-        { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
-        { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
-        { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-        { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-        { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-        { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-        { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-        { t: 83,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-        { t: 85,  en: "Always, ways, ways", es: "Siempre, formas, formas" },
-        { t: 89,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-        { t: 96,  en: "Pretty lady, used to walk with me", es: "Bella dama, solía caminar conmigo" },
-        { t: 103, en: "Down Bloor street, oh, what a time", es: "Por la calle Bloor, oh, qué tiempo" },
-        { t: 111, en: "And I still remember the fussin', the fightin', the fuckin', the lyin'", es: "Y todavía recuerdo el alboroto, la pelea, el sexo, las mentiras" },
-        { t: 116, en: "It's all fine, you'll always be mine", es: "Todo está bien, siempre serás mía" },
-        { t: 123, en: "And maybe I'm wrong (hey, babe, you could)", es: "Y tal vez me equivoque (Oye, nena, podrías)" },
-        { t: 126, en: "For writing this song (write me a song)", es: "Por escribir esta canción (Escribirme una canción)" },
-        { t: 130, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-        { t: 138, en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-        { t: 142,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-        { t: 152,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-        { t: 157,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-        { t: 163,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-        { t: 167,  en: "Always, ways, ways", es: "Siempre, formas, formas" },
-        { t: 170,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-        { t: 178,  en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ella seguro como las estrellas en el cielo" },
-        { t: 184,  en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
-        { t: 191,  en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
-        { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
-      ];
-
-      const lyricsInner = document.getElementById("lyrics-inner");
-      const lyricsContainer = document.getElementById("lyrics-container");
-      const seekBar = document.getElementById("seek-bar");
-      const currentTimeEl = document.getElementById("current-time");
-      const durationEl = document.getElementById("duration");
-
-      if (lyricsInner) {
-        lyrics.forEach((line, i) => {
-          const div = document.createElement("div");
-          div.className = "lyric-item";
-          div.id = `lyric-${i}`;
-          div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
-          div.addEventListener("click", () => {
-            if(bgAudio) bgAudio.currentTime = line.t;
-          });
-          lyricsInner.appendChild(div);
-        });
-      }
-
-      function updateProgressFill(input) {
-        const value = (input.value - input.min) / (input.max - input.min) * 100;
-        input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`;
-      }
-
-      function formatTime(seconds) {
-        if (isNaN(seconds)) return "0:00";
-        const min = Math.floor(seconds / 60);
-        const sec = Math.floor(seconds % 60);
-        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-      }
-
-      if (bgAudio) {
-        bgAudio.addEventListener("loadedmetadata", () => {
-          if (seekBar) {
-            seekBar.max = bgAudio.duration;
-            updateProgressFill(seekBar);
-          }
-          if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
-        });
-
-        bgAudio.addEventListener("timeupdate", () => {
-          if (seekBar) {
-            seekBar.value = bgAudio.currentTime;
-            updateProgressFill(seekBar);
-          }
-          if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
-
-          const current = bgAudio.currentTime;
-          let activeIndex = -1;
-          for (let i = 0; i < lyrics.length; i++) {
-            if (current >= lyrics[i].t && (!lyrics[i + 1] || current < lyrics[i + 1].t)) {
-              activeIndex = i;
-              break;
-            }
-          }
-
-          if (activeIndex !== -1) {
-            const el = document.getElementById(`lyric-${activeIndex}`);
-            if (el && !el.classList.contains("active")) {
-              document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
-              el.classList.add("active");
-              
-              const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2);
-              lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
-            }
-          }
-        });
-
-        if (seekBar) {
-          seekBar.addEventListener("input", function() { 
-            bgAudio.currentTime = this.value; 
-            updateProgressFill(this);
-          });
-        }
-      }
-
-      if (volumeBar && bgAudio) {
-        volumeBar.addEventListener("input", function() { 
-          bgAudio.volume = this.value; 
-          updateProgressFill(this);
-        });
-        updateProgressFill(volumeBar);
-      }
-
-      const alwaysToggleBtn = document.getElementById("always-toggle-btn");
-      const alwaysBtnIcon = document.getElementById("always-btn-icon");
-
-      if (alwaysToggleBtn && bgAudio) {
-        alwaysToggleBtn.addEventListener("click", () => {
-          if (bgAudio.paused) {
-            bgAudio.play();
-            alwaysBtnIcon.textContent = "❚❚";
-          } else {
-            bgAudio.pause();
-            alwaysBtnIcon.textContent = "▶";
-          }
-        });
-      }
-
       // --- MODAL DE CARTA Y CONTRASEÑA SECRETA ---
       const modal = document.getElementById("letter-modal");
       const openBtn = document.getElementById("open-letter-btn");
@@ -724,6 +1068,12 @@
 
       if (closeBtn && modal) {
         closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+      }
+
+      if (modal) {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) modal.classList.add("hidden");
+        });
       }
 
       function verifyPassword() {
