@@ -271,6 +271,13 @@
       border: 1px dashed rgba(229, 57, 53, 0.4);
     }
 
+    /* Estilo para el día de hoy */
+    .calendar-day.day-today {
+      border: 2px solid var(--purple-main);
+      background-color: rgba(103, 58, 183, 0.08);
+      font-weight: 900;
+    }
+
     .calendar-legend {
       display: flex;
       justify-content: center;
@@ -702,7 +709,7 @@
         src: "assets/coming-up-roses.mp3",
         lyrics: [
           { t: 0,   en: "Instrumental", es: "..." },
-          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como rosas" },
+          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como roses" },
           { t: 20,  en: "Looking at the way you smile", es: "Mirando la forma en que sonríes" },
           { t: 28,  en: "Feels like I've known you for a while", es: "Se siente como si te conociera de toda la vida" },
           { t: 36,  en: "Sunlight dancing in your eyes", es: "La luz del sol bailando en tus ojos" },
@@ -790,6 +797,8 @@
       const firstDayIndex = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+      const today = new Date();
+
       for (let i = 0; i < firstDayIndex; i++) {
         const emptyCell = document.createElement("div");
         emptyCell.className = "calendar-day empty";
@@ -822,6 +831,12 @@
           cell.title = "Margen probable (±3 días)";
         }
 
+        // Marcar el día de hoy
+        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+          cell.classList.add("day-today");
+          cell.title += " (Hoy)";
+        }
+
         grid.appendChild(cell);
       }
     }
@@ -848,6 +863,7 @@
         currentTrackIndex = index;
         const track = playlist[currentTrackIndex];
         bgAudio.src = track.src;
+        bgAudio.load();
         if (trackTitleEl) trackTitleEl.innerText = track.title;
         renderLyrics(track.lyrics);
       }
@@ -968,8 +984,9 @@
         prevTrackBtn.addEventListener("click", () => {
           currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
           loadTrack(currentTrackIndex);
-          bgAudio.play();
-          if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          bgAudio.play().then(() => {
+            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          });
         });
       }
 
@@ -977,8 +994,9 @@
         nextTrackBtn.addEventListener("click", () => {
           currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
           loadTrack(currentTrackIndex);
-          bgAudio.play();
-          if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          bgAudio.play().then(() => {
+            if (playBtnIcon) playBtnIcon.textContent = "❚❚";
+          });
         });
       }
 
