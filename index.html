@@ -324,7 +324,7 @@
     }
     @keyframes bounceMsg { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-    /* MODAL CARTA */
+    /* MODAL CARTA 1 */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 11, 46, 0.6); backdrop-filter: blur(8px); z-index: 100; display: flex; justify-content: center; align-items: center; }
     
     .letter-paper { 
@@ -338,6 +338,13 @@
       border-radius: 20px; 
       box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
       border: 1px solid #e9e0d2;
+    }
+
+    /* MODAL CARTA 2 MÁS GRANDE */
+    .letter-paper.large-paper {
+      max-width: 800px;
+      max-height: 90vh;
+      padding: 50px 45px;
     }
     
     .close-btn { 
@@ -437,7 +444,7 @@
   <div class="rain-container" id="rain-container"></div>
 
   <!-- AUDIO PRINCIPAL -->
-  <audio id="bg-audio" src="assets/Always.mp3"></audio>
+  <audio id="bg-audio"></audio>
 
   <!-- PANTALLA 1: Sobre cerrado -->
   <div id="envelope-screen" class="screen">
@@ -608,9 +615,9 @@
     </div>
   </div>
 
-  <!-- MODAL CARTA 2 (CON CONTRASEÑA 290524 E IMÁGENES) -->
+  <!-- MODAL CARTA 2 MÁS GRANDE (CONTRASEÑA: 290524) -->
   <div id="letter2-modal" class="modal-backdrop hidden">
-    <div class="letter-paper">
+    <div class="letter-paper large-paper">
       <button class="close-btn" id="close-letter2-btn">&times;</button>
       
       <div id="auth2-section" class="auth-box">
@@ -624,10 +631,9 @@
       </div>
 
       <div id="letter2-content-section" class="hidden" style="text-align: center; margin-top: 10px;">
-        <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;">Nuestros Recuerdos</h2>
-        <!-- Reemplaza "assets/carta1.jpg" y "assets/carta2.jpg" con las rutas reales de tus imágenes de cartas -->
-        <img src="assets/carta1.jpg" alt="Carta parte 1" style="width: 100%; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-        <img src="assets/carta2.jpg" alt="Carta parte 2" style="width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 25px;">Nuestros Recuerdos</h2>
+        <img src="assets/carta1.jpg" alt="Carta parte 1" style="width: 100%; max-width: 700px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null; this.src='https://via.placeholder.com/700x900?text=Coloca+carta1.jpg+en+assets';">
+        <img src="assets/carta2.jpg" alt="Carta parte 2" style="width: 100%; max-width: 700px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null; this.src='https://via.placeholder.com/700x900?text=Coloca+carta2.jpg+en+assets';">
       </div>
     </div>
   </div>
@@ -718,14 +724,12 @@
     // ==========================================
     function getCycleWindows() {
       const windows = [];
-      // Anclado en las fechas históricas proporcionadas
       const historicalStarts = [
         new Date(2026, 6, 20), // 20 Julio 2026
         new Date(2026, 7, 20), // 20 Agosto 2026
         new Date(2026, 8, 22)  // 22 Septiembre 2026
       ];
 
-      // Generar históricos y proyecciones futuras (ciclo promedio ~31 días)
       let lastDate = new Date(historicalStarts[historicalStarts.length - 1]);
       const allStarts = [...historicalStarts];
 
