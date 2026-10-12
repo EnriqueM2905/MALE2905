@@ -58,20 +58,59 @@
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
     .hidden { display: none !important; }
 
-    /* SOBRE INICIAL */
-    .envelope {
-      width: 280px; height: 190px; background: #fff;
-      border-radius: 20px 30px 25px 35px; display: flex; flex-direction: column;
-      justify-content: center; align-items: center; cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      box-shadow: 0 15px 35px rgba(103, 58, 183, 0.4);
-      border: 3px solid var(--purple-light);
-      animation: pulseEnvelope 2s infinite ease-in-out;
+    /* =========================================================
+       PANTALLA INICIAL: FLORES 3D Y SOBRE ORGÁNICO
+       ========================================================= */
+    #envelope-screen {
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at center, #fff0f5 0%, #e0f7fa 70%, #ede7f6 100%);
     }
-    .envelope:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 20px 40px rgba(0, 188, 212, 0.5); border-color: var(--turquoise-light); }
-    @keyframes pulseEnvelope { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-    .envelope-stamp { font-size: 3.5rem; margin-bottom: 8px; }
-    .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: var(--purple-main); font-size: 1.1rem; font-weight: 600; }
+
+    .flower-3d-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .floating-flower {
+      position: absolute;
+      font-size: 3.8rem;
+      opacity: 0.85;
+      filter: drop-shadow(0 12px 25px rgba(103, 58, 183, 0.3));
+      animation: floatFlowerArgs 8s ease-in-out infinite alternate;
+      user-select: none;
+    }
+
+    @keyframes floatFlowerArgs {
+      0% { transform: translateY(0px) rotate(-10deg) scale(0.95); }
+      50% { transform: translateY(-25px) rotate(15deg) scale(1.05); }
+      100% { transform: translateY(10px) rotate(-5deg) scale(1); }
+    }
+
+    .envelope {
+      width: 290px; height: 195px; background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px 35px 20px 30px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      box-shadow: 0 20px 45px rgba(103, 58, 183, 0.35), inset 0 2px 6px rgba(255,255,255,0.8);
+      border: 3px solid var(--purple-light);
+      animation: asymmetricFloat 4s ease-in-out infinite alternate;
+      transform: rotate(-3deg);
+      position: relative;
+      z-index: 5;
+    }
+    .envelope:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 25px 50px rgba(0, 188, 212, 0.5); border-color: var(--turquoise-light); }
+    
+    @keyframes asymmetricFloat {
+      0% { transform: translateY(0px) rotate(-3deg); }
+      100% { transform: translateY(-12px) rotate(1deg); }
+    }
+
+    .envelope-stamp { font-size: 3.8rem; margin-bottom: 6px; filter: drop-shadow(0 4px 8px rgba(103,58,183,0.3)); }
+    .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: var(--purple-main); font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
 
     /* DISEÑO PRINCIPAL */
     .dashboard-layout {
@@ -451,8 +490,9 @@
   <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio"></audio>
 
-  <!-- PANTALLA 1: Sobre cerrado -->
+  <!-- PANTALLA 1: Sobre cerrado con flores 3D flotantes -->
   <div id="envelope-screen" class="screen">
+    <div class="flower-3d-bg" id="flower-3d-bg"></div>
     <div class="envelope" id="envelope-btn">
       <div class="envelope-stamp">💜</div>
       <p class="tap-text">Tap to open, Male</p>
@@ -645,6 +685,33 @@
 
   <script>
     // ==========================================
+    // CREAR FLORES 3D FLOTANTES EN LA PANTALLA INICIAL
+    // ==========================================
+    const flowerBg = document.getElementById("flower-3d-bg");
+    if (flowerBg) {
+      const flowerEmojis = ['🌸', '🌺', '🌷', '🪷', '🌻', '💮'];
+      for (let i = 0; i < 16; i++) {
+        const flower = document.createElement("div");
+        flower.className = "floating-flower";
+        flower.innerText = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+        
+        // Posiciones orgánicas dispersas
+        flower.style.left = `${Math.random() * 90}%`;
+        flower.style.top = `${Math.random() * 90}%`;
+        
+        // Tamaños variados en 3D
+        const scale = Math.random() * 1.2 + 0.8;
+        flower.style.fontSize = `${scale * 3.2}rem`;
+        
+        // Tiempos de animación asíncronos para que no se vean simétricas
+        flower.style.animationDuration = `${Math.random() * 6 + 6}s`;
+        flower.style.animationDelay = `${Math.random() * 5}s`;
+        
+        flowerBg.appendChild(flower);
+      }
+    }
+
+    // ==========================================
     // LLUVIA DINÁMICA DE FONDO
     // ==========================================
     const rainContainer = document.getElementById("rain-container");
@@ -675,7 +742,7 @@
           { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
           { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
           { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré hier, porque ambos sabemos cómo va esto." },
+          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
           { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
           { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
           { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
@@ -899,7 +966,6 @@
         return `${min}:${sec < 10 ? '0' : ''}${sec}`;
       }
 
-      // Cargar primer track inicial sin reproducir automático
       loadTrack(0, false);
 
       if (envelopeBtn) {
