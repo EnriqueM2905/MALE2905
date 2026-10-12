@@ -33,7 +33,7 @@
       position: relative;
     }
 
-    /* EFECTO DE GOTITAS DE LLUVIA */
+    /* EFECTO DE GOTITAS DE LLUVIA MÁS CUIDADO */
     .rain-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -43,73 +43,114 @@
     }
     .raindrop {
       position: absolute;
-      background: linear-gradient(transparent, rgba(103, 58, 183, 0.4));
+      background: linear-gradient(transparent, rgba(103, 58, 183, 0.45));
       width: 1.5px;
-      height: 25px;
+      height: 30px;
       opacity: 0.6;
       animation: fallRain linear infinite;
     }
     @keyframes fallRain {
-      0% { transform: translateY(-30px); opacity: 0; }
-      20% { opacity: 0.6; }
-      100% { transform: translateY(105vh); opacity: 0; }
+      0% { transform: translateY(-40px); opacity: 0; }
+      20% { opacity: 0.7; }
+      100% { transform: translateY(108vh); opacity: 0; }
     }
 
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
     .hidden { display: none !important; }
 
     /* =========================================================
-       PANTALLA INICIAL: FLORES 3D Y SOBRE ORGÁNICO
+       PANTALLA INICIAL: FLORES FLORECIENDO Y FONDO MÁGICO
        ========================================================= */
     #envelope-screen {
       overflow: hidden;
       position: relative;
-      background: radial-gradient(circle at center, #fff0f5 0%, #e0f7fa 70%, #ede7f6 100%);
+      background: radial-gradient(circle at 50% 40%, #ffe6f0 0%, #d4f4fa 50%, #d1c4e9 100%);
     }
 
-    .flower-3d-bg {
+    .blooming-garden {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
       z-index: 1;
     }
 
-    .floating-flower {
+    /* Flor con animación real de apertura de pétalos */
+    .bloom-flower {
       position: absolute;
-      font-size: 3.8rem;
-      opacity: 0.85;
-      filter: drop-shadow(0 12px 25px rgba(103, 58, 183, 0.3));
-      animation: floatFlowerArgs 8s ease-in-out infinite alternate;
-      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: floatFlowerGentle 7s ease-in-out infinite alternate;
     }
 
-    @keyframes floatFlowerArgs {
-      0% { transform: translateY(0px) rotate(-10deg) scale(0.95); }
-      50% { transform: translateY(-25px) rotate(15deg) scale(1.05); }
-      100% { transform: translateY(10px) rotate(-5deg) scale(1); }
+    .flower-core {
+      width: 16px;
+      height: 16px;
+      background: #ffeb3b;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(255, 235, 59, 0.9);
+      position: relative;
+      z-index: 3;
+      animation: pulseCore 3s ease-in-out infinite;
+    }
+
+    .petal {
+      position: absolute;
+      width: 24px;
+      height: 42px;
+      background: linear-gradient(135deg, #ff80ab, #ff4081);
+      border-radius: 50% 50% 20% 20%;
+      transform-origin: bottom center;
+      box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+      animation: bloomPetals 4s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+
+    /* Posicionamiento de los 6 pétalos alrededor del centro */
+    .petal:nth-child(1) { transform: rotate(0deg) translateY(-14px); animation-delay: 0s; }
+    .petal:nth-child(2) { transform: rotate(60deg) translateY(-14px); animation-delay: 0.2s; }
+    .petal:nth-child(3) { transform: rotate(120deg) translateY(-14px); animation-delay: 0.4s; }
+    .petal:nth-child(4) { transform: rotate(180deg) translateY(-14px); animation-delay: 0.6s; }
+    .petal:nth-child(5) { transform: rotate(240deg) translateY(-14px); animation-delay: 0.8s; }
+    .petal:nth-child(6) { transform: rotate(300deg) translateY(-14px); animation-delay: 1s; }
+
+    @keyframes bloomPetals {
+      0% { transform: scale(0.6) rotate(var(--rot, 0deg)) translateY(-8px); opacity: 0.7; }
+      100% { transform: scale(1.15) rotate(var(--rot, 0deg)) translateY(-20px); opacity: 1; filter: drop-shadow(0 5px 10px rgba(103,58,183,0.3)); }
+    }
+
+    @keyframes pulseCore {
+      0%, 100% { transform: scale(0.9); }
+      50% { transform: scale(1.2); }
+    }
+
+    @keyframes floatFlowerGentle {
+      0% { transform: translateY(0px) rotate(-8deg); }
+      50% { transform: translateY(-18px) rotate(12deg); }
+      100% { transform: translateY(8px) rotate(-4deg); }
     }
 
     .envelope {
-      width: 290px; height: 195px; background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 25px 35px 20px 30px; display: flex; flex-direction: column;
+      width: 295px; height: 195px; background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-radius: 28px 32px 22px 35px; display: flex; flex-direction: column;
       justify-content: center; align-items: center; cursor: pointer;
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-      box-shadow: 0 20px 45px rgba(103, 58, 183, 0.35), inset 0 2px 6px rgba(255,255,255,0.8);
+      box-shadow: 0 20px 50px rgba(103, 58, 183, 0.4), inset 0 2px 8px rgba(255,255,255,0.9);
       border: 3px solid var(--purple-light);
-      animation: asymmetricFloat 4s ease-in-out infinite alternate;
-      transform: rotate(-3deg);
+      animation: asymmetricFloat 4.5s ease-in-out infinite alternate;
+      transform: rotate(-2deg);
       position: relative;
-      z-index: 5;
+      z-index: 10;
     }
-    .envelope:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 25px 50px rgba(0, 188, 212, 0.5); border-color: var(--turquoise-light); }
+    .envelope:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 25px 60px rgba(0, 188, 212, 0.6); border-color: var(--turquoise-light); }
     
     @keyframes asymmetricFloat {
-      0% { transform: translateY(0px) rotate(-3deg); }
-      100% { transform: translateY(-12px) rotate(1deg); }
+      0% { transform: translateY(0px) rotate(-2deg); }
+      100% { transform: translateY(-14px) rotate(2deg); }
     }
 
-    .envelope-stamp { font-size: 3.8rem; margin-bottom: 6px; filter: drop-shadow(0 4px 8px rgba(103,58,183,0.3)); }
+    .envelope-stamp { font-size: 3.8rem; margin-bottom: 6px; filter: drop-shadow(0 4px 10px rgba(103,58,183,0.35)); }
     .tap-text { font-family: 'Playfair Display', serif; font-style: italic; color: var(--purple-main); font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
 
     /* DISEÑO PRINCIPAL */
@@ -490,9 +531,9 @@
   <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio"></audio>
 
-  <!-- PANTALLA 1: Sobre cerrado con flores 3D flotantes -->
+  <!-- PANTALLA 1: Sobre cerrado con flores reales abriendo pétalos -->
   <div id="envelope-screen" class="screen">
-    <div class="flower-3d-bg" id="flower-3d-bg"></div>
+    <div class="blooming-garden" id="blooming-garden"></div>
     <div class="envelope" id="envelope-btn">
       <div class="envelope-stamp">💜</div>
       <p class="tap-text">Tap to open, Male</p>
@@ -685,29 +726,37 @@
 
   <script>
     // ==========================================
-    // CREAR FLORES 3D FLOTANTES EN LA PANTALLA INICIAL
+    // CREAR FLORES REALES ABRIENDO SUS PÉTALOS
     // ==========================================
-    const flowerBg = document.getElementById("flower-3d-bg");
-    if (flowerBg) {
-      const flowerEmojis = ['🌸', '🌺', '🌷', '🪷', '🌻', '💮'];
-      for (let i = 0; i < 16; i++) {
+    const garden = document.getElementById("blooming-garden");
+    if (garden) {
+      for (let i = 0; i < 14; i++) {
         const flower = document.createElement("div");
-        flower.className = "floating-flower";
-        flower.innerText = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+        flower.className = "bloom-flower";
         
-        // Posiciones orgánicas dispersas
-        flower.style.left = `${Math.random() * 90}%`;
-        flower.style.top = `${Math.random() * 90}%`;
+        // Posiciones orgánicas distribuidas en el fondo
+        flower.style.left = `${Math.random() * 88 + 5}%`;
+        flower.style.top = `${Math.random() * 88 + 5}%`;
         
-        // Tamaños variados en 3D
-        const scale = Math.random() * 1.2 + 0.8;
-        flower.style.fontSize = `${scale * 3.2}rem`;
-        
-        // Tiempos de animación asíncronos para que no se vean simétricas
-        flower.style.animationDuration = `${Math.random() * 6 + 6}s`;
-        flower.style.animationDelay = `${Math.random() * 5}s`;
-        
-        flowerBg.appendChild(flower);
+        // Centro de la flor
+        const core = document.createElement("div");
+        core.className = "flower-core";
+        flower.appendChild(core);
+
+        // 6 pétalos abriéndose
+        for (let p = 0; p < 6; p++) {
+          const petal = document.createElement("div");
+          petal.className = "petal";
+          petal.style.setProperty('--rot', `${p * 60}deg`);
+          petal.style.transform = `rotate(${p * 60}deg) translateY(-12px)`;
+          flower.appendChild(petal);
+        }
+
+        // Animación desincronizada para cada flor
+        flower.style.animationDuration = `${Math.random() * 4 + 5}s`;
+        flower.style.animationDelay = `${Math.random() * 3}s`;
+
+        garden.appendChild(flower);
       }
     }
 
@@ -716,7 +765,7 @@
     // ==========================================
     const rainContainer = document.getElementById("rain-container");
     if (rainContainer) {
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 45; i++) {
         const drop = document.createElement("div");
         drop.className = "raindrop";
         drop.style.left = `${Math.random() * 100}%`;
