@@ -16,6 +16,7 @@
       --red-strong: #E53935;
       --red-soft: #FFCDD2;
       --red-soft-text: #B71C1C;
+      --bg-cream: #FDFBF7; /* Un crema muy suave, casi blanco, estilo paper */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,130 +35,150 @@
     }
 
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; z-index: 1; }
-    .hidden { display: none !important; }
+    .hidden { display: none !important; opacity: 0; pointer-events: none; }
+
+    /* =========================================================
+       PANTALLA DE INICIO (SOBRE)
+       ========================================================= */
+    #intro-screen {
+      position: fixed; inset: 0; z-index: 110;
+      background-color: var(--bg-cream);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .intro-envelope {
+      width: 180px; 
+      height: 120px;
+      background-color: #EFE4D6; /* Un poco más claro y delicado */
+      border-radius: 5px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .intro-envelope:hover {
+      transform: scale(1.08);
+    }
+
+    .intro-envelope::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      border-top: 60px solid #E3D4C4;
+      border-right: 90px solid transparent; border-left: 90px solid transparent;
+      border-radius: 5px 5px 0 0; z-index: 2;
+    }
+
+    .intro-envelope::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      border-bottom: 60px solid #EFE4D6;
+      border-right: 90px solid transparent; border-left: 90px solid transparent;
+      border-radius: 0 0 5px 5px; z-index: 1;
+    }
+
+    .envelope-detail { position: absolute; top: 15px; font-size: 1.8rem; z-index: 3; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); }
+    .envelope-seal {
+      position: absolute; width: 30px; height: 30px; background-color: #B59595;
+      border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1);
+      display: flex; justify-content: center; align-items: center; font-size: 0.8rem; color: #fff; font-family: serif;
+    }
+    .envelope-seal::after { content: 'M'; font-style: italic; opacity: 0.8; }
+
+    .intro-text {
+      font-family: 'Caveat', cursive; color: #A08080; font-size: 1.6rem; margin-top: 30px; letter-spacing: 1.5px; opacity: 0.8;
+    }
 
     /* =========================================================
        PANTALLA DE BLOQUEO (LOCKSCREEN)
        ========================================================= */
     #lock-screen {
       position: fixed; inset: 0; z-index: 100;
-      background: radial-gradient(circle at center, #fff0f5 0%, #e0f7fa 70%, #ede7f6 100%);
+      background: var(--bg-cream);
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 0.6s ease;
+      opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
     }
+
+    #lock-screen.active { opacity: 1; pointer-events: auto; }
 
     .lock-title {
       font-family: 'Playfair Display', serif; font-style: italic;
-      color: var(--purple-dark); font-size: 1.6rem; margin-bottom: 25px;
-      letter-spacing: 0.5px;
+      color: #8C6B6B; font-size: 1.8rem; margin-bottom: 30px; letter-spacing: 0.5px;
     }
 
-    .pin-display {
-      display: flex; gap: 15px; margin-bottom: 40px; height: 20px;
-    }
+    .pin-display { display: flex; gap: 18px; margin-bottom: 45px; height: 20px; }
     .pin-dot {
       width: 14px; height: 14px; border-radius: 50%;
-      border: 2px solid var(--purple-main); background: transparent;
-      transition: all 0.2s;
+      border: 2px solid #D4B8B8; background: transparent; transition: all 0.2s;
     }
-    .pin-dot.filled { background: var(--purple-main); transform: scale(1.1); box-shadow: 0 0 10px rgba(103, 58, 183, 0.4); }
+    .pin-dot.filled { background: #D4B8B8; border-color: #D4B8B8; transform: scale(1.1); box-shadow: 0 0 10px rgba(212, 184, 184, 0.4); }
     .pin-dot.error { border-color: var(--red-strong); background: var(--red-strong); animation: shake 0.4s ease; }
 
-    .keypad {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-    }
+    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
     .key-btn {
-      width: 70px; height: 70px; border-radius: 50%;
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(5px);
-      border: 2px solid var(--purple-light);
-      font-family: 'Quicksand', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--purple-main);
-      cursor: pointer; display: flex; justify-content: center; align-items: center;
-      transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      width: 75px; height: 75px; border-radius: 50%; background: transparent;
+      border: 1px solid #EFE4D6; font-family: 'Quicksand', sans-serif; font-size: 2rem; font-weight: 500; color: #8C6B6B;
+      cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s;
     }
-    .key-btn:hover, .key-btn:active {
-      background: var(--purple-light); color: var(--purple-dark); transform: scale(0.95);
-    }
-    .key-btn.delete { font-size: 1.2rem; color: #888; border-color: transparent; background: transparent; box-shadow: none; }
-    .key-btn.delete:hover { color: var(--red-strong); }
+    .key-btn:hover, .key-btn:active { background: #EFE4D6; transform: scale(0.95); }
+    .key-btn.delete { font-size: 1.4rem; color: #A08080; border-color: transparent; }
+    .key-btn.delete:hover { color: var(--red-strong); background: transparent; }
 
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
     /* =========================================================
-       TRANSICIÓN FLORAL (BLOOM TRANSITION)
+       TRANSICIÓN FLORAL (BLOOM TRANSITION - ESTILO VIDEO)
        ========================================================= */
     #bloom-transition {
-      position: fixed; inset: 0; z-index: 90;
-      background: transparent; pointer-events: none;
+      position: fixed; inset: 0; z-index: 120; /* Por encima de todo */
+      background: var(--bg-cream); pointer-events: none;
       display: flex; justify-content: center; align-items: center;
+      opacity: 0; /* Oculto hasta que el PIN sea correcto */
+      transition: opacity 0.3s ease;
     }
 
-    .bloom-flower-center {
-      position: absolute; display: flex; justify-content: center; align-items: center;
-      opacity: 0; transform: scale(0);
+    .flower-layer {
+      position: absolute;
+      width: 100px; height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
     }
 
-    .bloom-flower-center.active {
-      animation: explodeBloom 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    /* Animación de explosión para las flores */
+    .flower-layer.explode {
+      animation: bloomOut 2.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
-    .trans-petal {
-      position: absolute; width: 60px; height: 120px;
-      background: linear-gradient(135deg, #ff80ab, #ff4081);
-      border-radius: 50% 50% 20% 20%; transform-origin: bottom center;
-      box-shadow: 0 10px 30px rgba(255, 64, 129, 0.4); z-index: 2;
-      animation: openTransPetals 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    @keyframes bloomOut {
+      0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)); }
+      20% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)); }
+      80% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.5)) rotate(var(--rot-end)); filter: blur(0px); }
+      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 2)) rotate(var(--rot-end)); filter: blur(15px); }
     }
 
-    .trans-petal:nth-child(1) { --rot: 0deg; }
-    .trans-petal:nth-child(2) { --rot: 45deg; }
-    .trans-petal:nth-child(3) { --rot: 90deg; }
-    .trans-petal:nth-child(4) { --rot: 135deg; }
-    .trans-petal:nth-child(5) { --rot: 180deg; }
-    .trans-petal:nth-child(6) { --rot: 225deg; }
-    .trans-petal:nth-child(7) { --rot: 270deg; }
-    .trans-petal:nth-child(8) { --rot: 315deg; }
-
-    @keyframes explodeBloom {
-      0% { opacity: 0; transform: scale(0); }
-      40% { opacity: 1; transform: scale(3.5); }
-      80% { opacity: 1; transform: scale(4.5); filter: blur(0px); }
-      100% { opacity: 0; transform: scale(6); filter: blur(10px); }
-    }
-
-    @keyframes openTransPetals {
-      0% { transform: scale(0.2) rotate(var(--rot)) translateY(0px); }
-      100% { transform: scale(1.5) rotate(var(--rot)) translateY(-80px); }
-    }
+    /* URLs de imágenes de flores realistas (Peonías, Rosas) para simular el video */
+    .flower-1 { background-image: url('https://cdn.pixabay.com/photo/2017/08/21/17/23/peony-2666060_1280.png'); } /* Peonía rosa claro */
+    .flower-2 { background-image: url('https://cdn.pixabay.com/photo/2017/02/17/15/25/rose-2074312_1280.png'); } /* Rosa roja/fucsia */
+    .flower-3 { background-image: url('https://cdn.pixabay.com/photo/2018/04/05/14/09/rose-3292942_1280.png'); } /* Rosa pálida/blanca */
+    .flower-4 { background-image: url('https://cdn.pixabay.com/photo/2017/04/19/13/15/flower-2242171_1280.png'); } /* Flor lila/rosada */
 
     /* EFECTO DE GOTITAS DE LLUVIA */
-    .rain-container {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 0; overflow: hidden;
-    }
-    .raindrop {
-      position: absolute; background: linear-gradient(transparent, rgba(103, 58, 183, 0.45));
-      width: 1.5px; height: 30px; opacity: 0.6; animation: fallRain linear infinite;
-    }
-    @keyframes fallRain {
-      0% { transform: translateY(-40px); opacity: 0; }
-      20% { opacity: 0.7; }
-      100% { transform: translateY(108vh); opacity: 0; }
-    }
+    .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+    .raindrop { position: absolute; background: linear-gradient(transparent, rgba(103, 58, 183, 0.45)); width: 1.5px; height: 30px; opacity: 0.6; animation: fallRain linear infinite; }
+    @keyframes fallRain { 0% { transform: translateY(-40px); opacity: 0; } 20% { opacity: 0.7; } 100% { transform: translateY(108vh); opacity: 0; } }
 
     /* DISEÑO PRINCIPAL (DASHBOARD) */
-    .dashboard-layout {
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px;
-      max-width: 1150px; width: 100%; padding: 20px; align-items: start; opacity: 0;
-      transition: opacity 1.5s ease 1s; /* Aparece después de la explosión */
-    }
+    .dashboard-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; max-width: 1150px; width: 100%; padding: 20px; align-items: start; opacity: 0; transition: opacity 2s ease 1s; }
     .dashboard-layout.visible { opacity: 1; }
 
-    .organic-box {
-      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
-      padding: 25px 30px; border-radius: 35px; border: 2px solid rgba(255,255,255,0.9);
-      box-shadow: 0 10px 30px rgba(103, 58, 183, 0.12); transition: all 0.4s ease;
-    }
-
+    .organic-box { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); padding: 25px 30px; border-radius: 35px; border: 2px solid rgba(255,255,255,0.9); box-shadow: 0 10px 30px rgba(103, 58, 183, 0.12); transition: all 0.4s ease; }
     .box-title { font-size: 1.3rem; color: var(--purple-dark); margin-bottom: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
     .left-col { display: flex; flex-direction: column; gap: 25px; }
     .right-col { display: flex; flex-direction: column; gap: 25px; }
@@ -166,34 +187,19 @@
     .player-box { background: linear-gradient(145deg, #ffffff, #f0f4ff); }
     .player-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .player-controls-btns { display: flex; align-items: center; gap: 10px; }
-    
-    .track-nav-btn {
-      background: none; border: 2px solid var(--purple-light); color: var(--purple-main);
-      width: 36px; height: 36px; border-radius: 50%; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s;
-    }
+    .track-nav-btn { background: none; border: 2px solid var(--purple-light); color: var(--purple-main); width: 36px; height: 36px; border-radius: 50%; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; }
     .track-nav-btn:hover { background: var(--purple-light); color: var(--purple-dark); }
-
-    .play-toggle-btn {
-      background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none;
-      width: 45px; height: 45px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 5px 15px rgba(103, 58, 183, 0.4); transition: transform 0.2s;
-    }
+    .play-toggle-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(103, 58, 183, 0.4); transition: transform 0.2s; }
     .play-toggle-btn:hover { transform: scale(1.08); }
-
     .audio-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
     .progress-container { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: var(--purple-dark); font-weight: 700; }
     .volume-container { display: flex; align-items: center; gap: 15px; justify-content: center; color: var(--purple-main); }
-
     input[type=range] { flex: 1; -webkit-appearance: none; background: var(--purple-light); height: 6px; border-radius: 10px; outline: none; transition: background 0.1s; }
     input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--turquoise-main); border-radius: 50%; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 188, 212, 0.6); transition: transform 0.2s; }
     input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
     /* LETRAS - ESTILO SPOTIFY */
-    .spotify-lyrics-container {
-      background: linear-gradient(145deg, #1A0B2E 0%, #00363A 100%);
-      border-radius: 20px; height: 260px; overflow-y: auto; position: relative; padding: 0;
-      box-shadow: inset 0 10px 30px rgba(0,0,0,0.5); scrollbar-width: none; 
-    }
+    .spotify-lyrics-container { background: linear-gradient(145deg, #1A0B2E 0%, #00363A 100%); border-radius: 20px; height: 260px; overflow-y: auto; position: relative; padding: 0; box-shadow: inset 0 10px 30px rgba(0,0,0,0.5); scrollbar-width: none; }
     .spotify-lyrics-container::-webkit-scrollbar { display: none; }
     .lyrics-inner { padding: 120px 25px; display: flex; flex-direction: column; gap: 25px; }
     .lyric-item { text-align: left; opacity: 0.3; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: left center; cursor: pointer; }
@@ -285,9 +291,18 @@
   <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio"></audio>
 
-  <!-- PANTALLA 1: BLOQUEO POR PIN -->
+  <!-- PANTALLA 1: INICIO (SOBRE) -->
+  <div id="intro-screen">
+    <div class="intro-envelope" id="intro-envelope-btn" onclick="showLockScreen()">
+      <div class="envelope-detail">🌿</div>
+      <div class="envelope-seal"></div>
+    </div>
+    <div class="intro-text">Tap to open</div>
+  </div>
+
+  <!-- PANTALLA 2: BLOQUEO POR PIN -->
   <div id="lock-screen">
-    <div class="lock-title">Hola Male 🌸</div>
+    <div class="lock-title">Songs for you</div>
     <div class="pin-display" id="pin-display">
       <div class="pin-dot"></div>
       <div class="pin-dot"></div>
@@ -312,12 +327,12 @@
     </div>
   </div>
 
-  <!-- PANTALLA 2: EXPLOSIÓN FLORAL (TRANSICIÓN) -->
+  <!-- PANTALLA 3: EXPLOSIÓN FLORAL ESTILO VIDEO (TRANSICIÓN) -->
   <div id="bloom-transition">
-    <!-- Aquí se inyectarán las flores dinámicamente -->
+    <!-- El contenedor se llenará dinámicamente con capas de flores PNG -->
   </div>
 
-  <!-- PANTALLA 3: DASHBOARD PRINCIPAL -->
+  <!-- PANTALLA 4: DASHBOARD PRINCIPAL -->
   <div id="main-screen" class="screen hidden">
     <!-- CONTENEDOR DE GOTITAS DE LLUVIA -->
     <div class="rain-container" id="rain-container"></div>
@@ -476,8 +491,21 @@
 
   <script>
     // ==========================================
-    // SISTEMA DE BLOQUEO Y TRANSICIÓN FLORAL
+    // SISTEMA DE INICIO Y BLOQUEO
     // ==========================================
+    window.showLockScreen = function() {
+      const introScreen = document.getElementById('intro-screen');
+      const lockScreen = document.getElementById('lock-screen');
+      
+      introScreen.style.transform = 'scale(0.9)';
+      introScreen.style.opacity = '0';
+      
+      setTimeout(() => {
+        introScreen.style.display = 'none';
+        lockScreen.classList.add('active');
+      }, 800);
+    };
+
     const SECRET_PIN = "290524";
     let currentPin = "";
     const dots = document.querySelectorAll('.pin-dot');
@@ -495,51 +523,71 @@
     }
 
     function triggerError() {
-      dots.forEach(dot => {
-        dot.classList.add('error');
-      });
-      setTimeout(() => {
-        currentPin = "";
-        updateDots();
-      }, 500);
+      dots.forEach(dot => { dot.classList.add('error'); });
+      setTimeout(() => { currentPin = ""; updateDots(); }, 500);
     }
 
+    // ==========================================
+    // EXPLOSIÓN FLORAL ESTILO VIDEO (SPRITES PNG)
+    // ==========================================
     function createBloomExplosion() {
       const transContainer = document.getElementById('bloom-transition');
-      
-      // Creamos la flor central que va a explotar
-      const centerFlower = document.createElement('div');
-      centerFlower.className = 'bloom-flower-center active';
-
-      // Le damos 8 pétalos grandes
-      for (let i = 0; i < 8; i++) {
-        const petal = document.createElement('div');
-        petal.className = 'trans-petal';
-        centerFlower.appendChild(petal);
-      }
-      
-      transContainer.appendChild(centerFlower);
-
-      // Desaparecemos la pantalla de bloqueo suavemente
+      transContainer.style.opacity = '1';
       document.getElementById('lock-screen').style.opacity = '0';
       
-      // Iniciamos audio y mostramos página de fondo
+      // Iniciamos audio principal
       const bgAudio = document.getElementById("bg-audio");
       if(bgAudio) bgAudio.play().catch(e => console.log(e));
-      
       const playBtnIcon = document.getElementById("play-btn-icon");
       if(playBtnIcon) playBtnIcon.textContent = "❚❚";
 
+      // Vamos a generar muchas capas de flores para simular el volumen 3D del video
+      const numFlowers = 35; 
+      
+      for (let i = 0; i < numFlowers; i++) {
+        const flower = document.createElement('div');
+        
+        // Asignamos una clase de flor aleatoria (1 a 4)
+        const flowerType = Math.floor(Math.random() * 4) + 1;
+        flower.className = `flower-layer flower-${flowerType}`;
+        
+        // Posiciones aleatorias centradas
+        const offsetX = (Math.random() - 0.5) * 60; // Desplazamiento desde el centro en vw
+        const offsetY = (Math.random() - 0.5) * 60; // Desplazamiento desde el centro en vh
+        
+        flower.style.left = `calc(50% + ${offsetX}vw)`;
+        flower.style.top = `calc(50% + ${offsetY}vh)`;
+        
+        // Rotación inicial y final aleatorias
+        const rotStart = Math.random() * 90 - 45;
+        const rotEnd = rotStart + (Math.random() * 180 - 90);
+        flower.style.setProperty('--rot-start', `${rotStart}deg`);
+        flower.style.setProperty('--rot-end', `${rotEnd}deg`);
+        
+        // Escala final masiva para cubrir la pantalla
+        const scaleMax = Math.random() * 6 + 5; 
+        flower.style.setProperty('--scale-max', scaleMax);
+        
+        // Retrasos ligeramente distintos para que no salgan todas idénticas
+        flower.style.animationDelay = `${Math.random() * 0.3}s`;
+        
+        // Añadimos la clase que inicia la animación
+        flower.classList.add('explode');
+        transContainer.appendChild(flower);
+      }
+
+      // Mostramos la página principal de fondo
       document.getElementById('main-screen').classList.remove('hidden');
       setTimeout(() => {
         document.getElementById('dashboard-layout').classList.add('visible');
-      }, 500);
+      }, 1500);
 
       // Limpiamos todo cuando termina la animación
       setTimeout(() => {
         document.getElementById('lock-screen').style.display = 'none';
-        transContainer.style.display = 'none';
-      }, 2500);
+        transContainer.style.opacity = '0';
+        setTimeout(() => { transContainer.style.display = 'none'; }, 500);
+      }, 3000);
     }
 
     window.addPin = function(num) {
@@ -549,7 +597,7 @@
         
         if (currentPin.length === 6) {
           if (currentPin === SECRET_PIN) {
-            setTimeout(createBloomExplosion, 200);
+            setTimeout(createBloomExplosion, 300);
           } else {
             triggerError();
           }
@@ -558,10 +606,7 @@
     };
 
     window.deletePin = function() {
-      if (currentPin.length > 0) {
-        currentPin = currentPin.slice(0, -1);
-        updateDots();
-      }
+      if (currentPin.length > 0) { currentPin = currentPin.slice(0, -1); updateDots(); }
     };
 
     // ==========================================
