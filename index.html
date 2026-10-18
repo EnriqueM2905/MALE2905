@@ -50,7 +50,7 @@
     .intro-envelope {
       width: 180px; 
       height: 120px;
-      background-color: #EFE4D6; /* Un poco más claro y delicado */
+      background-color: #EFE4D6;
       border-radius: 5px;
       position: relative;
       cursor: pointer;
@@ -61,9 +61,7 @@
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .intro-envelope:hover {
-      transform: scale(1.08);
-    }
+    .intro-envelope:hover { transform: scale(1.08); }
 
     .intro-envelope::before {
       content: ''; position: absolute; top: 0; left: 0;
@@ -80,6 +78,7 @@
     }
 
     .envelope-detail { position: absolute; top: 15px; font-size: 1.8rem; z-index: 3; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); }
+    
     .envelope-seal {
       position: absolute; width: 30px; height: 30px; background-color: #B59595;
       border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3;
@@ -130,51 +129,57 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
     /* =========================================================
-       TRANSICIÓN FLORAL (BLOOM TRANSITION - ESTILO VIDEO)
+       TRANSICIÓN FLORAL ESTILO VIDEO
        ========================================================= */
     #bloom-transition {
-      position: fixed; inset: 0; z-index: 120; /* Por encima de todo */
+      position: fixed; inset: 0; z-index: 120;
       background: var(--bg-cream); pointer-events: none;
       display: flex; justify-content: center; align-items: center;
-      opacity: 0; /* Oculto hasta que el PIN sea correcto */
-      transition: opacity 0.3s ease;
+      opacity: 0; transition: opacity 0.3s ease;
     }
 
     .flower-layer {
       position: absolute;
-      width: 100px; height: 100px;
+      width: 120px; height: 120px; /* Un poco más grandes de base */
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0;
       transform: scale(0) rotate(0deg);
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.2));
     }
 
-    /* Animación de explosión para las flores */
     .flower-layer.explode {
-      animation: bloomOut 2.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: bloomOut 3s cubic-bezier(0.25, 1, 0.4, 1) forwards; /* Curva más suave y prolongada */
     }
 
     @keyframes bloomOut {
       0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)); }
-      20% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)); }
-      80% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.5)) rotate(var(--rot-end)); filter: blur(0px); }
-      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 2)) rotate(var(--rot-end)); filter: blur(15px); }
+      25% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)); }
+      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.8)) rotate(var(--rot-end)); filter: blur(0px); }
+      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 2.5)) rotate(var(--rot-end)); filter: blur(20px); }
     }
 
-    /* URLs de imágenes de flores realistas (Peonías, Rosas) para simular el video */
-    .flower-1 { background-image: url('https://cdn.pixabay.com/photo/2017/08/21/17/23/peony-2666060_1280.png'); } /* Peonía rosa claro */
-    .flower-2 { background-image: url('https://cdn.pixabay.com/photo/2017/02/17/15/25/rose-2074312_1280.png'); } /* Rosa roja/fucsia */
-    .flower-3 { background-image: url('https://cdn.pixabay.com/photo/2018/04/05/14/09/rose-3292942_1280.png'); } /* Rosa pálida/blanca */
-    .flower-4 { background-image: url('https://cdn.pixabay.com/photo/2017/04/19/13/15/flower-2242171_1280.png'); } /* Flor lila/rosada */
+    /* URLs de las 10 imágenes locales en tu carpeta assets */
+    .flower-1 { background-image: url('assets/flor1.png'); } 
+    .flower-2 { background-image: url('assets/flor2.png'); } 
+    .flower-3 { background-image: url('assets/flor3.png'); } 
+    .flower-4 { background-image: url('assets/flor4.png'); } 
+    .flower-5 { background-image: url('assets/flor5.png'); } 
+    .flower-6 { background-image: url('assets/flor6.png'); } 
+    .flower-7 { background-image: url('assets/flor7.png'); } 
+    .flower-8 { background-image: url('assets/flor8.png'); } 
+    .flower-9 { background-image: url('assets/flor9.png'); } 
+    .flower-10 { background-image: url('assets/flor10.png'); }
 
     /* EFECTO DE GOTITAS DE LLUVIA */
     .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
     .raindrop { position: absolute; background: linear-gradient(transparent, rgba(103, 58, 183, 0.45)); width: 1.5px; height: 30px; opacity: 0.6; animation: fallRain linear infinite; }
     @keyframes fallRain { 0% { transform: translateY(-40px); opacity: 0; } 20% { opacity: 0.7; } 100% { transform: translateY(108vh); opacity: 0; } }
 
-    /* DISEÑO PRINCIPAL (DASHBOARD) */
+    /* =========================================================
+       DISEÑO PRINCIPAL (DASHBOARD)
+       ========================================================= */
     .dashboard-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; max-width: 1150px; width: 100%; padding: 20px; align-items: start; opacity: 0; transition: opacity 2s ease 1s; }
     .dashboard-layout.visible { opacity: 1; }
 
@@ -528,7 +533,7 @@
     }
 
     // ==========================================
-    // EXPLOSIÓN FLORAL ESTILO VIDEO (SPRITES PNG)
+    // EXPLOSIÓN FLORAL ESTILO VIDEO (10 FLORES LOCALES)
     // ==========================================
     function createBloomExplosion() {
       const transContainer = document.getElementById('bloom-transition');
@@ -541,37 +546,36 @@
       const playBtnIcon = document.getElementById("play-btn-icon");
       if(playBtnIcon) playBtnIcon.textContent = "❚❚";
 
-      // Vamos a generar muchas capas de flores para simular el volumen 3D del video
-      const numFlowers = 35; 
+      // Incrementado a 60 para que sea súper denso como en el video
+      const numFlowers = 60; 
       
       for (let i = 0; i < numFlowers; i++) {
         const flower = document.createElement('div');
         
-        // Asignamos una clase de flor aleatoria (1 a 4)
-        const flowerType = Math.floor(Math.random() * 4) + 1;
+        // Asignamos una clase de flor aleatoria (del 1 al 10)
+        const flowerType = Math.floor(Math.random() * 10) + 1;
         flower.className = `flower-layer flower-${flowerType}`;
         
-        // Posiciones aleatorias centradas
-        const offsetX = (Math.random() - 0.5) * 60; // Desplazamiento desde el centro en vw
-        const offsetY = (Math.random() - 0.5) * 60; // Desplazamiento desde el centro en vh
+        // Posiciones aleatorias centradas (un poco más agrupadas)
+        const offsetX = (Math.random() - 0.5) * 50; 
+        const offsetY = (Math.random() - 0.5) * 50; 
         
         flower.style.left = `calc(50% + ${offsetX}vw)`;
         flower.style.top = `calc(50% + ${offsetY}vh)`;
         
         // Rotación inicial y final aleatorias
-        const rotStart = Math.random() * 90 - 45;
+        const rotStart = Math.random() * 180 - 90;
         const rotEnd = rotStart + (Math.random() * 180 - 90);
         flower.style.setProperty('--rot-start', `${rotStart}deg`);
         flower.style.setProperty('--rot-end', `${rotEnd}deg`);
         
-        // Escala final masiva para cubrir la pantalla
-        const scaleMax = Math.random() * 6 + 5; 
+        // Escalas masivas
+        const scaleMax = Math.random() * 6 + 4; 
         flower.style.setProperty('--scale-max', scaleMax);
         
-        // Retrasos ligeramente distintos para que no salgan todas idénticas
-        flower.style.animationDelay = `${Math.random() * 0.3}s`;
+        // Retrasos escalonados para que exploten una tras otra muy rápido
+        flower.style.animationDelay = `${Math.random() * 0.4}s`;
         
-        // Añadimos la clase que inicia la animación
         flower.classList.add('explode');
         transContainer.appendChild(flower);
       }
@@ -587,7 +591,7 @@
         document.getElementById('lock-screen').style.display = 'none';
         transContainer.style.opacity = '0';
         setTimeout(() => { transContainer.style.display = 'none'; }, 500);
-      }, 3000);
+      }, 3500);
     }
 
     window.addPin = function(num) {
