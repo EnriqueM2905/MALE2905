@@ -118,7 +118,7 @@
     .raindrop { position: absolute; background: linear-gradient(transparent, rgba(126, 87, 194, 0.4)); width: 1.5px; height: 30px; opacity: 0.5; animation: fallRain linear infinite; }
     @keyframes fallRain { 0% { transform: translateY(-40px); opacity: 0; } 100% { transform: translateY(108vh); opacity: 0; } }
 
-    /* DASHBOARD ORGÁNICO Y FLUIDO */
+    /* DASHBOARD ORGÁNICO */
     .dashboard-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1250px; width: 100%; opacity: 0; transition: opacity 2s ease 1s; padding-bottom: 50px; }
     .dashboard-layout.visible { opacity: 1; }
 
@@ -131,12 +131,14 @@
     .box-title { font-size: 1.4rem; color: var(--purple-dark); margin-bottom: 18px; font-weight: 800; display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; }
     .col-full { grid-column: 1 / -1; }
 
-    /* REPRODUCTOR */
+    /* REPRODUCTOR DE MÚSICA */
     .player-box { background: linear-gradient(145deg, #ffffff 0%, #f6f0ff 100%); }
     .player-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .player-controls-btns { display: flex; align-items: center; gap: 12px; }
-    .track-nav-btn { background: rgba(255,255,255,0.8); border: 2px solid var(--purple-light); color: var(--purple-main); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-    .play-toggle-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 6px 18px rgba(126, 87, 194, 0.4); }
+    .track-nav-btn { background: rgba(255,255,255,0.9); border: 2px solid var(--purple-light); color: var(--purple-main); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
+    .track-nav-btn:hover { background: var(--purple-light); transform: scale(1.05); }
+    .play-toggle-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 6px 18px rgba(126, 87, 194, 0.4); transition: 0.2s; }
+    .play-toggle-btn:hover { transform: scale(1.1); }
     .audio-controls { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
     .progress-container { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: var(--purple-dark); font-weight: 700; }
     .volume-container { display: flex; align-items: center; gap: 15px; justify-content: center; color: var(--purple-main); }
@@ -151,6 +153,12 @@
     .lyric-en { display: block; font-size: 1.5rem; font-weight: 800; color: #ffffff; }
     .lyric-es { display: block; font-size: 0.95rem; font-weight: 600; color: var(--turquoise-light); margin-top: 5px; }
     .lyric-item.active { opacity: 1; transform: scale(1.05); }
+
+    /* YOUTUBE PLAYLIST */
+    .yt-box { display: flex; flex-direction: column; align-items: center; text-align: center; background: linear-gradient(145deg, #ffffff 0%, #f0fafb 100%); }
+    .yt-box .box-title { width: 100%; justify-content: flex-start; }
+    .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
     /* ÁRBOL DE CORAZONES */
     .canvas-tree-box { background: linear-gradient(160deg, #fffcf9 0%, #fef1f5 100%); display: flex; flex-direction: column; gap: 15px; }
@@ -182,15 +190,12 @@
     .organic-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(0, 188, 212, 0.5); }
     .organic-btn.secondary { background: linear-gradient(135deg, var(--turquoise-dark), var(--purple-main)); }
 
-    /* =========================================================
-       SECCIÓN 1: ASISTENTE DE TESIS Y BUSCADOR (EN DASHBOARD)
-       ========================================================= */
+    /* ASISTENTE DE TESIS (PUBMED) */
     .thesis-box { background: linear-gradient(145deg, #ffffff 0%, #f3fcfb 100%); }
     .search-bar-row { display: flex; gap: 12px; margin-bottom: 18px; }
     .search-input { flex: 1; padding: 14px 22px; border-radius: 30px; border: 2px solid var(--turquoise-light); font-family: 'Quicksand', sans-serif; font-size: 1rem; outline: none; background: white; }
     .search-btn-action { background: var(--turquoise-main); color: white; border: none; padding: 0 28px; border-radius: 30px; font-weight: 800; cursor: pointer; transition: 0.2s; }
     .search-btn-action:hover { background: var(--turquoise-dark); }
-    
     .paper-card { background: #fffdf9; border: 1.5px solid #e6dcd0; padding: 20px; border-radius: 22px; margin-bottom: 15px; text-align: left; }
     .paper-title { font-weight: 800; font-size: 1.05rem; color: var(--purple-dark); margin-bottom: 6px; }
     .paper-authors { font-size: 0.88rem; color: #666; font-style: italic; margin-bottom: 8px; }
@@ -202,16 +207,15 @@
     .apa-btn:hover { background: var(--purple-main); color: white; }
     .apa-output-box { width: 100%; margin-top: 10px; background: #f0f0f0; padding: 12px; border-radius: 14px; font-size: 0.85rem; font-family: monospace; display: none; }
 
-    /* =========================================================
-       SECCIÓN 2: MINIJUEGO CON PISTAS Y CONTRASEÑA (EN DASHBOARD)
-       ========================================================= */
+    /* RETOS AVANZADOS ROTATIVOS (MICROBIOLOGÍA NIVEL TESIS) */
     .quest-dashboard-box { background: linear-gradient(145deg, #ffffff 0%, #fbf3f8 100%); }
-    .quest-step { background: rgba(255, 255, 255, 0.8); border: 2px solid var(--purple-light); padding: 18px; border-radius: 22px; margin-bottom: 15px; }
-    .quest-question { font-weight: 700; color: var(--purple-dark); margin-bottom: 12px; font-size: 1.05rem; }
-    .quest-options { display: flex; gap: 10px; flex-wrap: wrap; }
-    .quest-opt-btn { background: white; border: 2px solid var(--purple-light); padding: 8px 18px; border-radius: 18px; font-weight: 700; cursor: pointer; color: #555; transition: 0.2s; }
-    .quest-opt-btn:hover { background: var(--purple-main); color: white; border-color: var(--purple-main); }
-    .clue-badge { background: #e8f5e9; border: 1.5px dashed #4caf50; padding: 10px 14px; border-radius: 14px; color: #2e7d32; font-weight: 700; font-size: 0.9rem; margin-top: 10px; display: none; }
+    .quest-step { background: rgba(255, 255, 255, 0.9); border: 2px solid var(--purple-light); padding: 20px; border-radius: 22px; margin-bottom: 15px; }
+    .quest-question { font-weight: 700; color: var(--purple-dark); margin-bottom: 14px; font-size: 1.1rem; }
+    .quest-options { display: flex; flex-direction: column; gap: 10px; }
+    .quest-opt-btn { background: white; border: 2px solid var(--purple-light); padding: 12px 18px; border-radius: 16px; font-weight: 700; cursor: pointer; color: #444; text-align: left; transition: 0.2s; }
+    .quest-opt-btn:hover { background: var(--purple-light); border-color: var(--purple-main); }
+    .clue-badge { background: #e8f5e9; border: 1.5px dashed #4caf50; padding: 12px; border-radius: 14px; color: #2e7d32; font-weight: 700; font-size: 0.95rem; margin-top: 12px; display: none; }
+    .refresh-quest-btn { background: none; border: none; color: var(--purple-main); font-weight: 700; cursor: pointer; font-size: 0.85rem; float: right; text-decoration: underline; }
 
     /* MODALES DE CARTAS */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(30, 15, 55, 0.65); backdrop-filter: blur(10px); z-index: 100; display: flex; justify-content: center; align-items: center; }
@@ -220,7 +224,6 @@
     .handwritten-letter { font-family: 'Caveat', cursive; font-size: 1.65rem; color: #382c22; line-height: 1.6; clear: both; }
     .handwritten-letter p { margin-bottom: 22px; text-align: justify; }
 
-    /* INPUT DE CONTRASEÑA PARA CARTA 2 */
     .password-unlock-box { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; text-align: center; }
     .password-input { padding: 12px 20px; border-radius: 25px; border: 2px solid var(--purple-main); font-size: 1.2rem; text-align: center; letter-spacing: 3px; outline: none; width: 220px; font-family: 'Quicksand', sans-serif; }
     .unlock-submit-btn { background: var(--purple-main); color: white; border: none; padding: 10px 25px; border-radius: 20px; font-weight: 800; cursor: pointer; }
@@ -237,7 +240,7 @@
 
   <audio id="bg-audio"></audio>
 
-  <!-- PANTALLA 1: INICIO (SOBRE) -->
+  <!-- PANTALLA 1: INICIO -->
   <div id="intro-screen">
     <div class="intro-envelope" onclick="showLockScreen()">
       <div class="envelope-detail">🌿</div>
@@ -246,7 +249,7 @@
     <div class="intro-text">Tap to open</div>
   </div>
 
-  <!-- PANTALLA 2: BLOQUEO POR PIN -->
+  <!-- PANTALLA 2: PIN -->
   <div id="lock-screen">
     <div class="lock-title">Songs for you</div>
     <div class="pin-display" id="pin-display">
@@ -269,7 +272,7 @@
     </div>
   </div>
 
-  <!-- TRANSICIÓN FLORAL -->
+  <!-- TRANSICIÓN -->
   <div id="bloom-transition"></div>
 
   <!-- DASHBOARD PRINCIPAL -->
@@ -278,14 +281,14 @@
     
     <div class="dashboard-layout" id="dashboard-layout">
       
-      <!-- 1. REPRODUCTOR DE MÚSICA -->
+      <!-- 1. REPRODUCTOR DE MÚSICA CON LETRAS SPOTIFY Y CONTROLES FUNCIONALES -->
       <div class="organic-box player-box">
         <div class="player-header-flex">
           <h3 class="box-title" id="current-track-title">♪ Always - Daniel Caesar</h3>
           <div class="player-controls-btns">
-            <button class="track-nav-btn" id="prev-track-btn">⏮</button>
+            <button class="track-nav-btn" id="prev-track-btn" title="Anterior">⏮</button>
             <button class="play-toggle-btn" id="play-toggle-btn"><span id="play-btn-icon">▶</span></button>
-            <button class="track-nav-btn" id="next-track-btn">⏭</button>
+            <button class="track-nav-btn" id="next-track-btn" title="Siguiente">⏭</button>
           </div>
         </div>
         <div class="audio-controls">
@@ -325,48 +328,49 @@
         </div>
       </div>
 
-      <!-- 3. ASISTENTE DE TESIS / BUSCADOR CIENTÍFICO (EN VIVO EN EL DASHBOARD) -->
-      <div class="organic-box thesis-box col-full">
-        <h3 class="box-title">🔬 Asistente de Tesis en Microbiología (PubMed)</h3>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Busca artículos científicos por palabras clave, léelos y genera su cita APA 7 solo si te convencen.</p>
-        <div class="search-bar-row">
-          <input type="text" class="search-input" id="search-query" placeholder="Ej. Biofilm formation, Pseudomonas aeruginosa, CRISPR...">
-          <button class="search-btn-action" onclick="searchScientificPapers()">Buscar Papers</button>
+      <!-- 3. PLAYLIST YOUTUBE RESTAURADA -->
+      <div class="organic-box yt-box">
+        <h3 class="box-title">✨ Nuestra Playlist YouTube</h3>
+        <div class="iframe-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/GrzMaw354u4?list=PLJyZwPZkDZ3M" frameborder="0" allowfullscreen></iframe>
         </div>
-        <div id="search-results"></div>
       </div>
 
-      <!-- 4. JUEGO DE PISTAS PARA CONTRASEÑA (EN VIVO EN EL DASHBOARD) -->
+      <!-- 4. ASISTENTE DE TESIS (PUBMED) -->
+      <div class="organic-box thesis-box">
+        <h3 class="box-title">🔬 Asistente de Tesis en Microbiología</h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Busca artículos por palabras clave, léelos y genera su cita APA 7 si te convencen.</p>
+        <div class="search-bar-row">
+          <input type="text" class="search-input" id="search-query" placeholder="Ej. Biofilm, CRISPR, E. coli...">
+          <button class="search-btn-action" onclick="searchScientificPapers()">Buscar</button>
+        </div>
+        <div id="search-results" style="max-height: 250px; overflow-y: auto;"></div>
+      </div>
+
+      <!-- 5. RETOS ACADÉMICOS ROTATIVOS DE NIVEL UNIVERSITARIO (PARA OBTENER PISTAS Y CONTRASEÑA) -->
       <div class="organic-box quest-dashboard-box col-full">
-        <h3 class="box-title">🧩 Retos Académicos & Pistas para la Carta 2</h3>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Resuelve los retos para conseguir los 3 fragmentos de la contraseña de 6 dígitos que abre la Carta 2:</p>
+        <h3 class="box-title">
+          🧩 Retos de Tesis & Pistas para la Carta 2
+          <button class="refresh-quest-btn" onclick="loadRandomQuests()">🔄 Nuevas preguntas</button>
+        </h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Supera estos 3 retos de nivel avanzado en microbiología y nuestra historia para desbloquear la contraseña de 6 dígitos:</p>
         
-        <div class="quest-step" id="step-1">
-          <div class="quest-question">Reto 1: ¿Cuál es el género bacteriano modelo más estudiado en biología molecular y microbiología?</div>
-          <div class="quest-options">
-            <button class="quest-opt-btn" onclick="resolveQuest(1, false)">Staphylococcus</button>
-            <button class="quest-opt-btn" onclick="resolveQuest(1, true)">Escherichia coli</button>
-            <button class="quest-opt-btn" onclick="resolveQuest(1, false)">Bacillus</button>
-          </div>
-          <div class="clue-badge" id="badge-1">💡 Pista 1 conseguida: Los primeros 2 dígitos corresponden al **día** de nuestra fecha especial.</div>
+        <div class="quest-step" id="q-step-1">
+          <div class="quest-question" id="q-text-1">Cargando pregunta 1...</div>
+          <div class="quest-options" id="q-opts-1"></div>
+          <div class="clue-badge" id="q-badge-1">💡 Pista 1 conseguida: Los primeros 2 dígitos corresponden al **día** de nuestra fecha especial.</div>
         </div>
 
-        <div class="quest-step" id="step-2" style="opacity: 0.5; pointer-events: none;">
-          <div class="quest-question">Reto 2: ¿Qué tinción diferencial básica permite clasificar a las bacterias en Gram positivas y Gram negativas?</div>
-          <div class="quest-options">
-            <button class="quest-opt-btn" onclick="resolveQuest(2, true)">Tinción de Gram</button>
-            <button class="quest-opt-btn" onclick="resolveQuest(2, false)">Tinción de Ziehl-Neelsen</button>
-          </div>
-          <div class="clue-badge" id="badge-2">💡 Pista 2 conseguida: Los siguientes 2 dígitos corresponden al **mes** en número.</div>
+        <div class="quest-step" id="q-step-2" style="opacity: 0.5; pointer-events: none;">
+          <div class="quest-question" id="q-text-2">Cargando pregunta 2...</div>
+          <div class="quest-options" id="q-opts-2"></div>
+          <div class="clue-badge" id="q-badge-2">💡 Pista 2 conseguida: Los siguientes 2 dígitos corresponden al **mes** en número.</div>
         </div>
 
-        <div class="quest-step" id="step-3" style="opacity: 0.5; pointer-events: none;">
-          <div class="quest-question">Reto 3: ¿En qué año se cruzaron nuestros caminos por primera vez?</div>
-          <div class="quest-options">
-            <button class="quest-opt-btn" onclick="resolveQuest(3, false)">2023</button>
-            <button class="quest-opt-btn" onclick="resolveQuest(3, true)">2024</button>
-          </div>
-          <div class="clue-badge" id="badge-3">💡 Pista 3 conseguida: Los últimos 2 dígitos son el **año** (ej. 24). ¡Contraseña completa lista!</div>
+        <div class="quest-step" id="q-step-3" style="opacity: 0.5; pointer-events: none;">
+          <div class="quest-question" id="q-text-3">Cargando pregunta 3...</div>
+          <div class="quest-options" id="q-opts-3"></div>
+          <div class="clue-badge" id="q-badge-3">💡 Pista 3 conseguida: Los últimos 2 dígitos son el **año** (ej. 24). ¡Contraseña completa: 290524!</div>
         </div>
       </div>
 
@@ -386,7 +390,7 @@
       <div class="handwritten-letter">
         <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;">Querida Malena,</h2>
         <p>Fuiste una persona muy especial para mí... de todo lo vivido aprendí, y ahora soy una mejor persona. Estuve pensando mucho en lo lindo que ha sido volver a hablar y compartir momentos contigo. Me gusta mucho escuchar tu risa y quiero mantenerte feliz siempre.</p>
-        <p>Anoche hablábamos de tus metas y de la maestría. Mi mayor ilusión es avanzar y encontrarte al final del día con tus canchitas sin aceite. Te quiero demasiado, Male, voy a dar todo de mí para recuperarte.</p>
+        <p>Anoche hablábamos de tus metas y de la tesis. Mi mayor ilusión es avanzar y encontrarte al final del día con tus canchitas sin aceite. Te quiero demasiado, Male, voy a dar todo de mí para recuperarte.</p>
         <div style="margin-top: 30px; text-align: right; font-weight: 700;">Con todo mi afecto.</div>
       </div>
     </div>
@@ -396,21 +400,17 @@
   <div id="letter2-modal" class="modal-backdrop hidden">
     <div class="letter-paper">
       <button class="close-btn" id="close-letter2-btn">&times;</button>
-      
-      <!-- CONTRASEÑA INPUT -->
       <div id="password-screen" class="password-unlock-box">
         <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark);">Carta Secreta 🔐</h2>
-        <p style="color: #666; font-size: 0.95rem;">Ingresa la contraseña de 6 dígitos que descubriste en los retos de microbiología y nuestra historia:</p>
+        <p style="color: #666; font-size: 0.95rem;">Ingresa la contraseña de 6 dígitos que descubriste en los retos de tesis:</p>
         <input type="password" class="password-input" id="letter2-pass" maxlength="6" placeholder="******">
         <button class="unlock-submit-btn" onclick="verifyLetter2Pass()">Desbloquear Carta</button>
         <div id="pass-error" style="color: red; font-size: 0.85rem; display: none;">Contraseña incorrecta. ¡Revisa las pistas de los retos!</div>
       </div>
-
-      <!-- CONTENIDO DE LA CARTA 2 -->
       <div id="letter2-content" class="handwritten-letter hidden">
         <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;">Para ti, Male:</h2>
-        <p>Si estás leyendo esto significa que resolviste los retos y descifraste el código. Eres una científica increíble y una mujer extraordinaria.</p>
-        <p>Quiero que sepas que admiro tu dedicación por la microbiología y tu tesis tanto como te admiro a ti. Estoy aquí para apoyarte en cada paso de este gran cierre académico y en todo lo que venga. ¡Mucho éxito, mi amor!</p>
+        <p>Si estás leyendo esto significa que superaste los retos científicos. Eres una investigadora brillante y una mujer extraordinaria.</p>
+        <p>Quiero que sepas que admiro tu dedicación por la microbiología y tu tesis tanto como te admiro a ti. Estoy aquí para apoyarte en cada paso de este gran cierre académico. ¡Mucho éxito, mi amor!</p>
         <div style="margin-top: 30px; text-align: right; font-weight: 700;">Siempre tuyo.</div>
       </div>
     </div>
@@ -493,13 +493,56 @@
       }
     }
 
-    // BUSCADOR CIENTÍFICO REAL (PUBMED API)
+    // BANCO DE PREGUNTAS ROTATIVAS DE NIVEL UNIVERSITARIO (MICROBIOLOGÍA & TESIS)
+    const questionBank = [
+      { q: "¿Qué mecanismo principal confiere resistencia bacteriana a los beta-lactámicos en cepas nosocomiales?", options: ["Producción de beta-lactamasas", "Mutación en la síntesis de quitina", "Inhibición de la girasa"], correct: 0 },
+      { q: "¿Cuál es el agente químico más comúnmente empleado para la desinfección de material termosensible en laboratorios de microbiología?", options: ["Glutaraldehído", "Cloruro de sodio isotónico", "Etanol al 20%"], correct: 0 },
+      { q: "En la formación de biofilms bacterianos, ¿qué componente macromolecular forma la matriz extracelular (EPS)?", options: ["Exopolisacáridos y ADN e", "Lípidos de membrana simple", "Peptidoglucano lineal"], correct: 0 },
+      { q: "¿Qué técnica molecular se utiliza de referencia para amplificar secuencias específicas de ADN bacteriano en la tesis?", options: ["Reacción en Cadena de la Polimerasa (PCR)", "Cromatografía de gases", "Electroforesis capilar proteica"], correct: 0 },
+      { q: "¿Qué estructura bacteriana es la principal responsable de la virulencia y protección contra la fagocitosis?", options: ["La cápsula bacteriana", "Los ribosomas 70S", "El mesosoma lateral"], correct: 0 },
+      { q: "¿En qué fase de la curva de crecimiento bacteriano la tasa de división iguala a la tasa de mortalidad celular?", options: ["Fase estacionaria", "Fase exponencial o logarítmica", "Fase de latencia"], correct: 0 }
+    ];
+
+    function loadRandomQuests() {
+      // Barajar preguntas aleatoriamente
+      const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+      for (let i = 1; i <= 3; i++) {
+        const qData = shuffled[i - 1];
+        document.getElementById(`q-text-${i}`).innerText = `Reto ${i}: ${qData.q}`;
+        const optsContainer = document.getElementById(`q-opts-${i}`);
+        optsContainer.innerHTML = "";
+        qData.options.forEach((optText, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'quest-opt-btn';
+          btn.innerText = optText;
+          btn.onclick = () => resolveQuest(i, idx === qData.correct);
+          optsContainer.appendChild(btn);
+        });
+      }
+    }
+
+    window.resolveQuest = function(step, isCorrect) {
+      if (isCorrect) {
+        document.getElementById(`q-badge-${step}`).style.display = 'block';
+        if (step < 3) {
+          const nextStep = document.getElementById(`q-step-${step + 1}`);
+          nextStep.style.opacity = '1';
+          nextStep.style.pointerEvents = 'auto';
+        } else {
+          alert("¡Excelente Male! Tienes los 3 fragmentos. Contraseña completa: 290524 💖");
+        }
+      } else {
+        alert("Respuesta incorrecta para nivel de tesis. ¡Piensa bien y prueba de nuevo! 🔬");
+      }
+    };
+
+    // BUSCADOR PUBMED
     window.searchScientificPapers = async function() {
       const query = document.getElementById('search-query').value.trim();
       const resultsContainer = document.getElementById('search-results');
       if (!query) return;
 
-      resultsContainer.innerHTML = "<p style='text-align:center; color:#7E57C2; padding: 15px;'>Buscando artículos en PubMed (NCBI)... 🔬</p>";
+      resultsContainer.innerHTML = "<p style='text-align:center; color:#7E57C2; padding: 15px;'>Buscando artículos en PubMed... 🔬</p>";
 
       try {
         const searchRes = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=${encodeURIComponent(query)}&retmode=json&retmax=4`);
@@ -507,7 +550,7 @@
         const idList = searchData.esearchresult.idlist;
 
         if (!idList || idList.length === 0) {
-          resultsContainer.innerHTML = "<p style='text-align:center; color:#666; padding: 15px;'>No se encontraron artículos con ese término. Prueba con otro concepto microbiológico.</p>";
+          resultsContainer.innerHTML = "<p style='text-align:center; color:#666; padding: 15px;'>No se encontraron artículos con ese término en PubMed.</p>";
           return;
         }
 
@@ -529,7 +572,7 @@
           card.innerHTML = `
             <div class="paper-title">${title}</div>
             <div class="paper-authors">${authors} (${pubdate}). <em>${source}</em>.</div>
-            <div class="paper-abstract">Accede al repositorio oficial para revisar el resumen completo y metodología de este artículo de investigación en microbiología.</div>
+            <div class="paper-abstract">Accede al repositorio oficial para revisar el resumen completo y metodología de este artículo.</div>
             <div class="paper-actions">
               <a href="${articleUrl}" target="_blank" class="read-link">Leer artículo original ↗</a>
               <button class="apa-btn" onclick="generateAPA(this, '${authors.replace(/'/g, "")}', '${pubdate}', '${title.replace(/'/g, "")}', '${source}')">Generar Cita APA 7 📋</button>
@@ -539,32 +582,15 @@
           resultsContainer.appendChild(card);
         });
       } catch (e) {
-        resultsContainer.innerHTML = "<p style='text-align:center; color:red; padding: 15px;'>Error de conexión con PubMed. Intenta de nuevo.</p>";
+        resultsContainer.innerHTML = "<p style='text-align:center; color:red; padding: 15px;'>Error de conexión con PubMed.</p>";
       }
     };
 
-    // GENERAR CITA APA 7 SI EL ARTÍCULO LE CONVENCE
     window.generateAPA = function(btn, authors, year, title, source) {
       const apaText = `${authors} (${year}). ${title}. <em>${source}</em>.`;
       const box = btn.parentElement.nextElementSibling;
       box.style.display = 'block';
-      box.innerHTML = `<strong>Formato APA 7 (Listo para tu tesis):</strong><br>${apaText}<br><button style="margin-top:8px; padding:4px 12px; font-size:0.8rem; cursor:pointer; background:var(--turquoise-main); color:white; border:none; border-radius:10px;" onclick="navigator.clipboard.writeText('${authors} (${year}). ${title}. ${source}.'); alert('¡Cita copiada al portapapeles!');">Copiar Cita al Portapapeles ✨</button>`;
-    };
-
-    // JUEGO DE PISTAS
-    window.resolveQuest = function(step, isCorrect) {
-      if (isCorrect) {
-        document.getElementById(`badge-${step}`).style.display = 'block';
-        if (step < 3) {
-          const nextStep = document.getElementById(`step-${step + 1}`);
-          nextStep.style.opacity = '1';
-          nextStep.style.pointerEvents = 'auto';
-        } else {
-          alert("¡Felicidades Male! Ya tienes los 3 fragmentos. La contraseña completa para abrir la Carta 2 es: 290524 💖");
-        }
-      } else {
-        alert("¡Casi! Piensa un poco más y vuelve a intentar. 🌸");
-      }
+      box.innerHTML = `<strong>Formato APA 7:</strong><br>${apaText}<br><button style="margin-top:6px; padding:4px 10px; font-size:0.8rem; cursor:pointer; background:var(--turquoise-main); color:white; border:none; border-radius:8px;" onclick="navigator.clipboard.writeText('${authors} (${year}). ${title}. ${source}.'); alert('¡Cita copiada al portapapeles!');">Copiar Cita ✨</button>`;
     };
 
     window.verifyLetter2Pass = function() {
@@ -578,31 +604,144 @@
       }
     };
 
-    // REPRODUCTOR Y MÚSICA
+    // REPRODUCTOR MULTI-CANCIÓN Y LETRAS SPOTIFY
     const playlist = [
       {
         title: "♪ Always - Daniel Caesar",
         src: "assets/Always.mp3",
         lyrics: [
-          { t: 0, en: "Instrumental", es: "..." },
-          { t: 15, en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
-          { t: 22, en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." }
+          { t: 0,   en: "Instrumental", es: "..." },
+          { t: 15,  en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
+          { t: 22,  en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
+          { t: 29,  en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
+          { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
+          { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
+          { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
+          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
+          { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." }
+        ]
+      },
+      {
+        title: "♪ Coming Up Roses - Harry Styles",
+        src: "assets/coming-up-roses.mp3",
+        lyrics: [
+          { t: 0,   en: "Instrumental", es: "..." },
+          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como rosas" },
+          { t: 20,  en: "Looking at the way you smile", es: "Mirando la forma en que sonríes" },
+          { t: 28,  en: "Feels like I've known you for a while", es: "Se siente como si te conociera de toda la vida" }
         ]
       }
     ];
 
+    let currentTrackIndex = 0;
+
     window.addEventListener("DOMContentLoaded", () => {
       const bgAudio = document.getElementById("bg-audio");
+      const volumeBar = document.getElementById("volume-bar");
+      const seekBar = document.getElementById("seek-bar");
+      const currentTimeEl = document.getElementById("current-time");
+      const durationEl = document.getElementById("duration");
+      const trackTitleEl = document.getElementById("current-track-title");
       const playToggleBtn = document.getElementById("play-toggle-btn");
       const playBtnIcon = document.getElementById("play-btn-icon");
+      const lyricsContainer = document.getElementById("lyrics-container");
+      const lyricsInner = document.getElementById("lyrics-inner");
 
-      bgAudio.src = playlist[0].src;
+      function loadTrack(index, autoPlay = false) {
+        currentTrackIndex = index;
+        const track = playlist[currentTrackIndex];
+        bgAudio.src = track.src;
+        bgAudio.load();
+        if (trackTitleEl) trackTitleEl.innerText = track.title;
+        if (lyricsInner) {
+          lyricsInner.innerHTML = "";
+          track.lyrics.forEach((line, i) => {
+            const div = document.createElement("div");
+            div.className = "lyric-item";
+            div.id = `lyric-${i}`;
+            div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
+            div.addEventListener("click", () => { if (bgAudio) bgAudio.currentTime = line.t; });
+            lyricsInner.appendChild(div);
+          });
+        }
+        if (autoPlay) {
+          bgAudio.play().then(() => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; }).catch(e => {});
+        } else {
+          if (playBtnIcon) playBtnIcon.textContent = "▶";
+        }
+      }
+
+      function updateProgressFill(input) {
+        const value = (input.value - input.min) / (input.max - input.min) * 100;
+        input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`;
+      }
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+      }
+
+      loadTrack(0, false);
+      loadRandomQuests(); // Cargar preguntas dinámicas
+
+      if (bgAudio) {
+        bgAudio.addEventListener("ended", () => {
+          currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+          loadTrack(currentTrackIndex, true);
+        });
+        bgAudio.addEventListener("play", () => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; });
+        bgAudio.addEventListener("pause", () => { if (playBtnIcon) playBtnIcon.textContent = "▶"; });
+        bgAudio.addEventListener("loadedmetadata", () => {
+          if (seekBar) { seekBar.max = bgAudio.duration; updateProgressFill(seekBar); }
+          if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
+        });
+        bgAudio.addEventListener("timeupdate", () => {
+          if (seekBar) { seekBar.value = bgAudio.currentTime; updateProgressFill(seekBar); }
+          if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
+          const current = bgAudio.currentTime;
+          const currentLyrics = playlist[currentTrackIndex].lyrics;
+          let activeIndex = -1;
+          for (let i = 0; i < currentLyrics.length; i++) {
+            if (current >= currentLyrics[i].t && (!currentLyrics[i + 1] || current < currentLyrics[i + 1].t)) {
+              activeIndex = i; break;
+            }
+          }
+          if (activeIndex !== -1) {
+            const el = document.getElementById(`lyric-${activeIndex}`);
+            if (el && !el.classList.contains("active")) {
+              document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
+              el.classList.add("active");
+              const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2);
+              lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
+            }
+          }
+        });
+        if (seekBar) {
+          seekBar.addEventListener("input", function() { bgAudio.currentTime = this.value; updateProgressFill(this); });
+        }
+      }
 
       if (playToggleBtn && bgAudio) {
         playToggleBtn.addEventListener("click", () => {
-          if (bgAudio.paused) { bgAudio.play(); playBtnIcon.textContent = "❚❚"; }
-          else { bgAudio.pause(); playBtnIcon.textContent = "▶"; }
+          if (bgAudio.paused) bgAudio.play().catch(e => {});
+          else bgAudio.pause();
         });
+      }
+
+      const prevTrackBtn = document.getElementById("prev-track-btn");
+      const nextTrackBtn = document.getElementById("next-track-btn");
+      if (prevTrackBtn) prevTrackBtn.addEventListener("click", () => {
+        currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrackIndex, true);
+      });
+      if (nextTrackBtn) nextTrackBtn.addEventListener("click", () => {
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        loadTrack(currentTrackIndex, true);
+      });
+      if (volumeBar && bgAudio) {
+        volumeBar.addEventListener("input", function() { bgAudio.volume = this.value; updateProgressFill(this); });
+        updateProgressFill(volumeBar);
       }
 
       // ÁRBOL DE CORAZONES
