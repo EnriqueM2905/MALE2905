@@ -16,7 +16,7 @@
       --red-strong: #E53935;
       --red-soft: #FFCDD2;
       --red-soft-text: #B71C1C;
-      --bg-cream: #FDFBF7; /* Un crema muy suave, casi blanco, estilo paper */
+      --bg-cream: #FDFBF7;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -129,7 +129,7 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
     /* =========================================================
-       TRANSICIÓN FLORAL ESTILO VIDEO
+       TRANSICIÓN FLORAL OPTIMIZADA
        ========================================================= */
     #bloom-transition {
       position: fixed; inset: 0; z-index: 120;
@@ -140,37 +140,41 @@
 
     .flower-layer {
       position: absolute;
-      width: 120px; height: 120px; /* Un poco más grandes de base */
+      /* REDUCCIÓN DE TAMAÑO BASE: De 150px a 80px */
+      width: 80px; height: 80px; 
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0;
       transform: scale(0) rotate(0deg);
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+      /* OPTIMIZACIÓN: Aceleración por hardware para reducir lag */
+      will-change: transform, opacity;
     }
 
     .flower-layer.explode {
-      animation: bloomOut 3s cubic-bezier(0.25, 1, 0.4, 1) forwards; /* Curva más suave y prolongada */
+      animation: bloomOut 3s cubic-bezier(0.25, 1, 0.4, 1) forwards; 
     }
 
     @keyframes bloomOut {
       0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)); }
       25% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)); }
-      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.8)) rotate(var(--rot-end)); filter: blur(0px); }
-      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 2.5)) rotate(var(--rot-end)); filter: blur(20px); }
+      /* REDUCCIÓN DE ESCALA FINAL: Ya no crecerán de forma exagerada */
+      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.3)) rotate(var(--rot-end)); filter: blur(0px); }
+      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 1.0)) rotate(var(--rot-end)); filter: blur(10px); }
     }
 
-    /* URLs de las 10 imágenes locales en tu carpeta assets */
-    .flower-1 { background-image: url('assets/flor1.png'); } 
-    .flower-2 { background-image: url('assets/flor2.png'); } 
-    .flower-3 { background-image: url('assets/flor3.png'); } 
-    .flower-4 { background-image: url('assets/flor4.png'); } 
-    .flower-5 { background-image: url('assets/flor5.png'); } 
-    .flower-6 { background-image: url('assets/flor6.png'); } 
-    .flower-7 { background-image: url('assets/flor7.png'); } 
-    .flower-8 { background-image: url('assets/flor8.png'); } 
-    .flower-9 { background-image: url('assets/flor9.png'); } 
-    .flower-10 { background-image: url('assets/flor10.png'); }
+    /* Enlaces seguros a imágenes PNG de flores (Alojadas en Imgur para garantizar disponibilidad) */
+    .flower-1 { background-image: url('https://i.imgur.com/vH1N9k3.png'); } 
+    .flower-2 { background-image: url('https://i.imgur.com/tH0M7rB.png'); } 
+    .flower-3 { background-image: url('https://i.imgur.com/rL7K1bM.png'); } 
+    .flower-4 { background-image: url('https://i.imgur.com/XqZ9J5p.png'); } 
+    .flower-5 { background-image: url('https://i.imgur.com/Z8N3j4y.png'); } 
+    .flower-6 { background-image: url('https://i.imgur.com/W2C5e8x.png'); } 
+    .flower-7 { background-image: url('https://i.imgur.com/Q9y5d8c.png'); } 
+    .flower-8 { background-image: url('https://i.imgur.com/vH1N9k3.png'); } 
+    .flower-9 { background-image: url('https://i.imgur.com/tH0M7rB.png'); } 
+    .flower-10 { background-image: url('https://i.imgur.com/rL7K1bM.png'); } 
 
     /* EFECTO DE GOTITAS DE LLUVIA */
     .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -533,7 +537,7 @@
     }
 
     // ==========================================
-    // EXPLOSIÓN FLORAL ESTILO VIDEO (10 FLORES LOCALES)
+    // EXPLOSIÓN FLORAL OPTIMIZADA
     // ==========================================
     function createBloomExplosion() {
       const transContainer = document.getElementById('bloom-transition');
@@ -546,34 +550,30 @@
       const playBtnIcon = document.getElementById("play-btn-icon");
       if(playBtnIcon) playBtnIcon.textContent = "❚❚";
 
-      // Incrementado a 60 para que sea súper denso como en el video
-      const numFlowers = 60; 
+      // REDUCCIÓN DE CANTIDAD: De 60 a 45 para mejorar el rendimiento
+      const numFlowers = 45; 
       
       for (let i = 0; i < numFlowers; i++) {
         const flower = document.createElement('div');
         
-        // Asignamos una clase de flor aleatoria (del 1 al 10)
         const flowerType = Math.floor(Math.random() * 10) + 1;
         flower.className = `flower-layer flower-${flowerType}`;
         
-        // Posiciones aleatorias centradas (un poco más agrupadas)
-        const offsetX = (Math.random() - 0.5) * 50; 
-        const offsetY = (Math.random() - 0.5) * 50; 
+        const offsetX = (Math.random() - 0.5) * 60; 
+        const offsetY = (Math.random() - 0.5) * 60; 
         
         flower.style.left = `calc(50% + ${offsetX}vw)`;
         flower.style.top = `calc(50% + ${offsetY}vh)`;
         
-        // Rotación inicial y final aleatorias
         const rotStart = Math.random() * 180 - 90;
         const rotEnd = rotStart + (Math.random() * 180 - 90);
         flower.style.setProperty('--rot-start', `${rotStart}deg`);
         flower.style.setProperty('--rot-end', `${rotEnd}deg`);
         
-        // Escalas masivas
-        const scaleMax = Math.random() * 6 + 4; 
+        // REDUCCIÓN DE ESCALA: Las flores no crecerán tanto (antes 4-10, ahora 2-6)
+        const scaleMax = Math.random() * 4 + 2; 
         flower.style.setProperty('--scale-max', scaleMax);
         
-        // Retrasos escalonados para que exploten una tras otra muy rápido
         flower.style.animationDelay = `${Math.random() * 0.4}s`;
         
         flower.classList.add('explode');
@@ -586,7 +586,7 @@
         document.getElementById('dashboard-layout').classList.add('visible');
       }, 1500);
 
-      // Limpiamos todo cuando termina la animación
+      // Limpiamos todo cuando termina
       setTimeout(() => {
         document.getElementById('lock-screen').style.display = 'none';
         transContainer.style.opacity = '0';
