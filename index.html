@@ -129,27 +129,25 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
     /* =========================================================
-       TRANSICIÓN FLORAL OPTIMIZADA (CERO LAG, MÁS PEQUEÑAS)
+       TRANSICIÓN FLORAL OPTIMIZADA (PANTALLA COMPLETA Y SIN LAG)
        ========================================================= */
     #bloom-transition {
       position: fixed; inset: 0; z-index: 120;
       background: var(--bg-cream); pointer-events: none;
-      display: flex; justify-content: center; align-items: center;
+      /* Eliminamos Flex para usar posicionamiento absoluto en toda la pantalla */
       opacity: 0; transition: opacity 0.3s ease;
     }
 
     .flower-layer {
       position: absolute;
-      /* TAMAÑO REDUCIDO para que sean más pequeñas */
-      width: 60px; height: 60px; 
+      width: 100px; height: 100px; /* Tamaño base óptimo */
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0;
-      /* TRANSLATE-Z (0) forza al navegador a usar la tarjeta gráfica, evitando el lag */
+      /* translateZ(0) obliga al navegador a usar aceleración gráfica (GPU) previniendo el lag */
       transform: scale(0) rotate(0deg) translateZ(0);
       filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
-      /* WILL-CHANGE optimiza la animación drásticamente */
       will-change: transform, opacity;
     }
 
@@ -160,11 +158,11 @@
     @keyframes bloomOut {
       0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)) translateZ(0); }
       25% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)) translateZ(0); }
-      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.3)) rotate(var(--rot-end)) translateZ(0); filter: blur(0px); }
-      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 1.0)) rotate(var(--rot-end)) translateZ(0); filter: blur(10px); }
+      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.5)) rotate(var(--rot-end)) translateZ(0); filter: blur(0px); }
+      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 1.5)) rotate(var(--rot-end)) translateZ(0); filter: blur(15px); }
     }
 
-    /* Volvemos a usar TUS imágenes locales alojadas en la carpeta assets */
+    /* Imágenes de flores conectadas a tus archivos locales */
     .flower-1 { background-image: url('assets/flor1.png'); } 
     .flower-2 { background-image: url('assets/flor2.png'); } 
     .flower-3 { background-image: url('assets/flor3.png'); } 
@@ -224,24 +222,61 @@
     .iframe-container { position: relative; width: 90%; max-width: 420px; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* ÁRBOL Y CONTADOR */
-    .canvas-tree-box { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(160deg, #fff0f5 0%, #e0f7fa 100%); padding: 25px; height: auto; }
-    .falling-hearts-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    /* =========================================================
+       NUEVO ÁRBOL ESTILO OTOÑO Y CORAZONES
+       ========================================================= */
+    .canvas-tree-box { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(160deg, #e0f7fa 0%, #fff0f5 100%); padding: 25px; height: auto; }
+    
     .tree-content-layout { display: flex; gap: 15px; align-items: center; position: relative; z-index: 2; }
+    
     .tree-graphic { position: relative; width: 180px; height: 210px; flex-shrink: 0; }
-    .css-trunk { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 22px; height: 90px; background: #795548; border-radius: 8px 8px 0 0; }
-    .css-trunk::before { content: ''; position: absolute; top: 15px; left: -15px; width: 20px; height: 40px; background: #795548; transform: rotate(-35deg); border-radius: 8px; }
-    .css-trunk::after { content: ''; position: absolute; top: 30px; right: -12px; width: 16px; height: 35px; background: #795548; transform: rotate(40deg); border-radius: 8px; }
-    .css-leaves { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 170px; height: 150px; border-radius: 50%; }
-    .tree-heart { position: absolute; transform: translate(-50%, -50%); animation: gentleBreeze 3s ease-in-out infinite alternate; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    @keyframes gentleBreeze { from { transform: translate(-50%, -50%) rotate(-8deg); } to { transform: translate(-50%, -50%) rotate(8deg); } }
+    
+    /* El tronco marrón inspirado en la imagen */
+    .css-trunk { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 28px; height: 85px; background: #6D4C41; border-radius: 6px 6px 0 0; }
+    .css-trunk::before { content: ''; position: absolute; top: 15px; left: -18px; width: 22px; height: 35px; background: #6D4C41; transform: rotate(-40deg); border-radius: 6px; }
+    .css-trunk::after { content: ''; position: absolute; top: 25px; right: -15px; width: 18px; height: 30px; background: #6D4C41; transform: rotate(45deg); border-radius: 6px; }
+    
+    /* Contenedor de la copa del árbol (corazones fijos) */
+    .css-leaves-container { position: absolute; top: 0; left: 0; width: 100%; height: 140px; }
+    
+    /* Clase para los corazones que forman el árbol */
+    .tree-leaf-emoji {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+      animation: gentleBreeze 3s ease-in-out infinite alternate;
+    }
+    
+    /* Clase para los corazones que caen como en otoño */
+    .falling-autumn-leaf {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+      animation: autumnFall linear forwards;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes gentleBreeze { 
+      from { transform: translate(-50%, -50%) rotate(-5deg) scale(0.95); } 
+      to { transform: translate(-50%, -50%) rotate(5deg) scale(1.05); } 
+    }
+    
+    @keyframes autumnFall {
+      0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 1; }
+      70% { opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--drift)), 160px) rotate(360deg); opacity: 0; }
+    }
+
     .tree-text-side { display: flex; flex-direction: column; align-items: flex-end; text-align: right; flex: 1; }
     .typewriter-note { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.85rem; color: #4a3b38; line-height: 1.4; margin-bottom: 10px; }
     .typewriter-note strong { color: var(--purple-main); font-weight: 800; }
     .bears-gif { width: 100px; height: auto; mix-blend-mode: multiply; }
-    .counter-linear { text-align: center; margin-top: 5px; position: relative; z-index: 2; background: rgba(255, 255, 255, 0.75); padding: 12px; border-radius: 16px; border: 1px dashed var(--turquoise-main); }
+    
+    /* Estilo del contador tal como en la imagen */
+    .counter-linear { text-align: center; margin-top: 5px; position: relative; z-index: 2; background: transparent; padding: 12px; border-radius: 16px; border: 1px dashed var(--turquoise-main); }
     .counter-label { font-family: 'Playfair Display', serif; font-style: italic; color: #8e6c73; font-size: 0.95rem; }
-    .counter-exact { font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--purple-dark); margin-top: 3px; letter-spacing: 0.5px; }
+    .counter-exact { font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--purple-dark); margin-top: 5px; letter-spacing: 0.5px; }
 
     /* CALENDARIO DE CICLO */
     .calendar-box { background: linear-gradient(145deg, #ffffff, #fff5f8); }
@@ -336,9 +371,9 @@
     </div>
   </div>
 
-  <!-- PANTALLA 3: EXPLOSIÓN FLORAL ESTILO VIDEO (TRANSICIÓN) -->
+  <!-- PANTALLA 3: EXPLOSIÓN FLORAL PANTALLA COMPLETA -->
   <div id="bloom-transition">
-    <!-- El contenedor se llenará dinámicamente con capas de flores PNG -->
+    <!-- El contenedor se llenará dinámicamente -->
   </div>
 
   <!-- PANTALLA 4: DASHBOARD PRINCIPAL -->
@@ -395,14 +430,14 @@
       <!-- COLUMNA DERECHA -->
       <div class="right-col">
         
-        <!-- ÁRBOL Y CONTADOR -->
+        <!-- ÁRBOL DE CORAZONES Y CONTADOR -->
         <div class="organic-box canvas-tree-box">
-          <div id="falling-hearts" class="falling-hearts-container"></div>
-
           <div class="tree-content-layout">
-            <div class="tree-graphic">
+            
+            <!-- Aquí el Árbol rediseñado con corazones -->
+            <div class="tree-graphic" id="heart-tree">
               <div class="css-trunk"></div>
-              <div id="tree-leaves" class="css-leaves"></div>
+              <div id="tree-leaves" class="css-leaves-container"></div>
             </div>
 
             <div class="tree-text-side">
@@ -486,7 +521,7 @@
     </div>
   </div>
 
-  <!-- MODAL CARTA 2 MÁS GRANDE -->
+  <!-- MODAL CARTA 2 -->
   <div id="letter2-modal" class="modal-backdrop hidden">
     <div class="letter-paper large-paper">
       <button class="close-btn" id="close-letter2-btn">&times;</button>
@@ -505,10 +540,8 @@
     window.showLockScreen = function() {
       const introScreen = document.getElementById('intro-screen');
       const lockScreen = document.getElementById('lock-screen');
-      
       introScreen.style.transform = 'scale(0.9)';
       introScreen.style.opacity = '0';
-      
       setTimeout(() => {
         introScreen.style.display = 'none';
         lockScreen.classList.add('active');
@@ -537,20 +570,19 @@
     }
 
     // ==========================================
-    // EXPLOSIÓN FLORAL OPTIMIZADA
+    // EXPLOSIÓN FLORAL EN TODA LA PANTALLA Y SIN LAG
     // ==========================================
     function createBloomExplosion() {
       const transContainer = document.getElementById('bloom-transition');
       transContainer.style.opacity = '1';
       document.getElementById('lock-screen').style.opacity = '0';
       
-      // Iniciamos audio principal
       const bgAudio = document.getElementById("bg-audio");
       if(bgAudio) bgAudio.play().catch(e => console.log(e));
       const playBtnIcon = document.getElementById("play-btn-icon");
       if(playBtnIcon) playBtnIcon.textContent = "❚❚";
 
-      // Redujimos un poco la cantidad (a 40) para eliminar el lag, pero se seguirá viendo espeso
+      // 40 es la cantidad perfecta: cubre toda la pantalla usando la escala, pero sin laguear
       const numFlowers = 40; 
       
       for (let i = 0; i < numFlowers; i++) {
@@ -559,8 +591,10 @@
         const flowerType = Math.floor(Math.random() * 10) + 1;
         flower.className = `flower-layer flower-${flowerType}`;
         
-        const offsetX = (Math.random() - 0.5) * 60; 
-        const offsetY = (Math.random() - 0.5) * 60; 
+        // El secreto para llenar la pantalla: usar un rango enorme en VW (Ancho) y VH (Alto)
+        // Desde -55vw hasta +55vw y de -55vh hasta +55vh. Así nacen esparcidas por TODA la pantalla
+        const offsetX = (Math.random() - 0.5) * 110; 
+        const offsetY = (Math.random() - 0.5) * 110; 
         
         flower.style.left = `calc(50% + ${offsetX}vw)`;
         flower.style.top = `calc(50% + ${offsetY}vh)`;
@@ -570,23 +604,21 @@
         flower.style.setProperty('--rot-start', `${rotStart}deg`);
         flower.style.setProperty('--rot-end', `${rotEnd}deg`);
         
-        // Crecen mucho menos. Antes crecían hasta x10, ahora solo x2.5 máximo
-        const scaleMax = Math.random() * 1.5 + 1; 
+        // Escala máxima de x2.5 a x5 para que se superpongan entre ellas y tapen el fondo
+        const scaleMax = Math.random() * 2.5 + 2.5; 
         flower.style.setProperty('--scale-max', scaleMax);
         
-        flower.style.animationDelay = `${Math.random() * 0.4}s`;
+        flower.style.animationDelay = `${Math.random() * 0.5}s`;
         
         flower.classList.add('explode');
         transContainer.appendChild(flower);
       }
 
-      // Mostramos la página principal de fondo
       document.getElementById('main-screen').classList.remove('hidden');
       setTimeout(() => {
         document.getElementById('dashboard-layout').classList.add('visible');
       }, 1500);
 
-      // Limpiamos todo cuando termina
       setTimeout(() => {
         document.getElementById('lock-screen').style.display = 'none';
         transContainer.style.opacity = '0';
@@ -598,7 +630,6 @@
       if (currentPin.length < 6) {
         currentPin += num;
         updateDots();
-        
         if (currentPin.length === 6) {
           if (currentPin === SECRET_PIN) {
             setTimeout(createBloomExplosion, 300);
@@ -614,7 +645,7 @@
     };
 
     // ==========================================
-    // LLUVIA DINÁMICA DE FONDO (MAIN SCREEN)
+    // LLUVIA DE FONDO Y REPRODUCTOR
     // ==========================================
     const rainContainer = document.getElementById("rain-container");
     if (rainContainer) {
@@ -629,9 +660,6 @@
       }
     }
 
-    // ==========================================
-    // PLAYLIST Y REPRODUCTOR SECUENCIAL
-    // ==========================================
     const playlist = [
       {
         title: "♪ Always - Daniel Caesar",
@@ -693,155 +721,69 @@
 
     let currentTrackIndex = 0;
 
-    // ==========================================
-    // CÁLCULO DE CICLO MENSUAL
-    // ==========================================
     function getCycleWindows() {
       const windows = [];
-      const historicalStarts = [
-        new Date(2026, 6, 20),
-        new Date(2026, 7, 20),
-        new Date(2026, 8, 22)
-      ];
-
+      const historicalStarts = [ new Date(2026, 6, 20), new Date(2026, 7, 20), new Date(2026, 8, 22) ];
       let lastDate = new Date(historicalStarts[historicalStarts.length - 1]);
       const allStarts = [...historicalStarts];
-
       for (let i = 0; i < 15; i++) {
         const nextMs = lastDate.getTime() + (31 * 24 * 60 * 60 * 1000);
-        lastDate = new Date(nextMs);
-        allStarts.push(lastDate);
+        lastDate = new Date(nextMs); allStarts.push(lastDate);
       }
-
       for (const startDate of allStarts) {
-        const periodDays = [];
-        for (let p = 0; p < 3; p++) {
-          const d = new Date(startDate);
-          d.setDate(d.getDate() + p);
-          periodDays.push(d);
-        }
-
-        const marginBefore = [];
-        for (let m = 1; m <= 3; m++) {
-          const d = new Date(periodDays[0]);
-          d.setDate(d.getDate() - m);
-          marginBefore.push(d);
-        }
-
-        const marginAfter = [];
-        for (let m = 1; m <= 3; m++) {
-          const d = new Date(periodDays[periodDays.length - 1]);
-          d.setDate(d.getDate() + m);
-          marginAfter.push(d);
-        }
-
+        const periodDays = []; for (let p = 0; p < 3; p++) { const d = new Date(startDate); d.setDate(d.getDate() + p); periodDays.push(d); }
+        const marginBefore = []; for (let m = 1; m <= 3; m++) { const d = new Date(periodDays[0]); d.setDate(d.getDate() - m); marginBefore.push(d); }
+        const marginAfter = []; for (let m = 1; m <= 3; m++) { const d = new Date(periodDays[periodDays.length - 1]); d.setDate(d.getDate() + m); marginAfter.push(d); }
         windows.push({ period: periodDays, margins: [...marginBefore, ...marginAfter] });
       }
       return windows;
     }
-
     const projectedCycle = getCycleWindows();
-    let calYear = 2026;
-    let calMonth = 9;
-
+    let calYear = 2026; let calMonth = 9;
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     function renderCalendar(year, month) {
-      const monthTitle = document.getElementById("cal-month-year");
-      const grid = document.getElementById("calendar-days-grid");
+      const monthTitle = document.getElementById("cal-month-year"); const grid = document.getElementById("calendar-days-grid");
       if (!monthTitle || !grid) return;
-
-      monthTitle.innerText = `${monthNames[month]} ${year}`;
-      grid.innerHTML = "";
-
-      const firstDayIndex = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const today = new Date();
-
-      for (let i = 0; i < firstDayIndex; i++) {
-        const emptyCell = document.createElement("div");
-        emptyCell.className = "calendar-day empty";
-        grid.appendChild(emptyCell);
-      }
-
+      monthTitle.innerText = `${monthNames[month]} ${year}`; grid.innerHTML = "";
+      const firstDayIndex = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const today = new Date();
+      for (let i = 0; i < firstDayIndex; i++) { const emptyCell = document.createElement("div"); emptyCell.className = "calendar-day empty"; grid.appendChild(emptyCell); }
       for (let day = 1; day <= daysInMonth; day++) {
-        const cell = document.createElement("div");
-        cell.className = "calendar-day";
-        cell.innerText = day;
-
-        let isPeriod = false;
-        let isMargin = false;
-
+        const cell = document.createElement("div"); cell.className = "calendar-day"; cell.innerText = day;
+        let isPeriod = false; let isMargin = false;
         for (const w of projectedCycle) {
           if (w.period.some(d => d.getFullYear() === year && d.getMonth() === month && d.getDate() === day)) { isPeriod = true; break; }
           if (w.margins.some(d => d.getFullYear() === year && d.getMonth() === month && d.getDate() === day)) { isMargin = true; }
         }
-
-        if (isPeriod) { cell.classList.add("day-period"); cell.title = "Día estimado"; } 
-        else if (isMargin) { cell.classList.add("day-margin"); cell.title = "Margen probable (±3 días)"; }
-
-        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-          cell.classList.add("day-today"); cell.title += " (Hoy)";
-        }
-
+        if (isPeriod) { cell.classList.add("day-period"); cell.title = "Día estimado"; } else if (isMargin) { cell.classList.add("day-margin"); cell.title = "Margen probable (±3 días)"; }
+        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) { cell.classList.add("day-today"); cell.title += " (Hoy)"; }
         grid.appendChild(cell);
       }
     }
 
-    // ==========================================
-    // SCRIPT PRINCIPAL
-    // ==========================================
     window.addEventListener("DOMContentLoaded", () => {
-      const bgAudio = document.getElementById("bg-audio");
-      const volumeBar = document.getElementById("volume-bar");
-      const seekBar = document.getElementById("seek-bar");
-      const currentTimeEl = document.getElementById("current-time");
-      const durationEl = document.getElementById("duration");
-      const trackTitleEl = document.getElementById("current-track-title");
-      const playToggleBtn = document.getElementById("play-toggle-btn");
-      const playBtnIcon = document.getElementById("play-btn-icon");
-      const lyricsContainer = document.getElementById("lyrics-container");
-      const lyricsInner = document.getElementById("lyrics-inner");
+      const bgAudio = document.getElementById("bg-audio"); const volumeBar = document.getElementById("volume-bar");
+      const seekBar = document.getElementById("seek-bar"); const currentTimeEl = document.getElementById("current-time");
+      const durationEl = document.getElementById("duration"); const trackTitleEl = document.getElementById("current-track-title");
+      const playToggleBtn = document.getElementById("play-toggle-btn"); const playBtnIcon = document.getElementById("play-btn-icon");
+      const lyricsContainer = document.getElementById("lyrics-container"); const lyricsInner = document.getElementById("lyrics-inner");
 
       function loadTrack(index, autoPlay = false) {
-        currentTrackIndex = index;
-        const track = playlist[currentTrackIndex];
-        bgAudio.src = track.src;
-        bgAudio.load();
+        currentTrackIndex = index; const track = playlist[currentTrackIndex]; bgAudio.src = track.src; bgAudio.load();
         if (trackTitleEl) trackTitleEl.innerText = track.title;
-        renderLyrics(track.lyrics);
-
-        if (autoPlay) {
-          bgAudio.play().then(() => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; }).catch(e => console.log("Play error:", e));
-        } else {
-          if (playBtnIcon) playBtnIcon.textContent = "▶";
+        if (lyricsInner) {
+          lyricsInner.innerHTML = "";
+          track.lyrics.forEach((line, i) => {
+            const div = document.createElement("div"); div.className = "lyric-item"; div.id = `lyric-${i}`;
+            div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
+            div.addEventListener("click", () => { if (bgAudio) bgAudio.currentTime = line.t; }); lyricsInner.appendChild(div);
+          });
         }
+        if (autoPlay) { bgAudio.play().then(() => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; }).catch(e => console.log(e)); } else { if (playBtnIcon) playBtnIcon.textContent = "▶"; }
       }
 
-      function renderLyrics(lyrics) {
-        if (!lyricsInner) return;
-        lyricsInner.innerHTML = "";
-        lyrics.forEach((line, i) => {
-          const div = document.createElement("div");
-          div.className = "lyric-item";
-          div.id = `lyric-${i}`;
-          div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
-          div.addEventListener("click", () => { if (bgAudio) bgAudio.currentTime = line.t; });
-          lyricsInner.appendChild(div);
-        });
-      }
-
-      function updateProgressFill(input) {
-        const value = (input.value - input.min) / (input.max - input.min) * 100;
-        input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`;
-      }
-
-      function formatTime(seconds) {
-        if (isNaN(seconds)) return "0:00";
-        const min = Math.floor(seconds / 60);
-        const sec = Math.floor(seconds % 60);
-        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-      }
+      function updateProgressFill(input) { const value = (input.value - input.min) / (input.max - input.min) * 100; input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`; }
+      function formatTime(seconds) { if (isNaN(seconds)) return "0:00"; const min = Math.floor(seconds / 60); const sec = Math.floor(seconds % 60); return `${min}:${sec < 10 ? '0' : ''}${sec}`; }
 
       loadTrack(0, false);
 
@@ -849,70 +791,82 @@
         bgAudio.addEventListener("ended", () => { currentTrackIndex = (currentTrackIndex + 1) % playlist.length; loadTrack(currentTrackIndex, true); });
         bgAudio.addEventListener("play", () => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; });
         bgAudio.addEventListener("pause", () => { if (playBtnIcon) playBtnIcon.textContent = "▶"; });
-        bgAudio.addEventListener("loadedmetadata", () => {
-          if (seekBar) { seekBar.max = bgAudio.duration; updateProgressFill(seekBar); }
-          if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
-        });
+        bgAudio.addEventListener("loadedmetadata", () => { if (seekBar) { seekBar.max = bgAudio.duration; updateProgressFill(seekBar); } if (durationEl) durationEl.innerText = formatTime(bgAudio.duration); });
         bgAudio.addEventListener("timeupdate", () => {
           if (seekBar) { seekBar.value = bgAudio.currentTime; updateProgressFill(seekBar); }
           if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
-          const current = bgAudio.currentTime;
-          const currentLyrics = playlist[currentTrackIndex].lyrics;
-          let activeIndex = -1;
-          for (let i = 0; i < currentLyrics.length; i++) {
-            if (current >= currentLyrics[i].t && (!currentLyrics[i + 1] || current < currentLyrics[i + 1].t)) { activeIndex = i; break; }
-          }
+          const current = bgAudio.currentTime; const currentLyrics = playlist[currentTrackIndex].lyrics; let activeIndex = -1;
+          for (let i = 0; i < currentLyrics.length; i++) { if (current >= currentLyrics[i].t && (!currentLyrics[i + 1] || current < currentLyrics[i + 1].t)) { activeIndex = i; break; } }
           if (activeIndex !== -1) {
             const el = document.getElementById(`lyric-${activeIndex}`);
             if (el && !el.classList.contains("active")) {
-              document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active'));
-              el.classList.add("active");
-              const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2);
-              lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
+              document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active')); el.classList.add("active");
+              const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2); lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
           }
         });
         if (seekBar) { seekBar.addEventListener("input", function() { bgAudio.currentTime = this.value; updateProgressFill(this); }); }
       }
-
-      if (playToggleBtn && bgAudio) {
-        playToggleBtn.addEventListener("click", () => { if (bgAudio.paused) { bgAudio.play().catch(e => console.log(e)); } else { bgAudio.pause(); } });
-      }
-
-      const prevTrackBtn = document.getElementById("prev-track-btn");
-      const nextTrackBtn = document.getElementById("next-track-btn");
-      if (prevTrackBtn) { prevTrackBtn.addEventListener("click", () => { currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length; loadTrack(currentTrackIndex, true); }); }
-      if (nextTrackBtn) { nextTrackBtn.addEventListener("click", () => { currentTrackIndex = (currentTrackIndex + 1) % playlist.length; loadTrack(currentTrackIndex, true); }); }
+      if (playToggleBtn && bgAudio) { playToggleBtn.addEventListener("click", () => { if (bgAudio.paused) bgAudio.play().catch(e=>e); else bgAudio.pause(); }); }
+      const prevTrackBtn = document.getElementById("prev-track-btn"); const nextTrackBtn = document.getElementById("next-track-btn");
+      if (prevTrackBtn) prevTrackBtn.addEventListener("click", () => { currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length; loadTrack(currentTrackIndex, true); });
+      if (nextTrackBtn) nextTrackBtn.addEventListener("click", () => { currentTrackIndex = (currentTrackIndex + 1) % playlist.length; loadTrack(currentTrackIndex, true); });
       if (volumeBar && bgAudio) { volumeBar.addEventListener("input", function() { bgAudio.volume = this.value; updateProgressFill(this); }); updateProgressFill(volumeBar); }
 
       renderCalendar(calYear, calMonth);
-      const calPrevBtn = document.getElementById("cal-prev-btn");
-      const calNextBtn = document.getElementById("cal-next-btn");
-      if (calPrevBtn) { calPrevBtn.addEventListener("click", () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(calYear, calMonth); }); }
-      if (calNextBtn) { calNextBtn.addEventListener("click", () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(calYear, calMonth); }); }
+      const calPrevBtn = document.getElementById("cal-prev-btn"); const calNextBtn = document.getElementById("cal-next-btn");
+      if (calPrevBtn) calPrevBtn.addEventListener("click", () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(calYear, calMonth); });
+      if (calNextBtn) calNextBtn.addEventListener("click", () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(calYear, calMonth); });
 
-      const leafEmojis = ['💜', '💚', '💖', '💕', '✨', '🤍'];
+      // ==========================================
+      // LÓGICA DEL ÁRBOL DE CORAZONES (REFERENCIA A image_042281.png)
+      // ==========================================
+      const leafEmojis = ['💜', '💚', '💖', '🤍', '✨', '💕', '❤️', '🩷'];
       const leavesContainer = document.getElementById('tree-leaves');
+      
       if (leavesContainer) {
-        for (let i = 0; i < 60; i++) {
-          const heart = document.createElement('div');
-          heart.className = 'tree-heart';
-          heart.innerText = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
-          const radius = Math.random() * 70; const angle = Math.random() * 2 * Math.PI;
-          heart.style.left = `${85 + radius * Math.cos(angle)}px`; heart.style.top = `${75 + radius * Math.sin(angle)}px`;
-          heart.style.fontSize = `${Math.random() * 0.7 + 0.6}rem`; heart.style.animationDelay = `${Math.random() * 3}s`;
-          leavesContainer.appendChild(heart);
+        // Crear la copa del árbol (corazones estáticos en forma abultada/de corazón)
+        for (let i = 0; i < 45; i++) {
+          const leaf = document.createElement('div');
+          leaf.className = 'tree-leaf-emoji';
+          leaf.innerText = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+          
+          // Fómula simple para agruparlos formando una copa superior ancha que baja hacia el tronco
+          const t = Math.random() * Math.PI * 2;
+          const r = Math.random() * 0.8 + 0.2; 
+          const x = r * 16 * Math.pow(Math.sin(t), 3);
+          const y = -r * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+          
+          leaf.style.left = `calc(50% + ${x * 3.5}px)`;
+          leaf.style.top = `calc(60% + ${y * 3.5}px)`;
+          leaf.style.fontSize = `${Math.random() * 0.6 + 0.9}rem`;
+          leaf.style.animationDelay = `${Math.random() * 3}s`;
+          leavesContainer.appendChild(leaf);
         }
-      }
-      const fallingContainer = document.getElementById('falling-hearts');
-      if (fallingContainer) {
+
+        // Crear corazones cayendo constantemente (efecto Otoño)
         setInterval(() => {
-          const heart = document.createElement('div'); heart.className = 'falling-heart';
-          heart.innerText = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
-          heart.style.left = `${Math.random() * 100}%`; heart.style.fontSize = `${Math.random() * 0.7 + 0.5}rem`;
-          const duration = Math.random() * 4 + 4; heart.style.animationDuration = `${duration}s`;
-          fallingContainer.appendChild(heart); setTimeout(() => { heart.remove(); }, duration * 1000);
-        }, 600);
+          const fallingLeaf = document.createElement('div');
+          fallingLeaf.className = 'falling-autumn-leaf';
+          fallingLeaf.innerText = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+          
+          // Nacen desde la parte inferior de la copa del árbol
+          const startX = (Math.random() - 0.5) * 100;
+          fallingLeaf.style.left = `calc(50% + ${startX}px)`;
+          fallingLeaf.style.top = `60%`; 
+          
+          const duration = Math.random() * 3 + 3.5; // Tardan entre 3.5 y 6.5 segundos en caer
+          const drift = (Math.random() - 0.5) * 80; // Se desvían ligeramente a los lados
+          
+          fallingLeaf.style.setProperty('--drift', `${drift}px`);
+          fallingLeaf.style.animationDuration = `${duration}s`;
+          fallingLeaf.style.fontSize = `${Math.random() * 0.5 + 0.8}rem`;
+          
+          leavesContainer.appendChild(fallingLeaf);
+          
+          // Eliminar el corazón del código una vez que termina de caer
+          setTimeout(() => fallingLeaf.remove(), duration * 1000);
+        }, 500); // Cae un corazón cada medio segundo
       }
 
       function updateLinearCounter() {
@@ -924,25 +878,19 @@
       }
       setInterval(updateLinearCounter, 1000); updateLinearCounter();
 
-      const modal = document.getElementById("letter-modal");
-      const openBtn = document.getElementById("open-letter-btn");
-      const closeBtn = document.getElementById("close-letter-btn");
-      if (openBtn && modal) { openBtn.addEventListener("click", () => { modal.classList.remove("hidden"); }); }
-      if (closeBtn && modal) { closeBtn.addEventListener("click", () => modal.classList.add("hidden")); }
-      if (modal) { modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); }); }
+      const modal = document.getElementById("letter-modal"); const openBtn = document.getElementById("open-letter-btn"); const closeBtn = document.getElementById("close-letter-btn");
+      if (openBtn && modal) openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+      if (closeBtn && modal) closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+      if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
 
-      const modal2 = document.getElementById("letter2-modal");
-      const openBtn2 = document.getElementById("open-letter2-btn");
-      const closeBtn2 = document.getElementById("close-letter2-btn");
-      if (openBtn2 && modal2) { openBtn2.addEventListener("click", () => { modal2.classList.remove("hidden"); }); }
-      if (closeBtn2 && modal2) { closeBtn2.addEventListener("click", () => modal2.classList.add("hidden")); }
-      if (modal2) { modal2.addEventListener("click", (e) => { if (e.target === modal2) modal2.classList.add("hidden"); }); }
+      const modal2 = document.getElementById("letter2-modal"); const openBtn2 = document.getElementById("open-letter2-btn"); const closeBtn2 = document.getElementById("close-letter2-btn");
+      if (openBtn2 && modal2) openBtn2.addEventListener("click", () => modal2.classList.remove("hidden"));
+      if (closeBtn2 && modal2) closeBtn2.addEventListener("click", () => modal2.classList.add("hidden"));
+      if (modal2) modal2.addEventListener("click", (e) => { if (e.target === modal2) modal2.classList.add("hidden"); });
 
-      let currentPairs = 4;
-      const allEmojis = ["💜", "💚", "✨", "🎵", "🌸", "🦋", "🌷", "🧸"];
+      let currentPairs = 4; const allEmojis = ["💜", "💚", "✨", "🎵", "🌸", "🦋", "🌷", "🧸"];
       window.setDifficulty = function(level) {
-        document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-        event.target.classList.add("active");
+        document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active")); event.target.classList.add("active");
         if (level === 'easy') currentPairs = 4; if (level === 'medium') currentPairs = 6; if (level === 'hard') currentPairs = 8;
         initGame();
       }
@@ -961,11 +909,8 @@
             if (flippedCards.length === 2) {
               setTimeout(() => {
                 const [c1, c2] = flippedCards;
-                if (c1.dataset.val === c2.dataset.val) {
-                  matchedCount += 2; if (matchedCount === gameDeck.length && msg) { msg.classList.remove("hidden"); }
-                } else {
-                  c1.classList.remove("flipped"); c1.innerText = ""; c2.classList.remove("flipped"); c2.innerText = "";
-                }
+                if (c1.dataset.val === c2.dataset.val) { matchedCount += 2; if (matchedCount === gameDeck.length && msg) msg.classList.remove("hidden"); } 
+                else { c1.classList.remove("flipped"); c1.innerText = ""; c2.classList.remove("flipped"); c2.innerText = ""; }
                 flippedCards = [];
               }, 700);
             }
