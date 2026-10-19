@@ -129,7 +129,7 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
     /* =========================================================
-       TRANSICIÓN FLORAL OPTIMIZADA
+       TRANSICIÓN FLORAL OPTIMIZADA (CERO LAG, MÁS PEQUEÑAS)
        ========================================================= */
     #bloom-transition {
       position: fixed; inset: 0; z-index: 120;
@@ -140,15 +140,16 @@
 
     .flower-layer {
       position: absolute;
-      /* REDUCCIÓN DE TAMAÑO BASE: De 150px a 80px */
-      width: 80px; height: 80px; 
+      /* TAMAÑO REDUCIDO para que sean más pequeñas */
+      width: 60px; height: 60px; 
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0;
-      transform: scale(0) rotate(0deg);
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
-      /* OPTIMIZACIÓN: Aceleración por hardware para reducir lag */
+      /* TRANSLATE-Z (0) forza al navegador a usar la tarjeta gráfica, evitando el lag */
+      transform: scale(0) rotate(0deg) translateZ(0);
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
+      /* WILL-CHANGE optimiza la animación drásticamente */
       will-change: transform, opacity;
     }
 
@@ -157,24 +158,23 @@
     }
 
     @keyframes bloomOut {
-      0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)); }
-      25% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)); }
-      /* REDUCCIÓN DE ESCALA FINAL: Ya no crecerán de forma exagerada */
-      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.3)) rotate(var(--rot-end)); filter: blur(0px); }
-      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 1.0)) rotate(var(--rot-end)); filter: blur(10px); }
+      0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)) translateZ(0); }
+      25% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)) translateZ(0); }
+      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.3)) rotate(var(--rot-end)) translateZ(0); filter: blur(0px); }
+      100% { opacity: 0; transform: scale(calc(var(--scale-max) + 1.0)) rotate(var(--rot-end)) translateZ(0); filter: blur(10px); }
     }
 
-    /* Enlaces seguros a imágenes PNG de flores (Alojadas en Imgur para garantizar disponibilidad) */
-    .flower-1 { background-image: url('https://i.imgur.com/vH1N9k3.png'); } 
-    .flower-2 { background-image: url('https://i.imgur.com/tH0M7rB.png'); } 
-    .flower-3 { background-image: url('https://i.imgur.com/rL7K1bM.png'); } 
-    .flower-4 { background-image: url('https://i.imgur.com/XqZ9J5p.png'); } 
-    .flower-5 { background-image: url('https://i.imgur.com/Z8N3j4y.png'); } 
-    .flower-6 { background-image: url('https://i.imgur.com/W2C5e8x.png'); } 
-    .flower-7 { background-image: url('https://i.imgur.com/Q9y5d8c.png'); } 
-    .flower-8 { background-image: url('https://i.imgur.com/vH1N9k3.png'); } 
-    .flower-9 { background-image: url('https://i.imgur.com/tH0M7rB.png'); } 
-    .flower-10 { background-image: url('https://i.imgur.com/rL7K1bM.png'); } 
+    /* Volvemos a usar TUS imágenes locales alojadas en la carpeta assets */
+    .flower-1 { background-image: url('assets/flor1.png'); } 
+    .flower-2 { background-image: url('assets/flor2.png'); } 
+    .flower-3 { background-image: url('assets/flor3.png'); } 
+    .flower-4 { background-image: url('assets/flor4.png'); } 
+    .flower-5 { background-image: url('assets/flor5.png'); } 
+    .flower-6 { background-image: url('assets/flor6.png'); } 
+    .flower-7 { background-image: url('assets/flor7.png'); } 
+    .flower-8 { background-image: url('assets/flor8.png'); } 
+    .flower-9 { background-image: url('assets/flor9.png'); } 
+    .flower-10 { background-image: url('assets/flor10.png'); } 
 
     /* EFECTO DE GOTITAS DE LLUVIA */
     .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -550,8 +550,8 @@
       const playBtnIcon = document.getElementById("play-btn-icon");
       if(playBtnIcon) playBtnIcon.textContent = "❚❚";
 
-      // REDUCCIÓN DE CANTIDAD: De 60 a 45 para mejorar el rendimiento
-      const numFlowers = 45; 
+      // Redujimos un poco la cantidad (a 40) para eliminar el lag, pero se seguirá viendo espeso
+      const numFlowers = 40; 
       
       for (let i = 0; i < numFlowers; i++) {
         const flower = document.createElement('div');
@@ -570,8 +570,8 @@
         flower.style.setProperty('--rot-start', `${rotStart}deg`);
         flower.style.setProperty('--rot-end', `${rotEnd}deg`);
         
-        // REDUCCIÓN DE ESCALA: Las flores no crecerán tanto (antes 4-10, ahora 2-6)
-        const scaleMax = Math.random() * 4 + 2; 
+        // Crecen mucho menos. Antes crecían hasta x10, ahora solo x2.5 máximo
+        const scaleMax = Math.random() * 1.5 + 1; 
         flower.style.setProperty('--scale-max', scaleMax);
         
         flower.style.animationDelay = `${Math.random() * 0.4}s`;
