@@ -15,6 +15,7 @@
       --turquoise-light: #E0F2F1;
       --red-strong: #E53935;
       --red-soft: #FFCDD2;
+      --red-soft-text: #B71C1C;
       --bg-cream: #FAF6EE;
     }
 
@@ -66,13 +67,13 @@
     .key-btn.delete { font-size: 1.3rem; background: transparent; border-color: transparent; }
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-    /* ================= NUEVA ANIMACIÓN DE TRANSICIÓN (CERO LAG) ================= */
+    /* ================= TRANSICIÓN (CERO LAG) ================= */
     #petal-transition { position: fixed; inset: 0; z-index: 120; background: var(--bg-cream); pointer-events: none; opacity: 0; transition: opacity 0.8s ease; overflow: hidden; }
     .falling-petal { position: absolute; width: 45px; height: 45px; background-size: contain; background-repeat: no-repeat; top: -60px; will-change: transform, opacity; animation: fallPetal linear forwards; }
     @keyframes fallPetal { 0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translate3d(var(--drift), 110vh, 0) rotate(var(--rot-end)); opacity: 0; } }
     .flower-1 { background-image: url('assets/flor1.png'); } .flower-2 { background-image: url('assets/flor2.png'); } .flower-3 { background-image: url('assets/flor3.png'); } .flower-4 { background-image: url('assets/flor4.png'); } .flower-5 { background-image: url('assets/flor5.png'); } .flower-6 { background-image: url('assets/flor6.png'); } .flower-7 { background-image: url('assets/flor7.png'); } .flower-8 { background-image: url('assets/flor8.png'); } .flower-9 { background-image: url('assets/flor9.png'); } .flower-10 { background-image: url('assets/flor10.png'); }
 
-    /* LLUVIA DE FONDO SUAVE */
+    /* LLUVIA DE FONDO */
     .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
     .raindrop { position: absolute; background: linear-gradient(transparent, rgba(126, 87, 194, 0.4)); width: 1.5px; height: 30px; opacity: 0.5; animation: fallRain linear infinite; }
     @keyframes fallRain { 0% { transform: translateY(-40px); opacity: 0; } 100% { transform: translateY(108vh); opacity: 0; } }
@@ -132,7 +133,7 @@
     .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.12); margin-top: auto; }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* ================= CALENDARIO RESTAURADO ================= */
+    /* ================= CALENDARIO (REGLA CON PROBABILIDAD) ================= */
     .calendar-box { background: linear-gradient(145deg, #ffffff 0%, #fff6f8 100%); display: flex; flex-direction: column; justify-content: center; }
     .calendar-nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .calendar-month-title { font-size: 1.15rem; font-weight: 800; color: var(--purple-dark); font-family: 'Playfair Display', serif; }
@@ -143,15 +144,15 @@
     .calendar-day { aspect-ratio: 1; display: flex; justify-content: center; align-items: center; font-size: 0.85rem; font-weight: 700; border-radius: 14px; color: #444; }
     .calendar-day.empty { background: transparent; border: none; }
     .calendar-day.day-period { background-color: var(--red-strong); color: white; box-shadow: 0 4px 10px rgba(229, 57, 53, 0.3); }
-    .calendar-day.day-margin { background-color: var(--red-soft); color: var(--red-soft-text); border: 1.5px dashed rgba(229, 57, 53, 0.5); }
+    .calendar-day.day-margin { background-color: var(--red-soft); color: var(--red-soft-text); font-weight: 800; }
     .calendar-day.day-today { border: 2px solid var(--purple-main); background-color: rgba(126, 87, 194, 0.1); }
-    .calendar-legend { display: flex; justify-content: center; gap: 18px; margin-top: 20px; font-size: 0.78rem; font-weight: 700; color: #666; }
+    .calendar-legend { display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-size: 0.75rem; font-weight: 700; color: #666; flex-wrap: wrap; }
     .legend-item { display: flex; align-items: center; gap: 6px; }
     .legend-dot { width: 12px; height: 12px; border-radius: 4px; }
     .legend-dot.strong { background-color: var(--red-strong); }
     .legend-dot.soft { background-color: var(--red-soft); }
 
-    /* ================= ASISTENTE TESIS PUBMED ================= */
+    /* ================= BUSCADOR DE INFORMACIÓN ================= */
     .thesis-box { background: linear-gradient(145deg, #ffffff 0%, #f3fcfb 100%); }
     .search-bar-row { display: flex; gap: 12px; margin-bottom: 18px; }
     .search-input { flex: 1; padding: 14px 22px; border-radius: 30px; border: 2px solid var(--turquoise-light); font-family: 'Quicksand', sans-serif; font-size: 1rem; outline: none; background: white; }
@@ -167,7 +168,7 @@
     .apa-btn:hover { background: var(--purple-main); color: white; }
     .apa-output-box { width: 100%; margin-top: 10px; background: #f0f0f0; padding: 12px; border-radius: 14px; font-size: 0.85rem; font-family: monospace; display: none; }
 
-    /* ================= RETOS ACADÉMICOS (ANTI-TRAMPAS) ================= */
+    /* ================= RETOS Y PISTAS ================= */
     .quest-dashboard-box { background: linear-gradient(145deg, #ffffff 0%, #fbf3f8 100%); }
     .quest-step { background: rgba(255, 255, 255, 0.9); border: 2px solid var(--purple-light); padding: 20px; border-radius: 22px; margin-bottom: 15px; transition: 0.3s; }
     .quest-question { font-weight: 700; color: var(--purple-dark); margin-bottom: 14px; font-size: 1.1rem; }
@@ -304,9 +305,9 @@
         </div>
       </div>
 
-      <!-- CALENDARIO RESTAURADO -->
+      <!-- CALENDARIO (CICLO MENSTRUAL CON PROBABILIDAD) -->
       <div class="organic-box calendar-box">
-        <h3 class="box-title">🌸 Calendario Especial</h3>
+        <h3 class="box-title">🌸 Calendario de Ciclo</h3>
         <div class="calendar-nav-header">
           <button class="cal-btn" id="cal-prev-btn">&lt;</button>
           <span class="calendar-month-title" id="cal-month-year">Octubre 2026</span>
@@ -315,15 +316,15 @@
         <div class="calendar-weekdays"><span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span></div>
         <div class="calendar-grid" id="calendar-days-grid"></div>
         <div class="calendar-legend">
-          <div class="legend-item"><div class="legend-dot strong"></div><span>Días estimados</span></div>
-          <div class="legend-item"><div class="legend-dot soft"></div><span>Margen probable</span></div>
+          <div class="legend-item"><div class="legend-dot strong"></div><span>Días estimados (Rojo fuerte)</span></div>
+          <div class="legend-item"><div class="legend-dot soft"></div><span>Margen probable (±3 días)</span></div>
         </div>
       </div>
 
-      <!-- ASISTENTE DE TESIS PUBMED -->
+      <!-- BUSCADOR DE INFORMACIÓN -->
       <div class="organic-box thesis-box col-full">
-        <h3 class="box-title">Buscador de información </h3>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Busca en PubMed, lee el artículo original y genera tu cita en APA 7 al instante.</p>
+        <h3 class="box-title">🔬 Buscador de información</h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Busca en repositorios científicos, lee el artículo original y genera tu cita en APA 7 al instante.</p>
         <div class="search-bar-row">
           <input type="text" class="search-input" id="search-query" placeholder="Ej. Biofilm, CRISPR, Pseudomonas...">
           <button class="search-btn-action" onclick="searchScientificPapers()">Buscar</button>
@@ -331,9 +332,9 @@
         <div id="search-results" style="max-height: 250px; overflow-y: auto;"></div>
       </div>
 
-      <!-- RETOS ANTI-TRAMPAS -->
+      <!-- RETOS Y PISTAS -->
       <div class="organic-box quest-dashboard-box col-full">
-        <h3 class="box-title">🧩 Retos  & Pistas (Carta 2)</h3>
+        <h3 class="box-title">🧩 Retos y Pistas</h3>
         <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Supera estos 3 retos para desbloquear la contraseña de 6 dígitos. <strong>¡Ojo! Si te equivocas, la pregunta cambiará.</strong></p>
         
         <div class="quest-step" id="q-step-1">
@@ -396,7 +397,7 @@
       
       <div id="letter2-password-screen" class="password-unlock-box">
         <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark);">Carta Secreta 🔐</h2>
-        <p style="color: #666; font-size: 0.95rem;">Ingresa la contraseña de 6 dígitos que descubriste en los retos de tesis:</p>
+        <p style="color: #666; font-size: 0.95rem;">Ingresa la contraseña de 6 dígitos que descubriste en los retos:</p>
         <input type="password" class="password-input" id="letter2-pass" maxlength="6" placeholder="******">
         <button class="unlock-submit-btn" onclick="verifyLetter2Pass()">Desbloquear Carta</button>
         <div id="pass2-error" style="color: red; font-size: 0.85rem; display: none; margin-top: 5px;">Contraseña incorrecta. ¡Revisa las pistas!</div>
@@ -444,8 +445,8 @@
         const petal = document.createElement('div');
         petal.className = `falling-petal flower-${Math.floor(Math.random() * 10) + 1}`;
         petal.style.left = `${Math.random() * 100}vw`;
-        petal.style.setProperty('--drift', `${(Math.random() - 0.5) * 40}vw`);
-        petal.style.setProperty('--rot-end', `${Math.random() * 720}deg`);
+        petal.style.setProperty('--drift', `${(Math.random() - 0.5) * 40}vw`;
+        petal.style.setProperty('--rot-end', `${Math.random() * 720}deg`;
         petal.style.animationDuration = `${Math.random() * 2 + 2}s`;
         petal.style.animationDelay = `${Math.random() * 1.5}s`;
         transContainer.appendChild(petal);
@@ -484,21 +485,59 @@
       }
     }
 
-    // ======= LOGICA CALENDARIO RESTAURADA =======
+    // ======= LÓGICA CALENDARIO (CICLO MENSTRUAL CON PROBABILIDAD) =======
+    function getCycleStatus(year, month, day) {
+      const target = new Date(year, month, day);
+
+      // Fechas base conocidas de inicio y su duración de 3 días:
+      // Agosto 2026: 20, 21, 22
+      // Septiembre 2026: 22, 23, 24
+      // Octubre 2026 (estimado por ciclo ~33 días): 25, 26, 27
+      // Noviembre 2026 (estimado): 27, 28, 29
+      const baseStarts = [
+        new Date(2026, 7, 20),
+        new Date(2026, 8, 22),
+        new Date(2026, 9, 25),
+        new Date(2026, 10, 27)
+      ];
+
+      for (let start of baseStarts) {
+        // 3 días de período central (Rojo Fuerte)
+        for (let i = 0; i < 3; i++) {
+          const pDay = new Date(start);
+          pDay.setDate(start.getDate() + i);
+          if (target.toDateString() === pDay.toDateString()) return 'period';
+        }
+        // 3 días antes y 3 días después (Rojo Claro - Margen probable)
+        for (let i = 1; i <= 3; i++) {
+          const mBefore = new Date(start);
+          mBefore.setDate(start.getDate() - i);
+          const mAfter = new Date(start);
+          mAfter.setDate(start.getDate() + 2 + i);
+          if (target.toDateString() === mBefore.toDateString() || target.toDateString() === mAfter.toDateString()) {
+            return 'margin';
+          }
+        }
+      }
+      return null;
+    }
+
     let navCalendar = 0;
     const calendarGrid = document.getElementById('calendar-days-grid');
     const monthYearEl = document.getElementById('cal-month-year');
     
     function loadCalendar() {
       if(!calendarGrid || !monthYearEl) return;
-      const dt = new Date();
-      dt.setMonth(new Date().getMonth() + navCalendar);
+      const baseYear = 2026;
+      const baseMonth = 9; // Octubre 2026
+      
+      const dt = new Date(baseYear, baseMonth + navCalendar, 1);
       const month = dt.getMonth();
       const year = dt.getFullYear();
       
       const firstDay = new Date(year, month, 1);
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const paddingDays = firstDay.getDay(); // 0 es Domingo
+      const paddingDays = firstDay.getDay(); 
       
       const monthName = dt.toLocaleDateString('es-ES', { month: 'long' });
       monthYearEl.innerText = `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year}`;
@@ -512,13 +551,15 @@
           const dayNumber = i - paddingDays;
           daySquare.innerText = dayNumber;
           
-          if (navCalendar === 0 && dayNumber === new Date().getDate()) {
+          const today = new Date();
+          if (dayNumber === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
             daySquare.classList.add('day-today');
           }
-          // Logica simulada para el periodo y margen (mitad del mes aprox)
-          if (dayNumber >= 14 && dayNumber <= 17) {
+          
+          const status = getCycleStatus(year, month, dayNumber);
+          if (status === 'period') {
             daySquare.classList.add('day-period');
-          } else if (dayNumber === 13 || dayNumber === 18) {
+          } else if (status === 'margin') {
             daySquare.classList.add('day-margin');
           }
         } else {
@@ -585,13 +626,13 @@
       }
     };
 
-    // ======= BUSCADOR PUBMED =======
+    // ======= BUSCADOR DE INFORMACIÓN =======
     window.searchScientificPapers = async function() {
       const query = document.getElementById('search-query').value.trim();
       const resultsContainer = document.getElementById('search-results');
       if (!query) return;
 
-      resultsContainer.innerHTML = "<p style='text-align:center; color:#7E57C2; padding: 15px;'>Buscando artículos en PubMed... 🔬</p>";
+      resultsContainer.innerHTML = "<p style='text-align:center; color:#7E57C2; padding: 15px;'>Buscando información... 🔬</p>";
 
       try {
         const searchRes = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=${encodeURIComponent(query)}&retmode=json&retmax=4`);
@@ -611,7 +652,7 @@
           const item = summaryData.result[id];
           if (!item) return;
           const title = item.title || "Sin título";
-          const source = item.source || "PubMed Central";
+          const source = item.source || "Repositorio Académico";
           const pubdate = item.pubdate ? item.pubdate.split(' ')[0] : "2026";
           const authors = item.authors ? item.authors.map(a => a.name).join(', ') : "Autores varios";
           const articleUrl = `https://pmc.ncbi.nlm.nih.gov/articles/PMC${id}/`;
@@ -630,7 +671,7 @@
           resultsContainer.appendChild(card);
         });
       } catch (e) {
-        resultsContainer.innerHTML = "<p style='text-align:center; color:red; padding: 15px;'>Error de conexión con PubMed.</p>";
+        resultsContainer.innerHTML = "<p style='text-align:center; color:red; padding: 15px;'>Error de conexión.</p>";
       }
     };
 
@@ -667,37 +708,18 @@
         src: "assets/Always.mp3",
         lyrics: [
           { t: 0,   en: "Instrumental", es: "..." },
-          { t: 15,  en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
-          { t: 22,  en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
-          { t: 29,  en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
-          { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
-          { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
-          { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-          { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-          { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-          { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-          { t: 83,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 85,  en: "Always, ways, ways", es: "Siempre, formas, formas" },
-          { t: 89,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 96,  en: "Pretty lady, used to walk with me", es: "Bella dama, solía caminar conmigo" },
-          { t: 103, en: "Down Bloor street, oh, what a time", es: "Por la calle Bloor, oh, qué tiempo" },
-          { t: 111, en: "And I still remember the fussin', the fightin', the fuckin', the lyin'", es: "Y todavía recuerdo el alboroto, la pelea, el sexo, las mentiras" },
-          { t: 116, en: "It's all fine, you'll always be mine", es: "Todo está bien, siempre serás mía" },
-          { t: 123, en: "And maybe I'm wrong (hey, babe, you could)", es: "Y tal vez me equivoque (Oye, nena, podrías)" },
-          { t: 126, en: "For writing this song (write me a song)", es: "Por escribir esta canción (Escribirme una canción)" },
-          { t: 130, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-          { t: 138, en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-          { t: 142, en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-          { t: 152, en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-          { t: 157, en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-          { t: 163, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 167, en: "Always, ways, ways", es: "Siempre, formas, formas" },
-          { t: 170, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 178, en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ello seguro como las estrellas en el cielo" },
-          { t: 184, en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
-          { t: 191, en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
-          { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
+          { t: 15,  en: "A song about enduring love and unspoken promises.", es: "Una canción sobre el amor duradero y promesas tácitas." },
+          { t: 22,  en: "Leaving a space for you and me, right where you left it.", es: "Dejando un espacio para ti y para mí, justo donde lo dejaste." },
+          { t: 36,  en: "Looking back and hoping we won't forget the beautiful times.", es: "Mirando atrás con la esperanza de no olvidar los momentos hermosos." },
+          { t: 49,  en: "Losing my head over you...", es: "Perdiendo la cabeza por ti..." },
+          { t: 61,  en: "I pray things stay the same always.", es: "Rezo para que las cosas sigan iguales, siempre." },
+          { t: 85,  en: "Always, ways, ways.", es: "Siempre, en todas las formas." },
+          { t: 103, en: "Memories of walking down the street, cherishing the time.", es: "Recuerdos de caminar por la calle, atesorando el tiempo." },
+          { t: 116, en: "It's all fine, as long as the connection remains.", es: "Todo está bien, mientras la conexión permanezca." },
+          { t: 142, en: "Wishing for time to stand still.", es: "Deseando que el tiempo se detenga." },
+          { t: 178, en: "You can count on it, sure as the stars in the sky.", es: "Puedes contar con ello, tan seguro como las estrellas en el cielo." },
+          { t: 191, en: "My affection for you ain't goin' nowhere.", es: "Mi afecto por ti no irá a ninguna parte." },
+          { t: 199, en: "(Escucha la canción y cántala conmigo)", es: "(Busca la letra oficial para cantarla completa)" }
         ]
       },
       {
@@ -705,17 +727,13 @@
         src: "assets/coming-up-roses.mp3",
         lyrics: [
           { t: 0,   en: "Instrumental", es: "..." },
-          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como rosas" },
-          { t: 20,  en: "Looking at the way you smile", es: "Mirando la forma en que sonríes" },
-          { t: 28,  en: "Feels like I've known you for a while", es: "Se siente como si te conociera de toda la vida" },
-          { t: 36,  en: "Sunlight dancing in your eyes", es: "La luz del sol bailando en tus ojos" },
-          { t: 45,  en: "No more worries, no goodbyes", es: "Sin más preocupaciones, sin despedidas" },
-          { t: 54,  en: "Coming up roses, soft and sweet", es: "Floreciendo rosas, suaves y dulces" },
-          { t: 63,  en: "Every heartbeat that we meet", es: "En cada latido que compartimos" },
-          { t: 72,  en: "I just wanna stay right here with you", es: "Solo quiero quedarme justo aquí contigo" },
-          { t: 82,  en: "Where the skies are clear and blue", es: "Donde el cielo es despejado y azul" },
-          { t: 95,  en: "Coming up roses all the way", es: "Rosas floreciendo en todo el camino" },
-          { t: 108, en: "Growing brighter every single day", es: "Brillando más con cada nuevo día" }
+          { t: 12,  en: "A melody about the world turning beautiful when you're around.", es: "Una melodía de cómo el mundo se vuelve hermoso cuando estás cerca." },
+          { t: 20,  en: "Everything's coming up roses, looking at the way you smile.", es: "Todo florece como rosas, mirando la forma en que sonríes." },
+          { t: 28,  en: "It feels like a connection that has existed for a while.", es: "Se siente como una conexión que ha existido por mucho tiempo." },
+          { t: 45,  en: "No more worries, just clear skies and sweet moments.", es: "Sin más preocupaciones, solo cielos despejados y momentos dulces." },
+          { t: 72,  en: "I just wanna stay right here with you.", es: "Solo quiero quedarme justo aquí, a tu lado." },
+          { t: 95,  en: "Things keep growing brighter every single day.", es: "Las cosas brillan más con cada nuevo día." },
+          { t: 108, en: "(Disfruta el momento y la melodía)", es: "(Busca la letra completa en Google y cántala)" }
         ]
       }
     ];
@@ -769,7 +787,6 @@
         return `${min}:${sec < 10 ? '0' : ''}${sec}`;
       }
 
-      // Inicializar el calendario y resto
       if (document.getElementById('cal-prev-btn') && document.getElementById('cal-next-btn')) {
         document.getElementById('cal-prev-btn').addEventListener('click', () => { navCalendar--; loadCalendar(); });
         document.getElementById('cal-next-btn').addEventListener('click', () => { navCalendar++; loadCalendar(); });
@@ -791,7 +808,6 @@
           if (durationEl) durationEl.innerText = formatTime(bgAudio.duration);
         });
         
-        // SINCRONIZACIÓN SPOTIFY
         bgAudio.addEventListener("timeupdate", () => {
           if (seekBar) { seekBar.value = bgAudio.currentTime; updateProgressFill(seekBar); }
           if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
@@ -889,7 +905,7 @@
       }
       setInterval(updateLinearCounter, 1000); updateLinearCounter();
 
-      // MODALES CARTAS (RESETEAN AL CERRAR)
+      // MODALES CARTAS
       const m1 = document.getElementById("letter-modal");
       document.getElementById("open-letter-btn").onclick = () => {
         document.getElementById('letter1-pass').value = '';
