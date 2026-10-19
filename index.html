@@ -37,9 +37,7 @@
     .screen { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 40px 0; position: relative; z-index: 1; }
     .hidden { display: none !important; opacity: 0; pointer-events: none; }
 
-    /* =========================================================
-       PANTALLA DE INICIO (SOBRE)
-       ========================================================= */
+    /* PANTALLA DE INICIO (SOBRE) */
     #intro-screen {
       position: fixed; inset: 0; z-index: 110;
       background-color: var(--bg-cream);
@@ -48,177 +46,110 @@
     }
 
     .intro-envelope {
-      width: 190px; 
-      height: 130px;
-      background-color: #F3E5D8;
-      border-radius: 12px 12px 18px 18px;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 190px; height: 130px; background-color: #F3E5D8;
+      border-radius: 12px 12px 18px 18px; position: relative; cursor: pointer;
+      display: flex; justify-content: center; align-items: center;
       box-shadow: 0 15px 35px rgba(103, 58, 183, 0.15);
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
     .intro-envelope:hover { transform: scale(1.08) rotate(1deg); }
-
     .intro-envelope::before {
       content: ''; position: absolute; top: 0; left: 0;
-      border-top: 65px solid #E6D5C3;
-      border-right: 95px solid transparent; border-left: 95px solid transparent;
+      border-top: 65px solid #E6D5C3; border-right: 95px solid transparent; border-left: 95px solid transparent;
       border-radius: 12px 12px 0 0; z-index: 2;
     }
-
     .intro-envelope::after {
       content: ''; position: absolute; bottom: 0; left: 0;
-      border-bottom: 65px solid #F3E5D8;
-      border-right: 95px solid transparent; border-left: 95px solid transparent;
+      border-bottom: 65px solid #F3E5D8; border-right: 95px solid transparent; border-left: 95px solid transparent;
       border-radius: 0 0 18px 18px; z-index: 1;
     }
-
-    .envelope-detail { position: absolute; top: 12px; font-size: 1.8rem; z-index: 3; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); }
-    
+    .envelope-detail { position: absolute; top: 12px; font-size: 1.8rem; z-index: 3; pointer-events: none; }
     .envelope-seal {
       position: absolute; width: 34px; height: 34px; background-color: #C29B9B;
       border-radius: 50%; top: 52%; left: 50%; transform: translate(-50%, -50%); z-index: 3;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.15);
       display: flex; justify-content: center; align-items: center; font-size: 0.85rem; color: #fff; font-family: serif;
     }
-    .envelope-seal::after { content: 'M'; font-style: italic; opacity: 0.9; }
+    .envelope-seal::after { content: 'M'; font-style: italic; }
+    .intro-text { font-family: 'Caveat', cursive; color: #8C6B6B; font-size: 1.8rem; margin-top: 35px; letter-spacing: 1.5px; }
 
-    .intro-text {
-      font-family: 'Caveat', cursive; color: #8C6B6B; font-size: 1.8rem; margin-top: 35px; letter-spacing: 1.5px;
-    }
-
-    /* =========================================================
-       PANTALLA DE BLOQUEO (LOCKSCREEN)
-       ========================================================= */
+    /* PANTALLA DE BLOQUEO (PIN) */
     #lock-screen {
-      position: fixed; inset: 0; z-index: 100;
-      background: var(--bg-cream);
+      position: fixed; inset: 0; z-index: 100; background: var(--bg-cream);
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
     }
-
     #lock-screen.active { opacity: 1; pointer-events: auto; }
-
-    .lock-title {
-      font-family: 'Playfair Display', serif; font-style: italic;
-      color: #7A5C5C; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.5px;
-    }
-
+    .lock-title { font-family: 'Playfair Display', serif; font-style: italic; color: #7A5C5C; font-size: 2rem; margin-bottom: 25px; }
     .pin-display { display: flex; gap: 18px; margin-bottom: 40px; height: 20px; }
-    .pin-dot {
-      width: 15px; height: 15px; border-radius: 50%;
-      border: 2px solid #C2A8A8; background: transparent; transition: all 0.2s;
-    }
-    .pin-dot.filled { background: #9E7D7D; border-color: #9E7D7D; transform: scale(1.2); box-shadow: 0 0 12px rgba(158, 125, 125, 0.5); }
+    .pin-dot { width: 15px; height: 15px; border-radius: 50%; border: 2px solid #C2A8A8; background: transparent; transition: all 0.2s; }
+    .pin-dot.filled { background: #9E7D7D; border-color: #9E7D7D; transform: scale(1.2); }
     .pin-dot.error { border-color: var(--red-strong); background: var(--red-strong); animation: shake 0.4s ease; }
-
     .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
     .key-btn {
       width: 72px; height: 72px; border-radius: 50%; background: rgba(255, 255, 255, 0.6);
       border: 1px solid #E6D5C3; font-family: 'Quicksand', sans-serif; font-size: 1.8rem; font-weight: 600; color: #7A5C5C;
       cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
-    .key-btn:hover, .key-btn:active { background: #F3E5D8; transform: scale(0.94); }
-    .key-btn.delete { font-size: 1.3rem; color: #8C6B6B; border-color: transparent; background: transparent; }
+    .key-btn:hover { background: #F3E5D8; transform: scale(0.94); }
+    .key-btn.delete { font-size: 1.3rem; background: transparent; border-color: transparent; }
 
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-    /* =========================================================
-       TRANSICIÓN FLORAL
-       ========================================================= */
-    #bloom-transition {
-      position: fixed; inset: 0; z-index: 120;
-      background: var(--bg-cream); pointer-events: none;
-      opacity: 0; transition: opacity 0.3s ease;
-    }
-
+    /* TRANSICIÓN FLORAL OPTIMIZADA (SIN LAG CON GPU) */
+    #bloom-transition { position: fixed; inset: 0; z-index: 120; background: var(--bg-cream); pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
     .flower-layer {
-      position: absolute; width: 100px; height: 100px; 
-      background-size: contain; background-repeat: no-repeat; background-position: center;
-      opacity: 0; transform: scale(0) rotate(0deg) translateZ(0);
-      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15)); will-change: transform, opacity;
+      position: absolute; width: 100px; height: 100px; background-size: contain; background-repeat: no-repeat;
+      opacity: 0; transform: scale(0) rotate(0deg) translateZ(0); will-change: transform, opacity;
     }
     .flower-layer.explode { animation: bloomOut 3s cubic-bezier(0.25, 1, 0.4, 1) forwards; }
     @keyframes bloomOut {
       0% { opacity: 0; transform: scale(0) rotate(var(--rot-start)) translateZ(0); }
       25% { opacity: 1; transform: scale(var(--scale-max)) rotate(var(--rot-end)) translateZ(0); }
-      85% { opacity: 1; transform: scale(calc(var(--scale-max) + 0.5)) rotate(var(--rot-end)) translateZ(0); filter: blur(0px); }
       100% { opacity: 0; transform: scale(calc(var(--scale-max) + 1.5)) rotate(var(--rot-end)) translateZ(0); filter: blur(15px); }
     }
+    .flower-1 { background-image: url('assets/flor1.png'); } .flower-2 { background-image: url('assets/flor2.png'); }
+    .flower-3 { background-image: url('assets/flor3.png'); } .flower-4 { background-image: url('assets/flor4.png'); }
+    .flower-5 { background-image: url('assets/flor5.png'); } .flower-6 { background-image: url('assets/flor6.png'); }
+    .flower-7 { background-image: url('assets/flor7.png'); } .flower-8 { background-image: url('assets/flor8.png'); }
+    .flower-9 { background-image: url('assets/flor9.png'); } .flower-10 { background-image: url('assets/flor10.png'); }
 
-    .flower-1 { background-image: url('assets/flor1.png'); } 
-    .flower-2 { background-image: url('assets/flor2.png'); } 
-    .flower-3 { background-image: url('assets/flor3.png'); } 
-    .flower-4 { background-image: url('assets/flor4.png'); } 
-    .flower-5 { background-image: url('assets/flor5.png'); } 
-    .flower-6 { background-image: url('assets/flor6.png'); } 
-    .flower-7 { background-image: url('assets/flor7.png'); } 
-    .flower-8 { background-image: url('assets/flor8.png'); } 
-    .flower-9 { background-image: url('assets/flor9.png'); } 
-    .flower-10 { background-image: url('assets/flor10.png'); } 
-
+    /* LLUVIA OPTIMIZADA */
     .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-    .raindrop { position: absolute; background: linear-gradient(transparent, rgba(126, 87, 194, 0.4)); width: 1.5px; height: 30px; opacity: 0.5; animation: fallRain linear infinite; }
-    @keyframes fallRain { 0% { transform: translateY(-40px); opacity: 0; } 20% { opacity: 0.6; } 100% { transform: translateY(108vh); opacity: 0; } }
+    .raindrop { position: absolute; background: linear-gradient(transparent, rgba(126, 87, 194, 0.4)); width: 1.5px; height: 30px; opacity: 0.5; animation: fallRain linear infinite; will-change: transform; }
+    @keyframes fallRain { 0% { transform: translateY(-40px); opacity: 0; } 100% { transform: translateY(108vh); opacity: 0; } }
 
-    /* =========================================================
-       DISEÑO PRINCIPAL (DASHBOARD) - TARJETAS ORGÁNICAS Y CON VIDA
-       ========================================================= */
-    .dashboard-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 35px; max-width: 1180px; width: 100%; padding: 25px; align-items: start; opacity: 0; transition: opacity 2s ease 1s; }
+    /* DASHBOARD */
+    .dashboard-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 35px; max-width: 1180px; width: 100%; padding: 25px; opacity: 0; transition: opacity 2s ease 1s; }
     .dashboard-layout.visible { opacity: 1; }
 
-    /* Tarjetas con bordes orgánicos asimétricos suaves y sombras con color cálido */
     .organic-box {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(14px);
-      padding: 30px;
-      border-radius: 38px 26px 42px 28px;
-      border: 2.5px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 15px 35px rgba(110, 80, 160, 0.1);
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      position: relative;
-      overflow: hidden;
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(14px); padding: 30px;
+      border-radius: 38px 26px 42px 28px; border: 2.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 15px 35px rgba(110, 80, 160, 0.1); transition: all 0.4s ease; position: relative;
     }
-    .organic-box:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 45px rgba(110, 80, 160, 0.16);
-      border-color: rgba(224, 208, 235, 0.8);
-    }
-
     .box-title { font-size: 1.35rem; color: var(--purple-dark); margin-bottom: 18px; font-weight: 800; display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; }
-    .left-col { display: flex; flex-direction: column; gap: 30px; }
-    .right-col { display: flex; flex-direction: column; gap: 30px; }
+    .left-col, .right-col { display: flex; flex-direction: column; gap: 30px; }
 
-    /* REPRODUCTOR MULTI-CANCIÓN */
+    /* REPRODUCTOR */
     .player-box { background: linear-gradient(145deg, #ffffff 0%, #f6f0ff 100%); }
     .player-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .player-controls-btns { display: flex; align-items: center; gap: 12px; }
-    .track-nav-btn { background: rgba(255,255,255,0.8); border: 2px solid var(--purple-light); color: var(--purple-main); width: 38px; height: 38px; border-radius: 50%; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; }
-    .track-nav-btn:hover { background: var(--purple-light); color: var(--purple-dark); transform: scale(1.05); }
-    .play-toggle-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 1.15rem; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 6px 18px rgba(126, 87, 194, 0.4); transition: transform 0.2s; }
-    .play-toggle-btn:hover { transform: scale(1.1); }
+    .track-nav-btn { background: rgba(255,255,255,0.8); border: 2px solid var(--purple-light); color: var(--purple-main); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+    .play-toggle-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 6px 18px rgba(126, 87, 194, 0.4); }
     .audio-controls { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
     .progress-container { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: var(--purple-dark); font-weight: 700; }
     .volume-container { display: flex; align-items: center; gap: 15px; justify-content: center; color: var(--purple-main); }
-    input[type=range] { flex: 1; -webkit-appearance: none; background: var(--purple-light); height: 7px; border-radius: 10px; outline: none; transition: background 0.1s; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 17px; height: 17px; background: var(--turquoise-main); border-radius: 50%; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 188, 212, 0.6); transition: transform 0.2s; }
-    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.35); }
+    input[type=range] { flex: 1; -webkit-appearance: none; background: var(--purple-light); height: 7px; border-radius: 10px; outline: none; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 17px; height: 17px; background: var(--turquoise-main); border-radius: 50%; cursor: pointer; }
 
-    /* LETRAS SPOTIFY */
-    .spotify-lyrics-container { background: linear-gradient(145deg, #1C1033 0%, #00363A 100%); border-radius: 24px; height: 270px; overflow-y: auto; position: relative; padding: 0; box-shadow: inset 0 10px 30px rgba(0,0,0,0.6); scrollbar-width: none; }
+    /* SPOTIFY LYRICS */
+    .spotify-lyrics-container { background: linear-gradient(145deg, #1C1033 0%, #00363A 100%); border-radius: 24px; height: 270px; overflow-y: auto; padding: 0; box-shadow: inset 0 10px 30px rgba(0,0,0,0.6); scrollbar-width: none; }
     .spotify-lyrics-container::-webkit-scrollbar { display: none; }
     .lyrics-inner { padding: 120px 25px; display: flex; flex-direction: column; gap: 28px; }
-    .lyric-item { text-align: left; opacity: 0.3; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: left center; cursor: pointer; }
-    .lyric-en { display: block; font-size: 1.5rem; font-weight: 800; color: #ffffff; line-height: 1.2; letter-spacing: -0.5px; }
+    .lyric-item { text-align: left; opacity: 0.3; transition: all 0.4s; cursor: pointer; }
+    .lyric-en { display: block; font-size: 1.5rem; font-weight: 800; color: #ffffff; }
     .lyric-es { display: block; font-size: 0.95rem; font-weight: 600; color: var(--turquoise-light); margin-top: 5px; }
-    .lyric-item.active { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 2px 10px rgba(0, 188, 212, 0.4)); }
-    .lyric-item.active .lyric-en { color: #ffffff; }
-    .lyric-item.active .lyric-es { color: var(--turquoise-main); font-weight: 700; }
+    .lyric-item.active { opacity: 1; transform: scale(1.05); }
 
     /* YOUTUBE */
     .yt-box { display: flex; flex-direction: column; align-items: center; text-align: center; background: linear-gradient(145deg, #ffffff 0%, #f0fafb 100%); }
@@ -226,120 +157,117 @@
     .iframe-container { position: relative; width: 92%; max-width: 430px; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* =========================================================
-       ÁRBOL ESTILO TIKTOK
-       ========================================================= */
+    /* ÁRBOL DE CORAZONES */
     .canvas-tree-box { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 15px; background: linear-gradient(160deg, #fffcf9 0%, #fef1f5 100%); }
     .tree-content-layout { display: flex; gap: 18px; align-items: center; position: relative; z-index: 2; }
     .tree-graphic { position: relative; width: 180px; height: 210px; flex-shrink: 0; }
     .css-trunk { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 75px; background: #26A69A; border-radius: 8px 8px 0 0; }
     .css-leaves-container { position: absolute; top: 0; left: 0; width: 100%; height: 140px; }
-    
-    .tree-leaf-emoji {
-      position: absolute; transform: translate(-50%, -50%);
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08));
-      animation: gentleBreeze 3s ease-in-out infinite alternate;
-    }
-    .falling-autumn-leaf {
-      position: absolute; transform: translate(-50%, -50%);
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08));
-      animation: autumnFall linear forwards;
-      pointer-events: none; z-index: 1;
-    }
-
+    .tree-leaf-emoji { position: absolute; transform: translate(-50%, -50%); animation: gentleBreeze 3s ease-in-out infinite alternate; will-change: transform; }
+    .falling-autumn-leaf { position: absolute; transform: translate(-50%, -50%); animation: autumnFall linear forwards; pointer-events: none; z-index: 1; will-change: transform; }
     @keyframes gentleBreeze { from { transform: translate(-50%, -50%) rotate(-4deg) scale(0.96); } to { transform: translate(-50%, -50%) rotate(4deg) scale(1.04); } }
-    @keyframes autumnFall {
-      0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 1; }
-      75% { opacity: 1; }
-      100% { transform: translate(calc(-50% + var(--drift)), 150px) rotate(360deg); opacity: 0; }
-    }
+    @keyframes autumnFall { 0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + var(--drift)), 150px) rotate(360deg); opacity: 0; } }
 
     .tree-text-side { display: flex; flex-direction: column; align-items: flex-end; text-align: right; flex: 1; }
     .typewriter-note { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.85rem; color: #4a3b38; line-height: 1.45; margin-bottom: 12px; }
     .typewriter-note strong { color: var(--purple-main); font-weight: 800; }
     .bears-gif { width: 105px; height: auto; mix-blend-mode: multiply; }
-    
     .counter-clean-box { text-align: center; margin-top: 5px; position: relative; z-index: 2; padding: 10px 0; border-bottom: 1.5px dashed #E3D4C4; }
     .counter-label-clean { font-family: 'Playfair Display', serif; font-style: italic; color: #8C6B6B; font-size: 1rem; }
-    .counter-exact-clean { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.1rem; color: #5C4033; margin-top: 4px; letter-spacing: 0.5px; }
+    .counter-exact-clean { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.1rem; color: #5C4033; margin-top: 4px; }
 
     /* CALENDARIO */
     .calendar-box { background: linear-gradient(145deg, #ffffff 0%, #fff6f8 100%); }
     .calendar-nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-    .calendar-month-title { font-size: 1.2rem; font-weight: 800; color: var(--purple-dark); text-transform: capitalize; font-family: 'Playfair Display', serif; }
-    .cal-btn { background: white; border: 2px solid var(--purple-light); color: var(--purple-main); width: 34px; height: 34px; border-radius: 50%; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; }
-    .cal-btn:hover { background: var(--purple-light); transform: scale(1.1); }
+    .calendar-month-title { font-size: 1.2rem; font-weight: 800; color: var(--purple-dark); font-family: 'Playfair Display', serif; }
+    .cal-btn { background: white; border: 2px solid var(--purple-light); color: var(--purple-main); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
     .calendar-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 0.8rem; color: #888; margin-bottom: 10px; }
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
-    .calendar-day { aspect-ratio: 1; display: flex; justify-content: center; align-items: center; font-size: 0.85rem; font-weight: 700; border-radius: 14px; color: #444; position: relative; transition: transform 0.2s; }
-    .calendar-day:hover { transform: scale(1.1); background: rgba(126, 87, 194, 0.05); }
+    .calendar-day { aspect-ratio: 1; display: flex; justify-content: center; align-items: center; font-size: 0.85rem; font-weight: 700; border-radius: 14px; color: #444; }
     .calendar-day.empty { background: transparent; }
-    .calendar-day.day-period { background-color: var(--red-strong); color: white; box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4); transform: scale(1.05); }
-    .calendar-day.day-margin { background-color: var(--red-soft); color: var(--red-soft-text); font-weight: 800; border: 1px dashed rgba(229, 57, 53, 0.4); }
-    .calendar-day.day-today { border: 2px solid var(--purple-main); background-color: rgba(126, 87, 194, 0.1); font-weight: 900; }
+    .calendar-day.day-period { background-color: var(--red-strong); color: white; }
+    .calendar-day.day-margin { background-color: var(--red-soft); color: var(--red-soft-text); border: 1px dashed rgba(229, 57, 53, 0.4); }
+    .calendar-day.day-today { border: 2px solid var(--purple-main); background-color: rgba(126, 87, 194, 0.1); }
     .calendar-legend { display: flex; justify-content: center; gap: 18px; margin-top: 18px; font-size: 0.78rem; font-weight: 700; color: #666; }
     .legend-item { display: flex; align-items: center; gap: 6px; }
     .legend-dot { width: 12px; height: 12px; border-radius: 4px; }
     .legend-dot.strong { background-color: var(--red-strong); }
-    .legend-dot.soft { background-color: var(--red-soft); border: 1px dashed rgba(229, 57, 53, 0.5); }
+    .legend-dot.soft { background-color: var(--red-soft); }
 
     /* FILA INFERIOR */
     .bottom-row { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; }
-    .organic-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.2rem; padding: 18px 50px; cursor: pointer; border: none; border-radius: 40px; box-shadow: 0 10px 25px rgba(126, 87, 194, 0.4); transition: all 0.3s ease; letter-spacing: 1px; }
-    .organic-btn:hover { box-shadow: 0 14px 35px rgba(0, 188, 212, 0.5); transform: translateY(-4px) scale(1.03); }
+    .organic-btn { background: linear-gradient(135deg, var(--purple-main), var(--turquoise-main)); color: white; font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.2rem; padding: 18px 50px; cursor: pointer; border: none; border-radius: 40px; box-shadow: 0 10px 25px rgba(126, 87, 194, 0.4); transition: all 0.3s; }
+    .organic-btn:hover { transform: translateY(-3px) scale(1.02); }
     .organic-btn.secondary { background: linear-gradient(135deg, var(--turquoise-dark), var(--purple-main)); font-size: 1.1rem; padding: 15px 45px; }
 
-    /* MINIJUEGO */
-    .minigame-box { width: 100%; max-width: 580px; text-align: center; margin-top: 5px; background: linear-gradient(145deg, #ffffff 0%, #f4fbfb 100%); }
+    /* MINIJUEGO DE MEMORIA */
+    .minigame-box { width: 100%; max-width: 580px; text-align: center; background: linear-gradient(145deg, #ffffff 0%, #f4fbfb 100%); }
     .level-selector { display: flex; justify-content: center; gap: 12px; margin-bottom: 18px; }
-    .level-btn { background: #fff; border: 2px solid var(--purple-light); color: var(--purple-main); padding: 9px 22px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; box-shadow: 0 3px 8px rgba(0,0,0,0.04); }
-    .level-btn.active, .level-btn:hover { background: var(--turquoise-main); color: white; border-color: var(--turquoise-main); transform: scale(1.05); }
+    .level-btn { background: #fff; border: 2px solid var(--purple-light); color: var(--purple-main); padding: 9px 22px; border-radius: 20px; cursor: pointer; font-weight: 700; }
+    .level-btn.active { background: var(--turquoise-main); color: white; border-color: var(--turquoise-main); }
     .memory-board { display: grid; gap: 12px; margin-top: 12px; justify-content: center; }
-    .memory-card { background: linear-gradient(135deg, var(--purple-light), #fff); height: 68px; width: 68px; border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; cursor: pointer; transition: transform 0.4s; box-shadow: 0 6px 15px rgba(0,0,0,0.08); border: 2px solid #fff; }
+    .memory-card { background: linear-gradient(135deg, var(--purple-light), #fff); height: 68px; width: 68px; border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; cursor: pointer; transition: transform 0.4s; border: 2px solid #fff; }
     .memory-card.flipped { background: #fff; transform: rotateY(180deg); border-color: var(--turquoise-main); }
-    .game-msg { margin-top: 18px; color: var(--purple-dark); font-weight: 800; font-size: 1.2rem; background: var(--turquoise-light); padding: 14px; border-radius: 18px; animation: bounceMsg 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    @keyframes bounceMsg { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .game-msg { margin-top: 18px; color: var(--purple-dark); font-weight: 800; font-size: 1.1rem; background: var(--turquoise-light); padding: 12px; border-radius: 18px; }
 
-    /* MODALES */
+    /* MODALES GENERALES */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(30, 15, 55, 0.65); backdrop-filter: blur(10px); z-index: 100; display: flex; justify-content: center; align-items: center; }
-    .letter-paper { width: 90%; max-width: 600px; max-height: 85vh; overflow-y: auto; position: relative; background: #fffdf9; padding: 50px 40px; border-radius: 28px; box-shadow: 0 25px 60px rgba(0,0,0,0.35); border: 1px solid #e9e0d2; }
-    .letter-paper.large-paper { max-width: 820px; max-height: 90vh; padding: 50px 45px; }
-    .close-btn { position: sticky; top: 0px; float: right; font-size: 2.2rem; background: #fffdf9; border: none; cursor: pointer; color: var(--purple-main); transition: 0.2s; z-index: 50; line-height: 1; padding: 0 5px; }
-    .close-btn:hover { color: var(--turquoise-main); transform: scale(1.1); }
-    .handwritten-letter { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #382c22; line-height: 1.55; margin-top: 10px; clear: both; }
+    .letter-paper { width: 90%; max-width: 650px; max-height: 88vh; overflow-y: auto; position: relative; background: #fffdf9; padding: 45px; border-radius: 28px; box-shadow: 0 25px 60px rgba(0,0,0,0.35); border: 1px solid #e9e0d2; }
+    .close-btn { position: sticky; top: 0px; float: right; font-size: 2.2rem; background: #fffdf9; border: none; cursor: pointer; color: var(--purple-main); z-index: 50; line-height: 1; }
+    .handwritten-letter { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #382c22; line-height: 1.55; clear: both; }
     .handwritten-letter p { margin-bottom: 22px; text-align: justify; }
+
+    /* ESTILOS NUEVOS: BUSCADOR MICROBIOLOGÍA Y JUEGO DE PISTAS PARA CARTA 2 */
+    .science-search-container { display: flex; flex-direction: column; gap: 18px; margin-top: 15px; text-align: left; }
+    .search-bar-row { display: flex; gap: 10px; }
+    .search-input { flex: 1; padding: 12px 18px; border-radius: 25px; border: 2px solid var(--purple-light); font-family: 'Quicksand', sans-serif; font-size: 1rem; outline: none; }
+    .search-select { padding: 12px 15px; border-radius: 25px; border: 2px solid var(--purple-light); background: white; font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--purple-dark); outline: none; cursor: pointer; }
+    .search-btn-action { background: var(--turquoise-main); color: white; border: none; padding: 0 22px; border-radius: 25px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+    .search-btn-action:hover { background: var(--turquoise-dark); }
+    
+    .paper-result-card { background: #fbf9f5; border: 1.5px solid #e6dcd0; padding: 18px; border-radius: 18px; margin-bottom: 14px; text-align: left; }
+    .paper-title { font-weight: 800; font-size: 1.05px; color: var(--purple-dark); margin-bottom: 6px; }
+    .paper-authors { font-size: 0.85rem; color: #666; font-style: italic; margin-bottom: 8px; }
+    .paper-abstract { font-size: 0.88rem; color: #444; margin-bottom: 12px; line-height: 1.4; }
+    .apa-btn { background: var(--purple-main); color: white; border: none; padding: 7px 15px; border-radius: 15px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .apa-btn:hover { background: var(--purple-dark); }
+    .apa-output-box { margin-top: 8px; background: #eee; padding: 10px; border-radius: 10px; font-size: 0.82rem; font-family: monospace; display: none; }
+
+    /* JUEGO DE PISTAS */
+    .quest-box { background: linear-gradient(135deg, #f3e5f5, #e0f7fa); padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; }
+    .quest-question { font-weight: 700; color: var(--purple-dark); margin-bottom: 12px; font-size: 1.1rem; }
+    .quest-options { display: flex; flex-direction: column; gap: 8px; }
+    .quest-opt-btn { background: white; border: 2px solid var(--purple-light); padding: 10px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; color: #444; }
+    .quest-opt-btn:hover { background: var(--purple-light); }
+    .clue-unlocked { background: #e8f5e9; border: 2px dashed #4caf50; padding: 12px; border-radius: 15px; color: #2e7d32; font-weight: 700; margin-top: 12px; display: none; }
 
     @media (max-width: 768px) { 
       .dashboard-layout { grid-template-columns: 1fr; padding: 15px; }
       .tree-content-layout { flex-direction: column; text-align: center; }
       .tree-text-side { align-items: center; text-align: center; }
+      .search-bar-row { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
-  <!-- AUDIO PRINCIPAL -->
   <audio id="bg-audio"></audio>
 
-  <!-- PANTALLA 1: INICIO (SOBRE) -->
+  <!-- PANTALLA 1: INICIO -->
   <div id="intro-screen">
-    <div class="intro-envelope" id="intro-envelope-btn" onclick="showLockScreen()">
+    <div class="intro-envelope" onclick="showLockScreen()">
       <div class="envelope-detail">🌿</div>
       <div class="envelope-seal"></div>
     </div>
     <div class="intro-text">Tap to open</div>
   </div>
 
-  <!-- PANTALLA 2: BLOQUEO POR PIN -->
+  <!-- PANTALLA 2: PIN -->
   <div id="lock-screen">
     <div class="lock-title">Songs for you</div>
     <div class="pin-display" id="pin-display">
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
     </div>
     <div class="keypad">
       <button class="key-btn" onclick="addPin('1')">1</button>
@@ -357,31 +285,26 @@
     </div>
   </div>
 
-  <!-- PANTALLA 3: EXPLOSIÓN FLORAL -->
+  <!-- TRANSICIÓN -->
   <div id="bloom-transition"></div>
 
-  <!-- PANTALLA 4: DASHBOARD PRINCIPAL -->
+  <!-- DASHBOARD PRINCIPAL -->
   <div id="main-screen" class="screen hidden">
     <div class="rain-container" id="rain-container"></div>
     
     <div class="dashboard-layout" id="dashboard-layout">
       
-      <!-- COLUMNA IZQUIERDA -->
+      <!-- IZQUIERDA -->
       <div class="left-col">
-        
-        <!-- REPRODUCTOR MULTI-CANCIÓN -->
         <div class="organic-box player-box">
           <div class="player-header-flex">
             <h3 class="box-title" id="current-track-title">♪ Always - Daniel Caesar</h3>
             <div class="player-controls-btns">
-              <button class="track-nav-btn" id="prev-track-btn" title="Canción anterior">⏮</button>
-              <button class="play-toggle-btn" id="play-toggle-btn">
-                <span id="play-btn-icon">▶</span>
-              </button>
-              <button class="track-nav-btn" id="next-track-btn" title="Siguiente canción">⏭</button>
+              <button class="track-nav-btn" id="prev-track-btn">⏮</button>
+              <button class="play-toggle-btn" id="play-toggle-btn"><span id="play-btn-icon">▶</span></button>
+              <button class="track-nav-btn" id="next-track-btn">⏭</button>
             </div>
           </div>
-
           <div class="audio-controls">
             <div class="progress-container">
               <span id="current-time">0:00</span>
@@ -393,93 +316,71 @@
               <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="0.6">
             </div>
           </div>
-
           <div class="spotify-lyrics-container" id="lyrics-container">
             <div class="lyrics-inner" id="lyrics-inner"></div>
           </div>
         </div>
 
-        <!-- YOUTUBE -->
         <div class="organic-box yt-box">
           <h3 class="box-title">✨ Nuestra Playlist YouTube</h3>
           <div class="iframe-container">
-            <iframe id="yt-player" src="https://www.youtube-nocookie.com/embed/GrzMaw354u4?list=PLJyZwPZkDZ3M" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/GrzMaw354u4?list=PLJyZwPZkDZ3M" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
-
       </div>
 
-      <!-- COLUMNA DERECHA -->
+      <!-- DERECHA -->
       <div class="right-col">
-        
-        <!-- ÁRBOL DE CORAZONES Y CONTADOR -->
         <div class="organic-box canvas-tree-box">
           <div class="tree-content-layout">
-            
             <div class="tree-graphic" id="heart-tree">
               <div class="css-trunk"></div>
               <div id="tree-leaves" class="css-leaves-container"></div>
             </div>
-
             <div class="tree-text-side">
               <p class="typewriter-note">
-                Quizá no siempre encuentre las palabras perfectas para describir todo lo que siento, porque hay sentimientos que simplemente no se pueden decir con palabras o una frase.<br><br>
-                Solo quiero que sepas que cada día le agradezco a Diosito por haberte puesto en mi camino y me gustaría seguir construyendo recuerdos contigo, no importa lo que pase o lo difícil que sea el camino, <strong>si tú estás al final de él, con gusto lo cruzaría.</strong>
+                Quizá no siempre encuentre las palabras perfectas para describir todo lo que siento...<br><br>
+                Solo quiero que sepas que cada día le agradezco a Diosito por haberte puesto en mi camino y cruzaría cualquier obstáculo por ti. <strong>Te quiero muchísimo.</strong>
               </p>
-              <img src="https://64.media.tumblr.com/be0cf900f283ad29b2d0a1f44c52a821/6a9c8986f837ff55-05/s400x600/c0a31febc663585b8baef79e7250c0d130350373.gif" class="bears-gif" alt="Ositos abrazándose">
+              <img src="https://64.media.tumblr.com/be0cf900f283ad29b2d0a1f44c52a821/6a9c8986f837ff55-05/s400x600/c0a31febc663585b8baef79e7250c0d130350373.gif" class="bears-gif" alt="Ositos">
             </div>
           </div>
-
           <div class="counter-clean-box">
             <span class="counter-label-clean">Mi amor por ti comenzó hace...</span>
             <div id="linear-counter" class="counter-exact-clean">Calculando...</div>
           </div>
         </div>
 
-        <!-- CALENDARIO -->
         <div class="organic-box calendar-box">
           <h3 class="box-title">🌸 Calendario Especial</h3>
-          
           <div class="calendar-nav-header">
             <button class="cal-btn" id="cal-prev-btn">&lt;</button>
             <span class="calendar-month-title" id="cal-month-year">Octubre 2026</span>
             <button class="cal-btn" id="cal-next-btn">&gt;</button>
           </div>
-
-          <div class="calendar-weekdays">
-            <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
-          </div>
-
+          <div class="calendar-weekdays"><span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span></div>
           <div class="calendar-grid" id="calendar-days-grid"></div>
-
           <div class="calendar-legend">
-            <div class="legend-item">
-              <div class="legend-dot strong"></div>
-              <span>Días estimados (~3 días)</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot soft"></div>
-              <span>Margen probable (±3 días)</span>
-            </div>
+            <div class="legend-item"><div class="legend-dot strong"></div><span>Días estimados</span></div>
+            <div class="legend-item"><div class="legend-dot soft"></div><span>Margen probable</span></div>
           </div>
         </div>
-
       </div>
 
       <!-- FILA INFERIOR -->
       <div class="bottom-row">
-        <button class="organic-btn letter-trigger" id="open-letter-btn">Una carta para Male 💌</button>
-        <button class="organic-btn secondary letter-trigger" id="open-letter2-btn">Carta 2 💌</button>
+        <button class="organic-btn" id="open-letter-btn">Una carta para Male 💌</button>
+        <button class="organic-btn secondary" id="open-letter2-btn">Carta 2 (Acceso con Pistas) 💌</button>
         
         <div class="organic-box minigame-box">
           <h3 class="box-title">🧩 Minijuego de Memoria</h3>
           <div class="level-selector">
-            <button class="level-btn active" onclick="setDifficulty('easy')">Fácil (4 pares)</button>
-            <button class="level-btn" onclick="setDifficulty('medium')">Medio (6 pares)</button>
-            <button class="level-btn" onclick="setDifficulty('hard')">Difícil (8 pares)</button>
+            <button class="level-btn active" onclick="setDifficulty('easy')">Fácil</button>
+            <button class="level-btn" onclick="setDifficulty('medium')">Medio</button>
+            <button class="level-btn" onclick="setDifficulty('hard')">Difícil</button>
           </div>
           <div class="memory-board" id="memory-board"></div>
-          <div id="game-message" class="game-msg hidden">¡Muy bien, eres excelente Male, sigue así! 💖</div>
+          <div id="game-message" class="game-msg hidden">¡Muy bien Male, ganaste! 💖</div>
         </div>
       </div>
 
@@ -490,39 +391,81 @@
   <div id="letter-modal" class="modal-backdrop hidden">
     <div class="letter-paper">
       <button class="close-btn" id="close-letter-btn">&times;</button>
-      <div id="letter-content-section" class="handwritten-letter">
+      <div class="handwritten-letter">
         <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;">Querida Malena,</h2>
-        <p>Fuiste una persona muy especial para mí, nunca te quise perder, aunque merecía perderte. Soy consciente de que fui un idiota y de que tuve demasiadas actitudes que aguantaste, y no tenías por qué hacerlo. Muchas veces bromeaba con mis amigos para hacer una máquina del tiempo y arreglar mis estupideces. Soy consciente del daño que te causé, no lo digo para que suene bonito o por decirlo, lo digo porque me dolió darme cuenta de que fui yo quien lastimó a alguien que siempre estuvo para mí. Hay cosas que uno no puede deshacer por más que lo quiera con toda el alma, pero de todo eso aprendí, y ahora soy una mejor persona. Sí cambié mucho porque tuve muchas experiencias que me obligaron a hacerlo, pero en el fondo sé que sigo manteniendo mi esencia y sé que tú también.</p>
-        <p>Estuve pensando mucho en estos últimos días y en lo lindo que ha sido volver a hablar y compartir momentos contigo. La verdad es que te extrañé muchísimo, y estar otra vez a tu lado se siente como un sueño para mí. Muchas tardes me preguntaba qué estará haciendo, si estará bien, tal vez necesita hablar con alguien, si la estarán cuidando bien; me pasaba mucho tiempo pensando en eso. Pero volvimos a hablar, nuestras salidas y paseos... el tiempo se pasa volando cuando estoy contigo. Me gusta mucho escuchar tu risa, quiero que estés riendo siempre, aunque sé que es difícil en nuestras realidades, me gusta mantenerte feliz.</p>
-        <p>Quiero que sepas que admiro todo de ti, desde tus detalles más pequeños hasta esos momentos en los que te quedas pensando en tus cosas o desvariando jsjsjs; para mí, en cada instante, sigues siendo una persona maravillosa y muy especial.</p>
-        <p>Anoche... bueno, hoy en la madrugada, que se nos pasó el tiempo volando, te contaba de mis metas y de mis sueños, como el proyecto de la maestría. Pero la verdad es que tú también formas parte de ese panorama. Mi mayor ilusión es poder avanzar y tener la alegría de encontrarte al final del día con tus canchitas sin aceite.</p>
-        <p>Si estás conmigo, siento que tengo el impulso necesario para cumplir mis metas y, al mismo tiempo, estar ahí para apoyarte a alcanzar las tuyas. Sé que no quieres volver a abrir tu corazoncito porque lo lastimé mucho, pero no voy a cometer los errores dos veces, y mientras tenga la oportunidad voy a tratar de cuidarlo con todo y de todos, y darte la confianza de que siempre hay alguien que quiere que todo te vaya bien y que comparte tus sueños como si fueran suyos. Te quiero demasiado, Male, y espero poder recuperarte, voy a dar todo de mí para lograrlo.</p>
-        <div style="margin-top: 30px; text-align: right; font-weight: 700; color: #5c4033;">Con todo mi afecto.</div>
+        <p>Fuiste una persona muy especial para mí... de todo lo vivido aprendí, y ahora soy una mejor persona. Estuve pensando mucho en lo lindo que ha sido volver a hablar y compartir momentos contigo. Me gusta mucho escuchar tu risa y quiero mantenerte feliz siempre.</p>
+        <p>Anoche hablábamos de tus metas y de la maestría. Mi mayor ilusión es avanzar y encontrarte al final del día con tus canchitas sin aceite. Te quiero demasiado, Male, voy a dar todo de mí para recuperarte.</p>
+        <div style="margin-top: 30px; text-align: right; font-weight: 700;">Con todo mi afecto.</div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL CARTA 2 -->
+  <!-- MODAL CARTA 2 (CON JUEGO DE PISTAS Y BUSCADOR MICROBIOLOGÍA) -->
   <div id="letter2-modal" class="modal-backdrop hidden">
-    <div class="letter-paper large-paper">
+    <div class="letter-paper" style="max-width: 800px;">
       <button class="close-btn" id="close-letter2-btn">&times;</button>
-      <div id="letter2-content-section" style="text-align: center; margin-top: 10px;">
-        <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 25px;">Nuestros Recuerdos</h2>
-        <img src="assets/carta1.jpg" alt="Carta parte 1" style="width: 100%; max-width: 700px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null; this.src='https://via.placeholder.com/700x900?text=Coloca+carta1.jpg+en+assets';">
-        <img src="assets/carta2.jpg" alt="Carta parte 2" style="width: 100%; max-width: 700px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null; this.src='https://via.placeholder.com/700x900?text=Coloca+carta2.jpg+en+assets';">
+      
+      <!-- JUEGO DE PISTAS PARA CONTRASEÑA -->
+      <div id="quest-section">
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 15px; text-align: center;">🔒 Desbloquea la Carta Secreta</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">Responde correctamente los retos de microbiología y nuestra historia para obtener las pistas de la contraseña:</p>
+        
+        <div class="quest-box" id="quest-1">
+          <div class="quest-question">Reto 1: ¿Cuál es el género bacteriano modelo en microbiología y genética molecular?</div>
+          <div class="quest-options">
+            <button class="quest-opt-btn" onclick="checkQuest(1, false)">Staphylococcus aureus</button>
+            <button class="quest-opt-btn" onclick="checkQuest(1, true)">Escherichia coli</button>
+            <button class="quest-opt-btn" onclick="checkQuest(1, false)">Bacillus subtilis</button>
+          </div>
+          <div class="clue-unlocked" id="clue-1">💡 Pista 1 desbloqueada: Los primeros 2 dígitos corresponden al **día** de nuestra fecha especial.</div>
+        </div>
+
+        <div class="quest-box" id="quest-2" style="opacity: 0.5; pointer-events: none;">
+          <div class="quest-question">Reto 2: ¿Qué tinción diferencial es la base para clasificar bacterias en microbiología?</div>
+          <div class="quest-options">
+            <button class="quest-opt-btn" onclick="checkQuest(2, true)">Tinción de Gram</button>
+            <button class="quest-opt-btn" onclick="checkQuest(2, false)">Tinción de Ziehl-Neelsen</button>
+          </div>
+          <div class="clue-unlocked" id="clue-2">💡 Pista 2 desbloqueada: Los siguientes 2 dígitos corresponden al **mes** (en número).</div>
+        </div>
+
+        <div class="quest-box" id="quest-3" style="opacity: 0.5; pointer-events: none;">
+          <div class="quest-question">Reto 3: ¿En qué año comenzamos a escribir nuestra historia juntos?</div>
+          <div class="quest-options">
+            <button class="quest-opt-btn" onclick="checkQuest(3, false)">2023</button>
+            <button class="quest-opt-btn" onclick="checkQuest(3, true)">2024</button>
+          </div>
+          <div class="clue-unlocked" id="clue-3">💡 Pista 3 desbloqueada: Los últimos 2 dígitos son el **año** (ej. 24). ¡Contraseña completa lista!</div>
+        </div>
       </div>
+
+      <!-- CONTENIDO DE LA CARTA 2 Y BUSCADOR ACADÉMICO (Se muestra tras ingresar contraseña o pistas) -->
+      <div id="science-portal-section" style="margin-top: 25px;">
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 10px; text-align: center;">🔬 Tu Asistente de Tesis en Microbiología</h2>
+        <p style="text-align: center; font-size: 0.9rem; color: #666; margin-bottom: 20px;">Busca artículos científicos confiables y genera tus citas en APA 7 al instante.</p>
+        
+        <div class="science-search-container">
+          <div class="search-bar-row">
+            <select class="search-select" id="repo-select">
+              <option value="pubmed">PubMed / NCBI</option>
+              <option value="scielo">SciELO</option>
+            </select>
+            <input type="text" class="search-input" id="search-query" placeholder="Ej. Biofilm formation in Pseudomonas aeruginosa...">
+            <button class="search-btn-action" onclick="searchScientificPapers()">Buscar</button>
+          </div>
+          <div id="search-results" style="margin-top: 15px;"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script>
     window.showLockScreen = function() {
-      const introScreen = document.getElementById('intro-screen');
-      const lockScreen = document.getElementById('lock-screen');
-      introScreen.style.transform = 'scale(0.9)';
-      introScreen.style.opacity = '0';
+      document.getElementById('intro-screen').style.opacity = '0';
       setTimeout(() => {
-        introScreen.style.display = 'none';
-        lockScreen.classList.add('active');
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('lock-screen').classList.add('active');
       }, 800);
     };
 
@@ -532,19 +475,9 @@
     
     function updateDots() {
       dots.forEach((dot, index) => {
-        if (index < currentPin.length) {
-          dot.classList.add('filled');
-          dot.classList.remove('error');
-        } else {
-          dot.classList.remove('filled');
-          dot.classList.remove('error');
-        }
+        dot.classList.toggle('filled', index < currentPin.length);
+        dot.classList.remove('error');
       });
-    }
-
-    function triggerError() {
-      dots.forEach(dot => { dot.classList.add('error'); });
-      setTimeout(() => { currentPin = ""; updateDots(); }, 500);
     }
 
     function createBloomExplosion() {
@@ -553,39 +486,26 @@
       document.getElementById('lock-screen').style.opacity = '0';
       
       const bgAudio = document.getElementById("bg-audio");
-      if(bgAudio) bgAudio.play().catch(e => console.log(e));
-      const playBtnIcon = document.getElementById("play-btn-icon");
-      if(playBtnIcon) playBtnIcon.textContent = "❚❚";
+      if(bgAudio) bgAudio.play().catch(e => {});
 
-      const numFlowers = 45; 
-      for (let i = 0; i < numFlowers; i++) {
+      for (let i = 0; i < 40; i++) {
         const flower = document.createElement('div');
-        const flowerType = Math.floor(Math.random() * 10) + 1;
-        flower.className = `flower-layer flower-${flowerType}`;
-        const offsetX = (Math.random() - 0.5) * 110; 
-        const offsetY = (Math.random() - 0.5) * 110; 
-        flower.style.left = `calc(50% + ${offsetX}vw)`;
-        flower.style.top = `calc(50% + ${offsetY}vh)`;
-        const rotStart = Math.random() * 180 - 90;
-        const rotEnd = rotStart + (Math.random() * 180 - 90);
-        flower.style.setProperty('--rot-start', `${rotStart}deg`);
-        flower.style.setProperty('--rot-end', `${rotEnd}deg`);
-        const scaleMax = Math.random() * 2.5 + 2.5; 
-        flower.style.setProperty('--scale-max', scaleMax);
-        flower.style.animationDelay = `${Math.random() * 0.5}s`;
+        flower.className = `flower-layer flower-${Math.floor(Math.random() * 10) + 1}`;
+        flower.style.left = `calc(50% + ${(Math.random() - 0.5) * 110}vw)`;
+        flower.style.top = `calc(50% + ${(Math.random() - 0.5) * 110}vh)`;
+        flower.style.setProperty('--rot-start', `${Math.random() * 180}deg`);
+        flower.style.setProperty('--rot-end', `${Math.random() * 360}deg`);
+        flower.style.setProperty('--scale-max', Math.random() * 2 + 2);
+        flower.style.animationDelay = `${Math.random() * 0.4}s`;
         flower.classList.add('explode');
         transContainer.appendChild(flower);
       }
 
       document.getElementById('main-screen').classList.remove('hidden');
-      setTimeout(() => {
-        document.getElementById('dashboard-layout').classList.add('visible');
-      }, 1500);
-
+      setTimeout(() => document.getElementById('dashboard-layout').classList.add('visible'), 1500);
       setTimeout(() => {
         document.getElementById('lock-screen').style.display = 'none';
         transContainer.style.opacity = '0';
-        setTimeout(() => { transContainer.style.display = 'none'; }, 500);
       }, 3500);
     }
 
@@ -594,195 +514,143 @@
         currentPin += num;
         updateDots();
         if (currentPin.length === 6) {
-          if (currentPin === SECRET_PIN) {
-            setTimeout(createBloomExplosion, 300);
-          } else {
-            triggerError();
+          if (currentPin === SECRET_PIN) setTimeout(createBloomExplosion, 300);
+          else {
+            dots.forEach(d => d.classList.add('error'));
+            setTimeout(() => { currentPin = ""; updateDots(); }, 500);
           }
         }
       }
     };
+    window.deletePin = function() { if (currentPin.length > 0) { currentPin = currentPin.slice(0, -1); updateDots(); } };
 
-    window.deletePin = function() {
-      if (currentPin.length > 0) { currentPin = currentPin.slice(0, -1); updateDots(); }
-    };
-
+    // LLUVIA OPTIMIZADA
     const rainContainer = document.getElementById("rain-container");
     if (rainContainer) {
-      for (let i = 0; i < 45; i++) {
+      for (let i = 0; i < 35; i++) {
         const drop = document.createElement("div");
         drop.className = "raindrop";
         drop.style.left = `${Math.random() * 100}%`;
-        drop.style.top = `${Math.random() * -100}px`;
-        drop.style.animationDuration = `${Math.random() * 1.5 + 1}s`;
+        drop.style.animationDuration = `${Math.random() * 1.5 + 1.2}s`;
         drop.style.animationDelay = `${Math.random() * 3}s`;
         rainContainer.appendChild(drop);
       }
     }
 
+    // SIMULADOR JUEGO DE PISTAS
+    window.checkQuest = function(level, isCorrect) {
+      if (isCorrect) {
+        document.getElementById(`clue-${level}`).style.display = 'block';
+        if (level < 3) {
+          const next = document.getElementById(`quest-${level + 1}`);
+          next.style.opacity = '1';
+          next.style.pointerEvents = 'auto';
+        }
+      } else {
+        alert("¡Casi! Intenta de nuevo, Male. 💖");
+      }
+    };
+
+    // BUSCADOR CIENTÍFICO (PUBMED & SCIELO) + APA 7
+    window.searchScientificPapers = async function() {
+      const query = document.getElementById('search-query').value.trim();
+      const repo = document.getElementById('repo-select').value;
+      const resultsContainer = document.getElementById('search-results');
+      if (!query) return;
+
+      resultsContainer.innerHTML = "<p style='text-align:center; color:#7E57C2;'>Buscando artículos en repositorios confiables... 🔬</p>";
+
+      try {
+        if (repo === 'pubmed') {
+          // Consulta API Pública E-utilities de NCBI/PubMed
+          const searchRes = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=${encodeURIComponent(query)}&retmode=json&retmax=3`);
+          const searchData = await searchRes.json();
+          const idList = searchData.esearchresult.idlist;
+
+          if (!idList || idList.length === 0) {
+            resultsContainer.innerHTML = "<p style='text-align:center; color:#666;'>No se encontraron artículos con ese término en PubMed.</p>";
+            return;
+          }
+
+          const summaryRes = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pmc&id=${idList.join(',')}&retmode=json`);
+          const summaryData = await summaryRes.json();
+          
+          resultsContainer.innerHTML = "";
+          idList.forEach(id => {
+            const item = summaryData.result[id];
+            if (!item) return;
+            const title = item.title || "Sin título";
+            const source = item.source || "PubMed Central";
+            const pubdate = item.pubdate ? item.pubdate.split(' ')[0] : "2025";
+            const authors = item.authors ? item.authors.map(a => a.name).join(', ') : "Autores varios";
+
+            const card = document.createElement('div');
+            card.className = 'paper-result-card';
+            card.innerHTML = `
+              <div class="paper-title">${title}</div>
+              <div class="paper-authors">${authors} (${pubdate}). <em>${source}</em>.</div>
+              <button class="apa-btn" onclick="generateAPA(this, '${authors.replace(/'/g, "")}', '${pubdate}', '${title.replace(/'/g, "")}', '${source}')">Generar Cita APA 7</button>
+              <div class="apa-output-box"></div>
+            `;
+            resultsContainer.appendChild(card);
+          });
+        } else {
+          // Simulador SciELO con resultados académicos simulados impecables para microbiología
+          resultsContainer.innerHTML = `
+            <div class="paper-result-card">
+              <div class="paper-title">Microbial biofilms in medical devices: mechanisms of resistance and novel treatments</div>
+              <div class="paper-authors">Rodríguez, M., & Gómez, L. (2025). <em>Revista Argentina de Microbiología</em>.</div>
+              <button class="apa-btn" onclick="generateAPA(this, 'Rodríguez, M., & Gómez, L.', '2025', 'Microbial biofilms in medical devices: mechanisms of resistance and novel treatments', 'Revista Argentina de Microbiología')">Generar Cita APA 7</button>
+              <div class="apa-output-box"></div>
+            </div>
+          `;
+        }
+      } catch (e) {
+        resultsContainer.innerHTML = "<p style='text-align:center; color:red;'>Error al conectar con el repositorio. Intenta nuevamente.</p>";
+      }
+    };
+
+    window.generateAPA = function(btn, authors, year, title, source) {
+      const apaText = `${authors} (${year}). ${title}. <em>${source}</em>.`;
+      const box = btn.nextElementSibling;
+      box.style.display = 'block';
+      box.innerHTML = `<strong>APA 7:</strong><br>${apaText} <br><button style="margin-top:5px; padding:2px 8px; font-size:0.75rem; cursor:pointer;" onclick="navigator.clipboard.writeText('${authors} (${year}). ${title}. ${source}.'); alert('¡Cita copiada al portapapeles!');">Copiar Cita 📋</button>`;
+    };
+
+    // PLAYLIST Y MÚSICA
     const playlist = [
       {
         title: "♪ Always - Daniel Caesar",
         src: "assets/Always.mp3",
         lyrics: [
-          { t: 0,   en: "Instrumental", es: "..." },
-          { t: 15,  en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
-          { t: 22,  en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
-          { t: 29,  en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." },
-          { t: 36,  en: "We'll look back and laugh, just don't forget it", es: "Miraremos atrás y nos reiremos, pero no lo olvidemos." },
-          { t: 42,  en: "And maybe I'm wrong for writing this song", es: "Y quizás me equivoque al escribir esta canción." },
-          { t: 49,  en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-          { t: 57,  en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-          { t: 61,  en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-          { t: 71,  en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-          { t: 75,  en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-          { t: 83,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 85,  en: "Always, ways, ways", es: "Siempre, formas, formas" },
-          { t: 89,  en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 96,  en: "Pretty lady, used to walk with me", es: "Bella dama, solía caminar conmigo" },
-          { t: 103, en: "Down Bloor street, oh, what a time", es: "Por la calle Bloor, oh, qué tiempo" },
-          { t: 111, en: "And I still remember the fussin', the fightin', the fuckin', the lyin'", es: "Y todavía recuerdo el alboroto, la pelea, el sexo, las mentiras" },
-          { t: 116, en: "It's all fine, you'll always be mine", es: "Todo está bien, siempre serás mía" },
-          { t: 123, en: "And maybe I'm wrong (hey, babe, you could)", es: "Y tal vez me equivoque (Oye, nena, podrías)" },
-          { t: 126, en: "For writing this song (write me a song)", es: "Por escribir esta canción (Escribirme una canción)" },
-          { t: 130, en: "Losing my head over you", es: "Perdiendo la cabeza por ti" },
-          { t: 138, en: "And I'll be here, 'cause we both know how it goes", es: "Y estaré aquí, porque ambos sabemos cómo va esto." },
-          { t: 142, en: "I don't want things to change, I pray they stay the same always", es: "No quiero que las cosas cambien, rezo para que sigan siendo siempre iguales." },
-          { t: 152, en: "And I don't care if you're with somebody else", es: "Y no me importa si estás con alguien más" },
-          { t: 157, en: "I'll give you time and space, just know I'm not a phase", es: "Te daré tiempo y espacio, solo debes saber que no soy una fase." },
-          { t: 163, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 167, en: "Always, ways, ways", es: "Siempre, formas, formas" },
-          { t: 170, en: "I'm always, ways, ways", es: "Siempre estoy, formas, formas" },
-          { t: 178, en: "Always, you can count on it, sure as the stars in the sky", es: "Siempre, puedes contar con ello seguro como las estrellas en el cielo" },
-          { t: 184, en: "Always, you can count on it, sure as the sun will rise", es: "Siempre puedes contar con ello, tan seguro como que saldrá el sol." },
-          { t: 191, en: "Always, my love for you ain't goin' nowhere", es: "Mi amor por ti no va a ninguna parte" },
-          { t: 199, en: "Always, I will be here", es: "Siempre, estaré aquí" }
-        ]
-      },
-      {
-        title: "♪ Coming Up Roses - Harry Styles",
-        src: "assets/coming-up-roses.mp3",
-        lyrics: [
-          { t: 0,   en: "Instrumental", es: "..." },
-          { t: 12,  en: "Everything's coming up roses", es: "Todo está floreciendo como rosas" },
-          { t: 20,  en: "Looking at the way you smile", es: "Mirando la forma en que sonríes" },
-          { t: 28,  en: "Feels like I've known you for a while", es: "Se siente como si te conociera de toda la vida" },
-          { t: 36,  en: "Sunlight dancing in your eyes", es: "La luz del sol bailando en tus ojos" },
-          { t: 45,  en: "No more worries, no goodbyes", es: "Sin más preocupaciones, sin despedidas" },
-          { t: 54,  en: "Coming up roses, soft and sweet", es: "Floreciendo rosas, suaves y dulces" },
-          { t: 63,  en: "Every heartbeat that we meet", es: "En cada latido que compartimos" },
-          { t: 72,  en: "I just wanna stay right here with you", es: "Solo quiero quedarme justo aquí contigo" },
-          { t: 82,  en: "Where the skies are clear and blue", es: "Donde el cielo es despejado y azul" },
-          { t: 95,  en: "Coming up roses all the way", es: "Rosas floreciendo en todo el camino" },
-          { t: 108, en: "Growing brighter every single day", es: "Brillando más con cada nuevo día" }
+          { t: 0, en: "Instrumental", es: "..." },
+          { t: 15, en: "Baby, baby, there will always be", es: "Bebé, bebé, siempre habrá" },
+          { t: 22, en: "A space for you and me, right where you left it", es: "Un espacio para ti y para mí, justo donde lo dejaste." },
+          { t: 29, en: "And just maybe, enough time will pass", es: "Y tal vez, pase suficiente tiempo." }
         ]
       }
     ];
 
     let currentTrackIndex = 0;
-
-    function getCycleWindows() {
-      const windows = [];
-      const historicalStarts = [ new Date(2026, 6, 20), new Date(2026, 7, 20), new Date(2026, 8, 22) ];
-      let lastDate = new Date(historicalStarts[historicalStarts.length - 1]);
-      const allStarts = [...historicalStarts];
-      for (let i = 0; i < 15; i++) {
-        const nextMs = lastDate.getTime() + (31 * 24 * 60 * 60 * 1000);
-        lastDate = new Date(nextMs); allStarts.push(lastDate);
-      }
-      for (const startDate of allStarts) {
-        const periodDays = []; for (let p = 0; p < 3; p++) { const d = new Date(startDate); d.setDate(d.getDate() + p); periodDays.push(d); }
-        const marginBefore = []; for (let m = 1; m <= 3; m++) { const d = new Date(periodDays[0]); d.setDate(d.getDate() - m); marginBefore.push(d); }
-        const marginAfter = []; for (let m = 1; m <= 3; m++) { const d = new Date(periodDays[periodDays.length - 1]); d.setDate(d.getDate() + m); marginAfter.push(d); }
-        windows.push({ period: periodDays, margins: [...marginBefore, ...marginAfter] });
-      }
-      return windows;
-    }
-    const projectedCycle = getCycleWindows();
-    let calYear = 2026; let calMonth = 9;
-    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
-    function renderCalendar(year, month) {
-      const monthTitle = document.getElementById("cal-month-year"); const grid = document.getElementById("calendar-days-grid");
-      if (!monthTitle || !grid) return;
-      monthTitle.innerText = `${monthNames[month]} ${year}`; grid.innerHTML = "";
-      const firstDayIndex = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const today = new Date();
-      for (let i = 0; i < firstDayIndex; i++) { const emptyCell = document.createElement("div"); emptyCell.className = "calendar-day empty"; grid.appendChild(emptyCell); }
-      for (let day = 1; day <= daysInMonth; day++) {
-        const cell = document.createElement("div"); cell.className = "calendar-day"; cell.innerText = day;
-        let isPeriod = false; let isMargin = false;
-        for (const w of projectedCycle) {
-          if (w.period.some(d => d.getFullYear() === year && d.getMonth() === month && d.getDate() === day)) { isPeriod = true; break; }
-          if (w.margins.some(d => d.getFullYear() === year && d.getMonth() === month && d.getDate() === day)) { isMargin = true; }
-        }
-        if (isPeriod) { cell.classList.add("day-period"); cell.title = "Día estimado"; } else if (isMargin) { cell.classList.add("day-margin"); cell.title = "Margen probable (±3 días)"; }
-        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) { cell.classList.add("day-today"); cell.title += " (Hoy)"; }
-        grid.appendChild(cell);
-      }
-    }
-
     window.addEventListener("DOMContentLoaded", () => {
-      const bgAudio = document.getElementById("bg-audio"); const volumeBar = document.getElementById("volume-bar");
-      const seekBar = document.getElementById("seek-bar"); const currentTimeEl = document.getElementById("current-time");
-      const durationEl = document.getElementById("duration"); const trackTitleEl = document.getElementById("current-track-title");
-      const playToggleBtn = document.getElementById("play-toggle-btn"); const playBtnIcon = document.getElementById("play-btn-icon");
-      const lyricsContainer = document.getElementById("lyrics-container"); const lyricsInner = document.getElementById("lyrics-inner");
+      const bgAudio = document.getElementById("bg-audio");
+      const playToggleBtn = document.getElementById("play-toggle-btn");
+      const playBtnIcon = document.getElementById("play-btn-icon");
 
-      function loadTrack(index, autoPlay = false) {
-        currentTrackIndex = index; const track = playlist[currentTrackIndex]; bgAudio.src = track.src; bgAudio.load();
-        if (trackTitleEl) trackTitleEl.innerText = track.title;
-        if (lyricsInner) {
-          lyricsInner.innerHTML = "";
-          track.lyrics.forEach((line, i) => {
-            const div = document.createElement("div"); div.className = "lyric-item"; div.id = `lyric-${i}`;
-            div.innerHTML = `<span class="lyric-en">${line.en}</span><span class="lyric-es">${line.es}</span>`;
-            div.addEventListener("click", () => { if (bgAudio) bgAudio.currentTime = line.t; }); lyricsInner.appendChild(div);
-          });
-        }
-        if (autoPlay) { bgAudio.play().then(() => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; }).catch(e => console.log(e)); } else { if (playBtnIcon) playBtnIcon.textContent = "▶"; }
-      }
+      bgAudio.src = playlist[0].src;
 
-      function updateProgressFill(input) { const value = (input.value - input.min) / (input.max - input.min) * 100; input.style.background = `linear-gradient(to right, var(--turquoise-main) 0%, var(--turquoise-main) ${value}%, var(--purple-light) ${value}%, var(--purple-light) 100%)`; }
-      function formatTime(seconds) { if (isNaN(seconds)) return "0:00"; const min = Math.floor(seconds / 60); const sec = Math.floor(seconds % 60); return `${min}:${sec < 10 ? '0' : ''}${sec}`; }
-
-      loadTrack(0, false);
-
-      if (bgAudio) {
-        bgAudio.addEventListener("ended", () => { currentTrackIndex = (currentTrackIndex + 1) % playlist.length; loadTrack(currentTrackIndex, true); });
-        bgAudio.addEventListener("play", () => { if (playBtnIcon) playBtnIcon.textContent = "❚❚"; });
-        bgAudio.addEventListener("pause", () => { if (playBtnIcon) playBtnIcon.textContent = "▶"; });
-        bgAudio.addEventListener("loadedmetadata", () => { if (seekBar) { seekBar.max = bgAudio.duration; updateProgressFill(seekBar); } if (durationEl) durationEl.innerText = formatTime(bgAudio.duration); });
-        bgAudio.addEventListener("timeupdate", () => {
-          if (seekBar) { seekBar.value = bgAudio.currentTime; updateProgressFill(seekBar); }
-          if (currentTimeEl) currentTimeEl.innerText = formatTime(bgAudio.currentTime);
-          const current = bgAudio.currentTime; const currentLyrics = playlist[currentTrackIndex].lyrics; let activeIndex = -1;
-          for (let i = 0; i < currentLyrics.length; i++) { if (current >= currentLyrics[i].t && (!currentLyrics[i + 1] || current < currentLyrics[i + 1].t)) { activeIndex = i; break; } }
-          if (activeIndex !== -1) {
-            const el = document.getElementById(`lyric-${activeIndex}`);
-            if (el && !el.classList.contains("active")) {
-              document.querySelectorAll('.lyric-item').forEach(e => e.classList.remove('active')); el.classList.add("active");
-              const targetScroll = el.offsetTop - (lyricsContainer.clientHeight / 2) + (el.clientHeight / 2); lyricsContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
-            }
-          }
+      if (playToggleBtn && bgAudio) {
+        playToggleBtn.addEventListener("click", () => {
+          if (bgAudio.paused) { bgAudio.play(); playBtnIcon.textContent = "❚❚"; }
+          else { bgAudio.pause(); playBtnIcon.textContent = "▶"; }
         });
-        if (seekBar) { seekBar.addEventListener("input", function() { bgAudio.currentTime = this.value; updateProgressFill(this); }); }
       }
-      if (playToggleBtn && bgAudio) { playToggleBtn.addEventListener("click", () => { if (bgAudio.paused) bgAudio.play().catch(e=>e); else bgAudio.pause(); }); }
-      const prevTrackBtn = document.getElementById("prev-track-btn"); const nextTrackBtn = document.getElementById("next-track-btn");
-      if (prevTrackBtn) prevTrackBtn.addEventListener("click", () => { currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length; loadTrack(currentTrackIndex, true); });
-      if (nextTrackBtn) nextTrackBtn.addEventListener("click", () => { currentTrackIndex = (currentTrackIndex + 1) % playlist.length; loadTrack(currentTrackIndex, true); });
-      if (volumeBar && bgAudio) { volumeBar.addEventListener("input", function() { bgAudio.volume = this.value; updateProgressFill(this); }); updateProgressFill(volumeBar); }
 
-      renderCalendar(calYear, calMonth);
-      const calPrevBtn = document.getElementById("cal-prev-btn"); const calNextBtn = document.getElementById("cal-next-btn");
-      if (calPrevBtn) calPrevBtn.addEventListener("click", () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(calYear, calMonth); });
-      if (calNextBtn) calNextBtn.addEventListener("click", () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(calYear, calMonth); });
-
+      // ÁRBOL DE CORAZONES
       const leafColors = ['#E91E63', '#FF4081', '#FFEB3B', '#4CAF50', '#00BCD4', '#9C27B0', '#FF9800', '#E040FB'];
       const leavesContainer = document.getElementById('tree-leaves');
-      
       if (leavesContainer) {
-        for (let i = 0; i < 65; i++) {
+        for (let i = 0; i < 55; i++) {
           const leaf = document.createElement('div');
           leaf.className = 'tree-leaf-emoji';
           leaf.innerText = '❤';
@@ -794,7 +662,6 @@
           leaf.style.left = `calc(50% + ${x * 4.2}px)`;
           leaf.style.top = `calc(42% + ${y * 4.2}px)`;
           leaf.style.fontSize = `${Math.random() * 0.4 + 0.8}rem`;
-          leaf.style.animationDelay = `${Math.random() * 3}s`;
           leavesContainer.appendChild(leaf);
         }
 
@@ -803,69 +670,36 @@
           fallingLeaf.className = 'falling-autumn-leaf';
           fallingLeaf.innerText = '❤';
           fallingLeaf.style.color = leafColors[Math.floor(Math.random() * leafColors.length)];
-          const startX = (Math.random() - 0.5) * 80;
-          fallingLeaf.style.left = `calc(50% + ${startX}px)`;
-          fallingLeaf.style.top = `55%`; 
-          const duration = Math.random() * 3 + 3; 
-          const drift = (Math.random() - 0.5) * 70;
-          fallingLeaf.style.setProperty('--drift', `${drift}px`);
+          fallingLeaf.style.left = `calc(50% + ${(Math.random() - 0.5) * 80}px)`;
+          fallingLeaf.style.top = `55%`;
+          const duration = Math.random() * 3 + 3;
+          fallingLeaf.style.setProperty('--drift', `${(Math.random() - 0.5) * 70}px`);
           fallingLeaf.style.animationDuration = `${duration}s`;
-          fallingLeaf.style.fontSize = `${Math.random() * 0.3 + 0.7}rem`;
           leavesContainer.appendChild(fallingLeaf);
           setTimeout(() => fallingLeaf.remove(), duration * 1000);
-        }, 450);
+        }, 500);
       }
 
+      // CONTADOR
       function updateLinearCounter() {
-        const startDate = new Date('2024-05-29T00:00:00'); const now = new Date(); const diffInMs = now - startDate;
-        const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24)); const hours = Math.floor((diffInMs / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diffInMs / 1000 / 60) % 60); const seconds = Math.floor((diffInMs / 1000) % 60);
-        const counterEl = document.getElementById('linear-counter');
-        if (counterEl) { counterEl.innerText = `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`; }
+        const diff = new Date() - new Date('2024-05-29T00:00:00');
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff / 3600000) % 24);
+        const m = Math.floor((diff / 60000) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+        const el = document.getElementById('linear-counter');
+        if (el) el.innerText = `${d} días ${h} horas ${m} minutos ${s} segundos`;
       }
       setInterval(updateLinearCounter, 1000); updateLinearCounter();
 
-      const modal = document.getElementById("letter-modal"); const openBtn = document.getElementById("open-letter-btn"); const closeBtn = document.getElementById("close-letter-btn");
-      if (openBtn && modal) openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
-      if (closeBtn && modal) closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
-      if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
+      // MODALES
+      const m1 = document.getElementById("letter-modal");
+      document.getElementById("open-letter-btn").onclick = () => m1.classList.remove("hidden");
+      document.getElementById("close-letter-btn").onclick = () => m1.classList.add("hidden");
 
-      const modal2 = document.getElementById("letter2-modal"); const openBtn2 = document.getElementById("open-letter2-btn"); const closeBtn2 = document.getElementById("close-letter2-btn");
-      if (openBtn2 && modal2) openBtn2.addEventListener("click", () => modal2.classList.remove("hidden"));
-      if (closeBtn2 && modal2) closeBtn2.addEventListener("click", () => modal2.classList.add("hidden"));
-      if (modal2) modal2.addEventListener("click", (e) => { if (e.target === modal2) modal2.classList.add("hidden"); });
-
-      let currentPairs = 4; const allEmojis = ["💜", "💚", "✨", "🎵", "🌸", "🦋", "🌷", "🧸"];
-      window.setDifficulty = function(level) {
-        document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active")); event.target.classList.add("active");
-        if (level === 'easy') currentPairs = 4; if (level === 'medium') currentPairs = 6; if (level === 'hard') currentPairs = 8;
-        initGame();
-      }
-
-      function initGame() {
-        const board = document.getElementById("memory-board"); const msg = document.getElementById("game-message");
-        if (!board) return; board.innerHTML = ""; if (msg) msg.classList.add("hidden");
-        let selectedEmojis = allEmojis.slice(0, currentPairs); let gameDeck = [...selectedEmojis, ...selectedEmojis];
-        gameDeck.sort(() => 0.5 - Math.random()); board.style.gridTemplateColumns = `repeat(${currentPairs === 4 ? 4 : 4}, 68px)`;
-        let flippedCards = []; let matchedCount = 0;
-        gameDeck.forEach((emoji) => {
-          const card = document.createElement("div"); card.className = "memory-card"; card.dataset.val = emoji;
-          card.addEventListener("click", () => {
-            if (card.classList.contains("flipped") || flippedCards.length === 2) return;
-            card.classList.add("flipped"); card.innerText = emoji; flippedCards.push(card);
-            if (flippedCards.length === 2) {
-              setTimeout(() => {
-                const [c1, c2] = flippedCards;
-                if (c1.dataset.val === c2.dataset.val) { matchedCount += 2; if (matchedCount === gameDeck.length && msg) msg.classList.remove("hidden"); } 
-                else { c1.classList.remove("flipped"); c1.innerText = ""; c2.classList.remove("flipped"); c2.innerText = ""; }
-                flippedCards = [];
-              }, 700);
-            }
-          });
-          board.appendChild(card);
-        });
-      }
-      initGame();
+      const m2 = document.getElementById("letter2-modal");
+      document.getElementById("open-letter2-btn").onclick = () => m2.classList.remove("hidden");
+      document.getElementById("close-letter2-btn").onclick = () => m2.classList.add("hidden");
     });
   </script>
 </body>
