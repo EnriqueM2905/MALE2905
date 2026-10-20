@@ -133,7 +133,7 @@
     .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.12); margin-top: auto; }
     .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* ================= CALENDARIO (REGLA CON PROBABILIDAD) ================= */
+    /* ================= CALENDARIO (CICLO MENSTRUAL CON PROBABILIDAD) ================= */
     .calendar-box { background: linear-gradient(145deg, #ffffff 0%, #fff6f8 100%); display: flex; flex-direction: column; justify-content: center; }
     .calendar-nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .calendar-month-title { font-size: 1.15rem; font-weight: 800; color: var(--purple-dark); font-family: 'Playfair Display', serif; }
@@ -445,8 +445,8 @@
         const petal = document.createElement('div');
         petal.className = `falling-petal flower-${Math.floor(Math.random() * 10) + 1}`;
         petal.style.left = `${Math.random() * 100}vw`;
-        petal.style.setProperty('--drift', `${(Math.random() - 0.5) * 40}vw`;
-        petal.style.setProperty('--rot-end', `${Math.random() * 720}deg`;
+        petal.style.setProperty('--drift', `${(Math.random() - 0.5) * 40}vw`);
+        petal.style.setProperty('--rot-end', `${Math.random() * 720}deg`);
         petal.style.animationDuration = `${Math.random() * 2 + 2}s`;
         petal.style.animationDelay = `${Math.random() * 1.5}s`;
         transContainer.appendChild(petal);
@@ -489,26 +489,19 @@
     function getCycleStatus(year, month, day) {
       const target = new Date(year, month, day);
 
-      // Fechas base conocidas de inicio y su duración de 3 días:
-      // Agosto 2026: 20, 21, 22
-      // Septiembre 2026: 22, 23, 24
-      // Octubre 2026 (estimado por ciclo ~33 días): 25, 26, 27
-      // Noviembre 2026 (estimado): 27, 28, 29
       const baseStarts = [
-        new Date(2026, 7, 20),
-        new Date(2026, 8, 22),
-        new Date(2026, 9, 25),
-        new Date(2026, 10, 27)
+        new Date(2026, 7, 20), // Agosto
+        new Date(2026, 8, 22), // Septiembre
+        new Date(2026, 9, 25), // Octubre (Estimado)
+        new Date(2026, 10, 27) // Noviembre (Estimado)
       ];
 
       for (let start of baseStarts) {
-        // 3 días de período central (Rojo Fuerte)
         for (let i = 0; i < 3; i++) {
           const pDay = new Date(start);
           pDay.setDate(start.getDate() + i);
           if (target.toDateString() === pDay.toDateString()) return 'period';
         }
-        // 3 días antes y 3 días después (Rojo Claro - Margen probable)
         for (let i = 1; i <= 3; i++) {
           const mBefore = new Date(start);
           mBefore.setDate(start.getDate() - i);
@@ -906,26 +899,4 @@
       setInterval(updateLinearCounter, 1000); updateLinearCounter();
 
       // MODALES CARTAS
-      const m1 = document.getElementById("letter-modal");
-      document.getElementById("open-letter-btn").onclick = () => {
-        document.getElementById('letter1-pass').value = '';
-        document.getElementById('pass1-error').style.display = 'none';
-        document.getElementById('letter1-password-screen').classList.remove('hidden');
-        document.getElementById('letter1-content').classList.add('hidden');
-        m1.classList.remove("hidden");
-      };
-      document.getElementById("close-letter-btn").onclick = () => m1.classList.add("hidden");
-
-      const m2 = document.getElementById("letter2-modal");
-      document.getElementById("open-letter2-btn").onclick = () => {
-        document.getElementById('letter2-pass').value = '';
-        document.getElementById('pass2-error').style.display = 'none';
-        document.getElementById('letter2-password-screen').classList.remove('hidden');
-        document.getElementById('letter2-content').classList.add('hidden');
-        m2.classList.remove("hidden");
-      };
-      document.getElementById("close-letter2-btn").onclick = () => m2.classList.add("hidden");
-    });
-  </script>
-</body>
-</html>
+      const m1 = document.getElementById("letter-modal
