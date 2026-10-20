@@ -204,6 +204,19 @@
       .tree-text-side { align-items: center; text-align: center; }
     }
   </style>
+
+  <script>
+    // Definir inmediatamente las funciones iniciales para evitar bloqueos
+    window.showLockScreen = function() {
+      const intro = document.getElementById('intro-screen');
+      const lock = document.getElementById('lock-screen');
+      if (intro) intro.style.opacity = '0';
+      setTimeout(() => {
+        if (intro) intro.style.display = 'none';
+        if (lock) lock.classList.add('active');
+      }, 800);
+    };
+  </script>
 </head>
 <body>
 
@@ -383,7 +396,7 @@
         <p>Fuiste una persona muy especial para mí, nunca te quise perder, aunque merecía perderte. Soy consciente de que fui un idiota y de que tuve demasiadas actitudes que aguantaste, y no tenías por qué hacerlo. Muchas veces bromeaba con mis amigos para hacer una máquina del tiempo y arreglar mis estupideces. Soy consciente del daño que te causé, no lo digo para que suene bonito o por decirlo, lo digo porque me dolió darme cuenta de que fui yo quien lastimó a alguien que siempre estuvo para mí. Hay cosas que uno no puede deshacer por más que lo quiera con toda el alma, pero de todo eso aprendí, y ahora soy una mejor persona. Sí cambié mucho porque tuve muchas experiencias que me obligaron a hacerlo, pero en el fondo sé que sigo manteniendo mi esencia y sé que tú también.</p>
         <p>Estuve pensando mucho en estos últimos días y en lo lindo que ha sido volver a hablar y compartir momentos contigo. La verdad es que te extrañé muchísimo, y estar otra vez a tu lado se siente como un sueño para mí. Muchas tardes me preguntaba qué estará haciendo, si estará bien, tal vez necesita hablar con alguien, si la estarán cuidando bien; me pasaba mucho tiempo pensando en eso. Pero volvimos a hablar, nuestras salidas y paseos... el tiempo se pasa volando cuando estoy contigo. Me gusta mucho escuchar tu risa, quiero que estés riendo siempre, aunque sé que es difícil en nuestras realidades, me gusta mantenerte feliz.</p>
         <p>Quiero que sepas que admiro todo de ti, desde tus detalles más pequeños hasta esos momentos en los que te quedas pensando en tus cosas o desvariando jsjsjs; para mí, en cada instante, sigues siendo una persona maravillosa y muy especial.</p>
-        <p>Anoche... bueno, hoy en la madrugada, que se nos pasó el tiempo volando, te contaba de mis metas y de mis sueños, como el proyecto de la maestría. Pero la verdad es que tú también formas parte de ese panorama. Mi mayor ilusión es poder avanzar y tener la alegría de encontrarte al final del día con tus canchitas sin aceite.</p>
+        <p>Anoche... bueno, hoy en la madrugada, que se nos pasó el tiempo volando, te contaba de mis metas y de моих sueños, como el proyecto de la maestría. Pero la verdad es que tú también formas parte de ese panorama. Mi mayor ilusión es poder avanzar y tener la alegría de encontrarte al final del día con tus canchitas sin aceite.</p>
         <p>Si estás conmigo, siento que tengo el impulso necesario para cumplir mis metas y, al mismo tiempo, estar ahí para apoyarte a alcanzar las tuyas. Sé que no quieres volver a abrir tu corazoncito porque lo lastimé mucho, pero no voy a cometer los errores dos veces, y mientras tenga la oportunidad voy a tratar de cuidarlo con todo y de todos, y darte la confianza de que siempre hay alguien que quiere que todo te vaya bien y que comparte tus sueños como si fueran suyos. Te quiero demasiado, Male, y espero poder recuperarte, voy a dar todo de mí para lograrlo.</p>
         <div style="margin-top: 30px; text-align: right; font-weight: 700; color: #5c4033;">Con todo mi afecto.</div>
       </div>
@@ -412,15 +425,6 @@
   </div>
 
   <script>
-    // ======= PANTALLAS INICIALES =======
-    window.showLockScreen = function() {
-      document.getElementById('intro-screen').style.opacity = '0';
-      setTimeout(() => {
-        document.getElementById('intro-screen').style.display = 'none';
-        document.getElementById('lock-screen').classList.add('active');
-      }, 800);
-    };
-
     const SECRET_PIN = "290524";
     let currentPin = "";
     const dots = document.querySelectorAll('.pin-dot');
@@ -899,4 +903,26 @@
       setInterval(updateLinearCounter, 1000); updateLinearCounter();
 
       // MODALES CARTAS
-      const m1 = document.getElementById("letter-modal
+      const m1 = document.getElementById("letter-modal");
+      document.getElementById("open-letter-btn").onclick = () => {
+        document.getElementById('letter1-pass').value = '';
+        document.getElementById('pass1-error').style.display = 'none';
+        document.getElementById('letter1-password-screen').classList.remove('hidden');
+        document.getElementById('letter1-content').classList.add('hidden');
+        m1.classList.remove("hidden");
+      };
+      document.getElementById("close-letter-btn").onclick = () => m1.classList.add("hidden");
+
+      const m2 = document.getElementById("letter2-modal");
+      document.getElementById("open-letter2-btn").onclick = () => {
+        document.getElementById('letter2-pass').value = '';
+        document.getElementById('pass2-error').style.display = 'none';
+        document.getElementById('letter2-password-screen').classList.remove('hidden');
+        document.getElementById('letter2-content').classList.add('hidden');
+        m2.classList.remove("hidden");
+      };
+      document.getElementById("close-letter2-btn").onclick = () => m2.classList.add("hidden");
+    });
+  </script>
+</body>
+</html>
